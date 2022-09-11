@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Wish list5</title>
+</head>
+
+<body>
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" width="128">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+                <form action="" class="d-flex w-75 position-relative ">
+                    <input type="search" class="form-control me-2" placeholder="Find some" aria-label="Seach">
+                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Seach</button>
+                </form>
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Jhoan Peterson
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="link">
+                            <img width="32" height="32"
+                                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
+                                alt="User image" class="rounded-circle mx-auto d-block">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT     -->
+    <div class="mt-5 container-fluid">
+        <div class="row">
+            <!-- OWN LISTS -->
+            <div class="col-lg-2">
+                <div class="row">
+                    <h3 class="fw-bold text-center">My Wishes</h3>
+                    <div class="list-group list-group-flush border-bottom border-warning border-5">
+                        <div class="list-group-item my-2">
+                            <a href="#" class="fs-5 fw-normal">Compras de skate</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#" class="fs-5 fw-normal">Bocinas para fiesta</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#" class="fs-5 fw-normal">Monitores</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- MORE LISTS FROM OWNER -->
+                <div class="row mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" role="button" id="lists" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    More lists from <b>Jhon Peterson</b>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="lists">
+                                    <li><a href="#" class="dropdown-item">Compras Skate</a></li>
+                                    <li><a href="#" class="dropdown-item">Bocinas para fiestas</a></li>
+                                    <li><a href="#" class="dropdown-item">Monitores</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                New Wish list
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- WISH LIST CONTENT -->
+            <div class="col m-3">
+                <!-- WISH LIST BANNER -->
+                <div class="row border border-5 border-warning">
+                    <div class="col-3 p-2">
+                        <img width="200"
+                            src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg"
+                            alt="" class="mx-auto img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <p class="m-0 fs-6 fw-light">Public List</p>
+                        <h1>Bocinas para fiesta</h1>
+                        <p class="fs-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, dolor
+                            adipisci, sapiente eos, </p>
+                        <small>Jhon Peterson</small>
+                    </div>
+                </div>
+                <!-- WISH LIST CONTENT -->
+                <div class="row m-2 border-bottom border-2">
+                    <div class="col-1 p-2">
+                        <img width="100"
+                            src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg"
+                            alt="" class="img-thumbnail">
+                    </div>
+                    <div class="col-8">
+                        <h3 class="m-0">Tabla Baker</h3>
+                        <p class="m-0">Estrellas</p>
+                        <p class="m-0 fs-4">$60</p>
+                        <small>In Stock</small>
+                    </div>
+                    <div class="col justify-content-center d-flex">
+                        <div class="g-grid g-2">
+                            <input value="Agregar al carrito" type="submit" class="justify-content-end btn btn-warning">
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-2 border-bottom border-2">
+                    <div class="col-1 p-2">
+                        <img width="100" src="https://m.media-amazon.com/images/I/71KC6YWsyLL._AC_SS450_.jpg" alt=""
+                            class="img-thumbnail">
+                    </div>
+                    <div class="col-8">
+                        <h3 class="m-0">Bocinas JBL</h3>
+                        <p class="m-0">Estrellas</p>
+                        <p class="m-0 fs-4">$45</p>
+                        <small>In Stock</small>
+                    </div>
+                    <div class="col justify-content-center d-flex">
+                        <div class="g-grid g-2">
+                            <input value="Agregar al carrito" type="submit" class="justify-content-end btn btn-warning">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

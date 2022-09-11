@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E_shop | New User</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body style="background-color: snow">
+
+    <div class="container">
+        <div class="row my-5" id="wrapper">
+            <div class="col" id="imgHolder">
+                <nav class="nav">
+                    <a href="#" class="navbar-brand">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt=""
+                            width="128">
+                    </a>
+                </nav>
+            </div>
+            <div class="col align-self-center">
+                <div class="row">
+                    <h2 class="text-start">Create Account</h2>
+                    <form action="" class="row g-3">
+                        <div class="col-12">
+                            <label for="usremail" class="form-label">Email</label>
+                            <input type="email" name="usremail" id="usremail" class="form-control"
+                                placeholder="email@example.com">
+                        </div>
+                        <div class="col-12">
+                            <label for="usrnick" class="form-label">User Nickname</label>
+                            <input type="text" name="usrnick" id="usrnick" class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="usrpwd" class="form-label">Password</label>
+                            <input type="password" name="usrpwd" id="usrpwd" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <label for="usrname" class="form-label">Name</label>
+                            <input type="text" name="usrname" id="usrname" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <label for="usrlastname" class="form-label">Last name</label>
+                            <input type="text" name="usrlastname" id="usrlastname" class="form-control">
+                        </div>
+                        <div class="col d-grid gap-2">
+                            <input type="submit" value="Submit" id="create" class="btn btn-warning">
+                        </div>
+                    </form>
+                </div>
+                <div class="row m-2">
+                    <div class="col-12 m-3">
+                        <small>
+                            When you create a new account already accept terms and conditions on web page, you can see
+                            all on
+                            <a href="#" class="">Terms and conditions</a>
+                        </small>
+                    </div>
+                    <div class="col-12 m-3">
+                        <small>
+                            Already have an account, login on
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LGON MODAL BUTTON -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-3 " id="loginModalLabel">Sign in</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <form action="" class="row g-3">
+                                <div class="col-12">
+                                    <label for="usremail" class="form-label">Email</label>
+                                    <input type="email" name="usremail" id="usremail" class="form-control"
+                                        placeholder="email@example.com">
+                                </div>
+                                <div class="col-12">
+                                    <label for="usrpwd" class="form-label">Password</label>
+                                    <input type="password" name="usrpwd" id="usrpwd" class="form-control">
+                                </div>
+                                <div class="col d-grid gap-2">
+                                    <input type="submit" value="Submit" id="create" class="btn btn-warning">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-12">
+                            <small class="fs-6 fw-light">
+                                By continuing, you agree to Amazon's Conditions of Use and Privacy Notice.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
