@@ -1,44 +1,4 @@
-const card = ({img, title, text, link})=>{
-
-    // COL CONTAINER
-    const container = document.createElement('div');
-    container.className = 'col-4  d-flex justify-content-center';
-
-    // CARD
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.style.width = '18rem';
-
-    // CARD IMAGE
-    const cover = document.createElement('img');
-    cover.src = img;
-    cover.className = 'card-img-top';
-
-    // CARD BODY
-    const body = document.createElement('div');
-    body.className = 'card-body';
-
-    // CARD CONTENT
-    const head = document.createElement('h5');
-    head.className = 'card-title';
-    head.textContent = title;
-
-    const desc = document.createElement('p');
-    desc.className = 'card-text';
-    desc.textContent = text;
-
-    const button = document.createElement('a');
-    button.href = link;
-    button.className = 'btn btn-primary';
-    button.textContent = 'Show more';
-
-    body.append(head, desc, button);
-    card.append(cover, body);
-    container.append(card);
-
-    return container;
-
-}
+ 
 
 const content = document.querySelector('#content');
 const prev = document.querySelector('#prev');
@@ -49,14 +9,20 @@ const cards = [];
 
 for(let i = 0; i < 18 ; i++){
     
-    const carta = card({
+    const carta = new Card({
         img: 'https://m.media-amazon.com/images/I/718sn7oOcfL._AC_SY450_.jpg',
         title: 'Computadora' + i,
-        text: 'Some quick example text to build on the card title and make up the bulk of the',
+        desc: 'Some quick example text to build on the card title and make up the bulk of the',
         link: '#',
+        text:{
+            href: '#',
+            text: 'Show more',
+            tColor: 'light',
+            color: 'primary'
+        }
     })
     
-    cards.push(carta);
+    cards.push(carta.card);
 }
 
 
