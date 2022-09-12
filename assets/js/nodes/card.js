@@ -8,6 +8,9 @@ class Card{
         this.desc = desc;
         this.bConfig = text;
 
+        const wrapper = document.createElement('div');
+        wrapper.className = `col-${size}  d-flex justify-content-center`;
+
         this.card = document.createElement('div');
         this.card.className = 'card';
         this.card.style.width = '18rem';
@@ -16,6 +19,8 @@ class Card{
         const cover = this.cover(this.img);
 
         this.card.append(cover, body);
+        wrapper.append(this.card);
+        this.card = wrapper
 
     }
 
