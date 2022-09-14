@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.setOnLoadCallback(drawStuff);
+
+        function drawStuff() {
+            var data = new google.visualization.arrayToDataTable([
+                ['Months', 'Current', 'Last'],
+                ["January", 1500, 2500],
+                ["February", 2850, 1500],
+                ["March", 500, 300],
+                ["April", 3940, 2800],
+                ['May', 850, 100]
+            ]);
+
+            var options = {
+                title: 'Sales per month',
+                width: 600,
+                legend: { position: 'none' },
+                chart: {
+                    title: 'Sales per month',
+                    subtitle: 'Summary'
+                },
+                bars: 'horizontal', // Required for Material Bar Charts.
+                axes: {
+                    x: {
+                        Current: { side: 'top', label: 'Ammount' }, // Top x-axis.
+                        Last: { side: 'top', label: 'Ammount' } // Top x-axis.
+                    }
+                }
+                // bar: { groupWidth: "90%" }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+            chart.draw(data, options);
+        };
+
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Month Goal', 'Total'],
+                ['Restante', 10],
+                ['Current', 20]
+            ]);
+
+            var options = {
+                title: 'Month Goal',
+                pieHole: 0.5,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+    <title>Products</title>
+</head>
+
+<body>
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" width="128">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Profile
+                        </a>
+                    </li>
+                </ul>
+                <form action="" class="d-flex w-75 position-relative ">
+                    <input type="search" class="form-control me-2" placeholder="Find some" aria-label="Seach">
+                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Seach</button>
+                </form>
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Jhoan Peterson
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="link">
+                            <img width="32" height="32"
+                                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
+                                alt="User image" class="rounded-circle mx-auto d-block">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row p-3">
+            <div class="col-lg-2 mx-4">
+                <img width="200" height="200"
+                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
+                    alt="User image" class="rounded-circle mx-auto d-block">
+            </div>
+            <div class="col m-4">
+                <div class="row">
+                    <h1 class="d-flex  border-bottom border-5 border-warning p-2">
+                        Jhoan Peterson <p class="fs-6 fw-light">(Sale man)</p>
+                    </h1>
+                    <small class="">
+                        correo@prueba.com
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h2 class="text-end p-5 text-muted">Sales summary</h2>
+            <div class="col border border-4 p-5" id="top_x_div" style="height: 600px;">
+            </div>
+            <div class="col border border-4" id="donutchart"></div>
+        </div>
+        <div class="row">
+            <div class="col border border-4 p-2">
+                <h2>Detail sales report  </h2>
+                <table class="table table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sold on</th>
+                            <th scope="col">Hour</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Rate</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Existence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10/05/2022</td>
+                            <td>15:55</td>
+                            <td>Video Games</td>
+                            <td>Gameboy advance</td>
+                            <td>4.5/5</td>
+                            <td>$15.99</td>
+                            <td>35pz</td>
+                        </tr>
+                        <tr>
+                            <td>10/05/2022</td>
+                            <td>2:35</td>
+                            <td>Video Games</td>
+                            <td>PlayStation 4</td>
+                            <td>5/5</td>
+                            <td>$75.00</td>
+                            <td>2pz</td>
+                        </tr>
+                        <tr>
+                            <td>25/05/2022</td>
+                            <td>1:02</td>
+                            <td>Games</td>
+                            <td>Back to the future jigsaw</td>
+                            <td>2.5</td>
+                            <td>$9.99</td>
+                            <td>100pz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col border border-4">
+                <h2>Resume sales report</h2>
+                <table class="table table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sold on</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Sales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10/05/2022</td>
+                            <td>Video Games</td>
+                            <td>$45.98</td>
+                        </tr>
+                        <tr>
+                            <td>11/05/2022</td>
+                            <td>Games</td>
+                            <td>$55.10</td>
+                        </tr>
+                        <tr>
+                            <td>25/05/2022</td>
+                            <td>Health</td>
+                            <td>$10.98</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row bg-dark">
+            <!-- FOOTER -->
+            <div class="col">
+                <div class="row">
+                    <p class="text-light text-center border-bottom border-2 my-2">Back to top</p>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center bg-dark">
+            <div class="col-lg-4 text-center">
+                <h3 class="text-light">
+                    Get to know us
+                </h3>
+            </div>
+            <div class="col-lg-4 text-center">
+                <h3 class="text-light">
+                    Payment products
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
