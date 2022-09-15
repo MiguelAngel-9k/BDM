@@ -15,10 +15,10 @@ for(let i = 0; i < 18 ; i++){
         desc: 'Some quick example text to build on the card title and make up the bulk of the',
         link: '#',
         text:{
-            href: '#',
-            text: 'Show more',
+            href: 'product.html',
+            text: 'Ver mas',
             tColor: 'light',
-            color: 'primary'
+            color: 'success'
         }
     })
     

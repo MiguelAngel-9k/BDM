@@ -1,0 +1,189 @@
+:root{
+    --main-color: #2e2e2e;
+    --secondary-color: #6d6d6d;
+    --light-color: #d2d2d2;
+    --sucess-color: #0F3560;
+    --success-light-color: #2078BE;
+    --good-color: #76B179;
+}
+
+/* BACKGROUND */
+.bg-primary{
+    background-color: var(--main-color) !important;
+}
+
+.bg-success{
+    background-color: var(--sucess-color) !important;
+}
+
+.bg-secondary{
+    background-color: var(--secondary-color) !important;
+}
+
+.bg-good{
+    background-color: var(--good-color);
+}
+
+/* BORDERS */
+.border-success{
+    border-color: var(--sucess-color) !important;
+}
+
+/* TEXT */
+.text-primary{
+    color: var(--light-color) !important;
+}
+
+.text-success{
+    color: var(--sucess-color) !important;
+}
+
+.text-good{
+    color: var(--good-color);
+}
+
+a.link{
+    text-decoration: none;
+    color: var(--success-light-color);
+}
+
+a.link:hover{
+    font-size: 18px;
+}
+
+/* FORMS */
+label.form-label{
+    color: var(--light-color) !important;
+}
+
+input.form-control{
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    border: none;
+}
+
+input.form-control::placeholder{
+    color: var(--light-color);
+}
+
+input[type="checkbox"].form-check-label{
+    color: var(--light-color);
+}
+
+textarea.form-control{
+    background-color: var(--secondary-color);
+    border: none;
+    color: var(--light-color);
+}
+
+textarea.form-control::placeholder{
+    color: var(--light-color);
+}
+
+textarea.form-control:focus{
+    background-color: var(--light-color);
+}
+
+.btn{
+    border: none;
+}
+
+.btn-success-light{
+    background-color: var(--success-light-color) !important;
+}
+
+.btn-success{
+    background-color: var(--sucess-color) !important;
+}
+
+input[type="submit"].btn-success{
+    background-color: var(--sucess-color);
+    color: var(--light-color);
+}
+
+input.form-control:focus{
+    background-color: var(--light-color);
+}
+
+nav input[type="search"]{
+    background-color: var(--main-color);
+    color: var(--light-color);
+}
+
+nav button[type="submit"]{
+    color: var(--success-color);
+}
+
+nav button[type="submit"]:hover{
+    color: var(--success-light-color);
+    font-size: 18px;
+}
+
+/* OTHERS */
+.profile-name{
+    color: var(--light-color);
+}
+
+.profile-name:hover{
+    color: var(--light-color);
+}
+
+/* WISH LISTS */
+.list-group-item{
+    background-color: transparent;
+    border: none;
+}
+
+.list-group-item a{
+    color: var(--light-color);
+    text-decoration: none;
+}
+
+.list-group-item:hover{
+    border-bottom: 5px solid var(--success-light-color);
+}
+
+.list-group-item img:hover{
+    transform: scale(1.2);
+}
+
+/* CARDS */
+.card{
+    background-color:  var(--secondary-color);
+    color :var(--light-color)
+}
+
+
+/* DROPDOWNS */
+.dropdown-menu{
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+}
+
+.dropdown-menu a:hover{
+    background-color: var(--success-light-color);
+    color: var(--light-color);
+}
+
+.privacy{
+    font-style: italic;
+    padding: 0px;
+    margin: 0px;
+}
+
+.wish-object{
+    cursor: pointer;
+}
+
+.wish-object:hover{
+    background-color: var(--sucess-color);
+}
+
+a.wish-object{
+    text-decoration: none;
+}
+
+img.product-thumbnail:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
