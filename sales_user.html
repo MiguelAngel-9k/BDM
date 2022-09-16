@@ -156,6 +156,10 @@
                                 Pefil</a>
                         </li>
                         <li class="list-group-item">
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#carritoModal">
+                                Carrito</a>
+                        </li>
+                        <li class="list-group-item">
                             <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addProduct">
                                 Agregar producto
                             </a>
@@ -397,7 +401,8 @@
 
     <!-- AGREGAR CATEGORIA -->
     <!-- MODAL -->
-    <div class="modal fade" id="addCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal fade" id="addCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="addCategoryLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark text-primary">
                 <div class="modal-header">
@@ -416,6 +421,55 @@
                             <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARRITO DE COMPRAS -->
+    <!-- MODAL -->
+    <div class="modal fade" id="carritoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="carritoModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content bg-dark text-primary">
+                <div class="modal-header">
+                    <h3 class="modal-title text-center" id="carritoLabel">Carrito de compras</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-light table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gameboy advance</td>
+                                <td>$15.99</td>
+                                <td>Video Games</td>
+                                <td>10/05/2022</td>
+                            </tr>
+                            <tr>
+                                <td>Gameboy advance</td>
+                                <td>$15.99</td>
+                                <td>Video Games</td>
+                                <td>10/05/2022</td>
+                            </tr>
+                            <tr>
+                                <td>Gameboy advance</td>
+                                <td>$15.99</td>
+                                <td>Video Games</td>
+                                <td>10/05/2022</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-success">Comprar</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -463,7 +517,7 @@
                                     <option value="1">Calzado</option>
                                     <option value="2">Tecnologia</option>
                                     <option value="3">Electronica</option>
-                                  </select>
+                                </select>
                             </div>
                             <div class="m-2 col-12">
                                 <label for="pDesc" class="form-label">Mas informacion acerca</label>
