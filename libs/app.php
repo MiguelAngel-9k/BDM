@@ -2,20 +2,25 @@
 
 class App{
 
-    private static $app = null;
-    public static $counter = 0;
 
     private function __construct(){
-        App::$counter++;
-        echo "Constructor de App \n Veces construida: ".App::$counter;
     }
 
     public static function Init_one(){
+        
+        //OBTENGO LA URL Y SE DESGLOZA
+        $url = isset($_GET['dir']) ? $_GET['dir'] : null;
+        $url = trim($url, '/');
+        $url = explode('/', $url);
 
-        if(App::$app == null)
-            App::$app = new App();
+        $controller = !empty($url[0]) ? $url[0] : null;
 
-        return App::$app;
+        if($controller == null){
+            // var_dump(empty($url[0]));
+            include_once "controllers/user.controller.php";
+            $controller = new UserController();
+        }
+        
 
     }
 
