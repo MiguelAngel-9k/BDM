@@ -8,7 +8,10 @@
 
 */
 class UserController{
+    
     public function __construct(){
+
+
         
         session_start();
         if(!isset($_SESSION['UMAIL'])){
@@ -18,6 +21,21 @@ class UserController{
 
         require "views/user/landing.php";
         return;
+
+    }
+
+    public function newUser(email, nickname, pwd, name){
+
+        /* 
+                TODO
+
+            .- VALIDAR EL CORREO
+            .- VALIDAR LA CONTRASENIA
+            .- VALIDAR EL PASSWORD
+            .- VALIDAR EL NOMBRE
+
+
+        */
 
     }
 }
