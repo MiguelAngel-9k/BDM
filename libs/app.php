@@ -13,10 +13,8 @@ class App{
         $url = trim($url, '/');
         $url = explode('/', $url);
 
-        // $controller = !empty($url[0]) ? $url[0] : null;
 
-        if(empty($url[0])){
-            // var_dump(empty($url[0]));
+        if(empty($url[0])){ //CONTROLADOR
             include_once "controllers/object.controller.php";
             $controller = new ObjectController();
             return;
@@ -25,8 +23,22 @@ class App{
             include_once "controllers/".$url[0].".controller.php";
             $controller = new $url[0]();
             
-            if(empty($url[1])){
-                
+            if(!empty($url[1])){ //METODO
+
+                if(method_exists($controller, $url[1])){ //SI EL METODO EXISTE
+                    
+                    if(isset($url[2])){ //ARGS
+
+                        
+                        
+                    }else{ //NO ARGS
+                    }
+
+                    return;
+                }
+
+                echo 'Metodo no existe';
+
             }
         }
 

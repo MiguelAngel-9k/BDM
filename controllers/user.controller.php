@@ -7,18 +7,9 @@
     3.- DE NO SER ASI REDIRIGIR A REGISTER.
 
 */
-echo 'User controller class';
 class User{
     
     public function __construct(){
-
-
-        
-        session_start();
-        if(!isset($_SESSION['UMAIL'])){
-            require "views/user/register.php";
-            // return;
-        }
 
         // require "views/user/landing.php";
         return;
@@ -26,6 +17,7 @@ class User{
     }
 
     public function register(){
+
 
         /* 
                 TODO
@@ -38,14 +30,16 @@ class User{
 
         */
 
-        echo $this->existsPOST(array('email', 'nickname', 'pwd', 'name'));
+        echo 'Register user';
+
+        $this->existsPOST(array('email', 'nickname', 'pwd', 'name'));
 
     }
 
     private function existsPOST($keys){
         foreach($keys as $key){
             if(!isset($_POST[$key])){
-                return `Missing {$key}`;
+                echo `Missing {$key}`;
                 break;
             }
         }
@@ -53,5 +47,3 @@ class User{
         return;
     }
 }
-
-?>
