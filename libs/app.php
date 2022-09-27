@@ -9,14 +9,14 @@ class App{
     public static function Init_one(){
         
         //OBTENGO LA URL Y SE DESGLOZA
-        $url = isset($_GET['url']) ? $_GET['url'] : null;
+        $url = isset($_GET[constant('URL')]) ? $_GET[constant('URL')] : null;
         $url = trim($url, '/');
         $url = explode('/', $url);
 
 
         if(empty($url[0])){ //CONTROLADOR
             include_once "controllers/object.controller.php";
-            $controller = new ObjectController();
+            $controller = new Product();
             return;
         }else{
 
@@ -29,9 +29,10 @@ class App{
                     
                     if(isset($url[2])){ //ARGS
 
-                        
+                        var_dump(array_slice($url, 2));
                         
                     }else{ //NO ARGS
+                        $controller->{$url[1]}();
                     }
 
                     return;

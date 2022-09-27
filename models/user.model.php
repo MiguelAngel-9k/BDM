@@ -3,25 +3,27 @@
 class UserModel{
 
     private $email;
+    private $name;
     private $nickname;
     private $pwd;
-    private $name;
-    
+
     public function __construct(){
-        
+
     }
 
-    public function setAll($data = []){
-
+    public function setAll($data=[]){
         $this->email = $data['email'];
-        $this->nickname = $data['nickname'];
-        $this->pwd = $data['pwd'];
         $this->name = $data['name'];
-
-        return;
-
+        $this->nickname = $data['nickname'];
     }
 
+    public function setEmail($email){
+        $this->email = $email;
+    }
+
+    public function setPwd($pwd){
+        $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
+    }
 }
 
 ?>

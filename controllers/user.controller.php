@@ -1,12 +1,5 @@
 <?php
-/* 
-        TODO
 
-    1.- REVISAR SI YA HAY UNA SESION INICIADA.
-    2.- DE SER ASI REDIRIGIR A LANDING PAGE.
-    3.- DE NO SER ASI REDIRIGIR A REGISTER.
-
-*/
 class User{
     
     public function __construct(){
@@ -17,33 +10,80 @@ class User{
     }
 
     public function register(){
+       if($this->existsPOST(array('email', 'nickname', 'pwd', 'name'))){
+            if($this->validData($_POST)){
+                $user = new UserModel();
+                $user->setAll($_POST);
+                $user->setPwd($_POST['pwd']);
+            }
+       }
+    }
 
+    public function login(){
+        if($this->existsPOST(array('email', 'pwd'))){
+            if($this->validData($_POST)){
+                $user = new UserModel();
+                $user->login($_POST['email'], $_POST['pwd']);
+            }
+        }
+    }
 
-        /* 
-                TODO
+    private function isName($name){
+        if(!preg_match(constant('REGX_NME'), $name)){
+            echo "Nombre no valido \n";
+            return false;
+        }
 
-            .- VALIDAR EL CORREO
-            .- VALIDAR LA CONTRASENIA
-            .- VALIDAR EL PASSWORD
-            .- VALIDAR EL NOMBRE
+        return true;
+    }
 
+    private function isPwd($pwd){
+        if(!preg_match(constant('REGX_PWD'), $pwd)){
+            echo "Constrasenia no valida \n";
+            return false;
+        }
 
-        */
+        return true;
+    }
 
-        echo 'Register user';
+    private function isEmail($email){
+        if(!preg_match(constant('REGX_EMAIL'), $email)){
+            echo "Correo no valido \n";
+            return false;
+        }
 
-        $this->existsPOST(array('email', 'nickname', 'pwd', 'name'));
+        return true;
+    }
 
+    private function isNickname($nickname){
+        if(!preg_match(constant('REGX_NKNAME'), $nickname)){
+            echo "Apodo no valido \n";
+            return false;
+        }
+
+        return true;
     }
 
     private function existsPOST($keys){
         foreach($keys as $key){
             if(!isset($_POST[$key])){
-                echo `Missing {$key}`;
-                break;
+                return false;
             }
         }
 
-        return;
+        return true;
+    }
+
+    private function validData($data=[]){
+
+        foreach($data as $key => $d){
+            $valid = "is{$key}";
+            if(!$this->{$valid}($d)){
+                return false;
+            }
+        }
+
+        return true;
+
     }
 }
