@@ -8,6 +8,12 @@ class User extends Controller
 
         parent::__construct();
 
+        session_start();
+
+        if(isset($_SESSION['user'])){
+            
+        }
+
         //PAGINA POR DEFECTO ES LA DE PERFIL
         // require "views/user/landing.php";
         return;
