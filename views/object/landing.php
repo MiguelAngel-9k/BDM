@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    Landing
+    <h1>Landing</h1>
+    <?php  var_dump($data) ?>
 </body>
 </html>

@@ -24,6 +24,17 @@ class UserModel{
     public function setPwd($pwd){
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
+
+    public function login($email, $pwd){
+        echo "LOGED IN \n";
+        //USE SP SESSION ON DATABASE WITH OPTION REGISTER
+    }
+
+    public function register(){
+        echo 'REGISTER NEW ACCOUNT';
+        //USE SP SESSION ON DATABAS WITH OPTION LOGIN
+    }
+
 }
 
 ?>
