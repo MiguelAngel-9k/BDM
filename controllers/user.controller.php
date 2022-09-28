@@ -8,20 +8,8 @@ class User extends Controller
 
         parent::__construct();
 
-        session_start();
-
-        if(isset($_SESSION['user'])){
-            
-        }
-
         //PAGINA POR DEFECTO ES LA DE PERFIL
         // require "views/user/landing.php";
-        return;
-    }
-
-    public function render($url, $data=[]){
-        $view = "views/user/$url.php";
-        require $view;
     }
 
     public function register()
@@ -41,7 +29,10 @@ class User extends Controller
         if ($this->existsPOST(array('email', 'pwd'))) {
             if ($this->validData($_POST)) {
                 $user = new UserModel();
-                $user->login($_POST['email'], $_POST['pwd']);
+                $data = $user->login($_POST['email'], $_POST['pwd']);
+                if(!empty($data)){
+                    // $this->render('profile', $data);
+                }
             }
         }
     }

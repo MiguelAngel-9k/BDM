@@ -17,7 +17,7 @@ class App{
         if(empty($url[0])){ //CONTROLADOR
             include_once "controllers/object.controller.php";
             $controller = new Product();
-            $controller->render('landing');
+            // $controller->render('landing');
             return;
         }else{
 

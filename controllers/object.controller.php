@@ -8,11 +8,6 @@ class Product extends Controller{
         return;
     }
 
-    public function render($url, $data=[]){
-        $view = "views/object/$url.php";
-        require $view;
-    }
-
     public function newProduct(){
 
 
