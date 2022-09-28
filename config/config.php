@@ -11,4 +11,6 @@ define('SNAME', 'localhost');
 define('UNAME', 'root');
 define('DNAME', 'MERCADONA_DB');
 define('PWD',  'quienSoy?Miguel9k');
+
+define('API', 'http://localhost/');
 ?>

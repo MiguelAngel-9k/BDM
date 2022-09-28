@@ -41,6 +41,8 @@ class App{
 
                 echo 'Metodo no existe';
 
+            }else{
+                $controller->render();
             }
         }
 

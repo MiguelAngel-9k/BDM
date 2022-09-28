@@ -86,4 +86,8 @@ class UserModel
         echo 'REGISTER NEW ACCOUNT';
         //USE SP SESSION ON DATABAS WITH OPTION LOGIN
     }
+
+    public function getEmail(){
+        return $this->email;
+    }
 }
