@@ -7,13 +7,13 @@ class Controller
     {
         session_start();
 
-        if (!isset($_SESSION['USER'])) {
-            $this->render('user/register');
-            return;
+        if (!isset($_SESSION['USER'])){
+                $this->render('user/register');
+            // header('location: http://10.52.2.61/user/register');
         }
     }
 
-    public function render($path, $data = [])
+    private function render($path, $data = [])
     {
 
         if (!empty($path)) {

@@ -12,8 +12,9 @@ class User extends Controller
         // require "views/user/landing.php";
     }
 
-    public function render(){
-        
+    public function render($path, $data = [])
+    {
+        require 'views/user/profile.php';
     }
 
     public function register()
@@ -32,12 +33,16 @@ class User extends Controller
     {
         if ($this->existsPOST(array('email', 'pwd'))) {
             if ($this->validData($_POST)) {
-                $user = new UserModel();
+                /*  $user = new UserModel();
                 $data = $user->login($_POST['email'], $_POST['pwd']);
                 if(!empty($data)){
                     $_SESSION['USER'] = $user->getEmail();
-                    header("location:user" );
-                }
+                    $this->render('');
+                } */
+                $_SESSION['USER'] = $_POST['email'];
+                $this->render('');
+            }else{
+                echo 'Info no valida';
             }
         }
     }

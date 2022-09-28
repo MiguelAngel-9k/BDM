@@ -8,6 +8,10 @@ class Product extends Controller{
         return;
     }
 
+    public function render($path, $data=[]){
+        echo 'product controller render';
+    }
+
     public function newProduct(){
 
 
