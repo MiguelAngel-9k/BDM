@@ -5,15 +5,10 @@ class Controller
 
     public function __construct()
     {
-        session_start();
 
-        if (!isset($_SESSION['USER'])) {
-            $this->render('user/register');
-            return;
-        }
     }
 
-    public function render($path, $data = [])
+    private function render($path, $data = [])
     {
 
         if (!empty($path)) {

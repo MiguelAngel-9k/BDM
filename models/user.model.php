@@ -20,9 +20,8 @@ class UserModel
         try {
             $this->conn = new PDO("mysql:host=" . constant('SNAME') . ";dbname=" . constant('DNAME'), constant('UNAME'), constant('PWD'));
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo 'Connected successfully';
         } catch (PDOException $e) {
-            echo 'Connected failed: ' . $e->getMessage();
+            die('Connected failed: ' . $e->getMessage());
         }
     }
 
@@ -31,6 +30,38 @@ class UserModel
         $this->email = $data['email'];
         $this->name = $data['name'];
         $this->nickname = $data['nickname'];
+    }
+
+    public function get($email)
+    {
+        try {
+            $query = $this->conn->prepare("CALL SP_USUARIO(:email, '', '', '', '', '', '', 'GET')");
+            $query->execute([
+                'email' => $email
+            ]);
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+
+            $this->email = $result['CORREO'];
+            $this->nickname = $result['APODO'];
+            $this->img = $result['IMGN'];
+            $this->rol = $result['ROL'];
+            $this->name = $result['NOMBRE'];
+            $this->gender = $result['GENERO'];
+            $this->priv = $result['PRIV'];
+
+            return array(
+                'email' => $this->email,
+                'nickname' => $this->nickname,
+                'img' => $this->img,
+                'rol' => $this->rol,
+                'name' => $this->name,
+                'gender' => $this->gender,
+                'priv' => $this->priv
+            );
+        } catch (PDOException $e) {
+            echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
+            return;
+        }
     }
 
     public function setEmail($email)
@@ -47,7 +78,7 @@ class UserModel
     {
 
         try {
-            $query = $this->conn->prepare( "CALL SP_SESSION(:email, :pwd, '', '', 'INI')");
+            $query = $this->conn->prepare("CALL SP_SESSION(:email, :pwd, '', '', 'INI')");
 
             $query->execute([
                 'email' => $email,
@@ -63,7 +94,7 @@ class UserModel
             $this->rol = $result['ROL'];
             $this->name = $result['NOMBRE'];
             $this->gender = $result['GENERO'];
-            $this->priv =$result['PRIV'];
+            $this->priv = $result['PRIV'];
 
             return array(
                 'email' => $this->email,
@@ -74,20 +105,72 @@ class UserModel
                 'gender' => $this->gender,
                 'priv' => $this->priv
             );
-
         } catch (PDOException $e) {
-            echo 'Error al buscar al usuario '.$e->getMessage()."\n";
+            echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
             return;
         }
     }
 
     public function register()
     {
-        echo 'REGISTER NEW ACCOUNT';
-        //USE SP SESSION ON DATABAS WITH OPTION LOGIN
+        try {
+            $query = $this->conn->prepare("CALL SP_SESSION(:EMAIL, :PWD, :NICKNAME, :NAME, 'REG')");
+            $query->execute([
+                'EMAIL' => $this->email,
+                'PWD' => $this->pwd,
+                'NICKNAME' => $this->nickname,
+                'NAME' => $this->name
+            ]);
+
+            return;
+        } catch (PDOException $e) {
+            echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
+            return;
+        }
     }
 
-    public function getEmail(){
+    public function edit($email, $name, $nickname, $img){
+        try {
+            $query = $this->conn->prepare("CALL SP_USUARIO(:email, :nickname, '', :img, :name, :gnder, '', 'EDT' )");
+            $query->execute([
+                'email' => $email,
+                'nickname' => $nickname,
+                'img' => $img,
+                'name' => $name,
+                'gnder' => true
+            ]);
+            return;
+        } catch (PDOException $e) {
+            echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
+            return;
+        }
+    }
+
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getEmail()
+    {
         return $this->email;
+    }
+
+    public function serialize()
+    {
+        return array(
+            'email' => $this->email,
+            'nickname' => $this->nickname,
+            'img' => $this->img,
+            'rol' => $this->rol,
+            'name' => $this->name,
+            'gender' => $this->gender,
+            'priv' => $this->priv
+        );
     }
 }

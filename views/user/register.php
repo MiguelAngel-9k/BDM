@@ -15,31 +15,27 @@
             <div class="col align-self-center">
                 <div class="row">
                     <h2 class="text-start text-primary">Create Account</h2>
-                    <form class="row g-3">
+                    <form action="http://localhost/user/register" method="POST" class="row g-3">
                         <div class="col-12">
-                            <label for="usremail" class="form-label">Email</label>
-                            <input type="email" name="usremail" id="usremail" class="form-control"
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" id="email" class="form-control"
                                 placeholder="email@example.com">
                         </div>
                         <div class="col-12">
-                            <label for="usrnick" class="form-label">User Nickname</label>
-                            <input type="text" name="usrnick" id="usrnick" class="form-control">
+                            <label for="nickname" class="form-label">User Nickname</label>
+                            <input type="text" name="nickname" id="nickname" class="form-control">
                         </div>
                         <div class="col-12">
-                            <label for="usrpwd" class="form-label">Password</label>
-                            <input type="password" name="usrpwd" id="usrpwd" class="form-control">
+                            <label for="pwd" class="form-label">Password</label>
+                            <input type="password" name="pwd" id="pwd" class="form-control">
                         </div>
-                        <div class="col-6">
-                            <label for="usrname" class="form-label">Name</label>
-                            <input type="text" name="usrname" id="usrname" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <label for="usrlastname" class="form-label">Last name</label>
-                            <input type="text" name="usrlastname" id="usrlastname" class="form-control">
+                        <div class="col-12">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" id="name" class="form-control">
                         </div>
                         <div class="col d-grid gap-2">
-                            <!-- <input type="submit" value="Submit" id="create" class="btn btn-success" onclick="valid()"> -->
-                            <a class="btn btn-success" id="usrpwd" onclick="valid()">Registrate</a>
+                            <input type="submit" value="Submit" id="create" class="btn btn-success">
+                            <!-- <a class="btn btn-success" id="usrpwd" onclick="valid()">Registrate</a> -->
                         </div>
                     </form>
                 </div>
@@ -75,7 +71,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form action="<?php echo constant('API').'/user/login' ?>" class="row g-3">
+                            <form action="<?php echo constant('API').'user/login' ?>" method="POST" class="row g-3">
                                 <div class="col-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" name="email" id="email" class="form-control"
