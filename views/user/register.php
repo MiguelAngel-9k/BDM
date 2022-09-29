@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-
-    <!-- BOOTSTRAP CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <!-- OWN CSS -->
-    <link rel="stylesheet" href='http://10.52.3.61/captura/bdm/assets/css/reset.css'>
-</head>
+<?php include 'partials/head.php' ?>
 
 <body class="bg-primary">
 
@@ -29,30 +15,26 @@
             <div class="col align-self-center">
                 <div class="row">
                     <h2 class="text-start text-primary">Create Account</h2>
-                    <form class="row g-3">
+                    <form action="http://localhost/user/register" method="POST" class="row g-3">
                         <div class="col-12">
-                            <label for="usremail" class="form-label">Email</label>
-                            <input type="email" name="usremail" id="usremail" class="form-control" placeholder="email@example.com">
-                        </div>
-                        <div class="col-12">
-                            <label for="usrnick" class="form-label">User Nickname</label>
-                            <input type="text" name="usrnick" id="usrnick" class="form-control">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="email@example.com">
                         </div>
                         <div class="col-12">
-                            <label for="usrpwd" class="form-label">Password</label>
-                            <input type="password" name="usrpwd" id="usrpwd" class="form-control">
+                            <label for="nickname" class="form-label">User Nickname</label>
+                            <input type="text" name="nickname" id="nickname" class="form-control">
                         </div>
-                        <div class="col-6">
-                            <label for="usrname" class="form-label">Name</label>
-                            <input type="text" name="usrname" id="usrname" class="form-control">
+                        <div class="col-12">
+                            <label for="pwd" class="form-label">Password</label>
+                            <input type="password" name="pwd" id="pwd" class="form-control">
                         </div>
-                        <div class="col-6">
-                            <label for="usrlastname" class="form-label">Last name</label>
-                            <input type="text" name="usrlastname" id="usrlastname" class="form-control">
+                        <div class="col-12">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" name="name" id="name" class="form-control">
                         </div>
                         <div class="col d-grid gap-2">
-                            <!-- <input type="submit" value="Submit" id="create" class="btn btn-success" onclick="valid()"> -->
-                            <a class="btn btn-success" id="usrpwd" onclick="valid()">Registrate</a>
+                            <input type="submit" value="Submit" id="create" class="btn btn-success">
+                            <!-- <a class="btn btn-success" id="usrpwd" onclick="valid()">Registrate</a> -->
                         </div>
                     </form>
                 </div>
@@ -88,7 +70,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form action="<?php echo constant('API') . 'user/login'; ?>" method="POST" class="row g-3">
+                            <form id="login" action="<?php echo constant('API') . 'user/login' ?>" method="POST" class="row g-3">
                                 <div class="col-12">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" name="email" id="email" class="form-control" placeholder="email@example.com">
@@ -98,8 +80,8 @@
                                     <input type="password" name="pwd" id="pwd" class="form-control">
                                 </div>
                                 <div class="col d-grid gap-2">
-                                    <input type="submit" value="Submit" id="create" class="btn btn-success">
-                                    <!-- <a class="btn btn-success" id="usrpwd" onclick="valid()">Inicar sesión</a> -->
+                                    <!-- <input type="submit" value="Submit" id="create" class="btn btn-success"> -->
+                                    <a class="btn btn-success" id="btnLogin">Inicar sesión</a>
 
                                 </div>
                             </form>
@@ -116,6 +98,31 @@
             </div>
         </div>
     </div>
-    <!-- BOOTSTRAP JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        const loginBtn = document.querySelector('#btnLogin');
+
+        
+
+        const login = ()=>{
+            const form = document.querySelector('#login');
+
+            let data = new FormData(form);
+
+            console.log(data);
+        }
+
+        document.addEventListener('click', (e) => {
+            switch (e.target.id) {
+                case 'btnLogin':
+                        login();
+                    break;
+            
+                default:
+                    break;
+            }
+        });
+    </script>
+
+    <?php include 'partials/tail.php' ?>
 </body>

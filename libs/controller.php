@@ -5,12 +5,7 @@ class Controller
 
     public function __construct()
     {
-        session_start();
 
-        if (!isset($_SESSION['USER'])){
-                $this->render('user/register');
-            // header('location: http://10.52.2.61/user/register');
-        }
     }
 
     private function render($path, $data = [])

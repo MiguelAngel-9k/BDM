@@ -15,10 +15,9 @@ class App{
 
 
         if(empty($url[0])){ //CONTROLADOR
-            include_once "controllers/object.controller.php";
-            $controller = new Product();
+            include_once "controllers/user.controller.php";
+            $controller = new User();
             $controller->render('');
-            // $controller->render('landing');
             return;
         }else{
 
@@ -43,8 +42,7 @@ class App{
                 echo 'Metodo no existe';
 
             }else{
-                // $controller->render('');
-                echo 'No method render';
+                echo "no controlador";
             }
         }
 

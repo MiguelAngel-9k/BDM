@@ -12,5 +12,5 @@ define('UNAME', 'root');
 define('DNAME', 'MERCADONA_DB');
 define('PWD',  'quienSoy?Miguel9k');
 
-define('API', 'http://localhost/');
+define('API', 'http://10.52.3.61/captura/bdm/');
 ?>
