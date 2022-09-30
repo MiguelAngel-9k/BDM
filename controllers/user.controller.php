@@ -63,12 +63,15 @@ class User extends Controller
 
     public function login()
     {
+        session_start();
+
         if ($this->existsPOST(array('email', 'pwd'))) {
             if ($this->validData($_POST)) {
-                /*  $user = new UserModel();
+                $user = new UserModel();
                 $data = $user->login($_POST['email'], $_POST['pwd']);
                 if (!empty($data)) {
                     $_SESSION['USER'] = $user->getEmail();
+                    // var_dump($data);
                     header("location: http://localhost/user/profile");
                 }
             }
@@ -78,10 +81,10 @@ class User extends Controller
     public function Edit(){
         if($this->existsPOST(array('nickname', 'name', 'email'))){
             if($this->isName($_POST['name']) && $this->isNickname($_POST['nickname'])){
-                $imgData = addslashes(file_get_contents($_FILES['avatar']['tmp_name']));
+                // $imgData = addslashes(file_get_contents($_FILES['avatar']['tmp_name']));
                 $user = new UserModel();
-                $user->edit($_POST['email'], $_POST['name'], $_POST['nickname'], $imgData);
-                // header('location: http://localhost/user/profile');
+                $user->edit($_POST['email'], $_POST['name'], $_POST['nickname'], $_POST['gender']);
+                header('location: http://localhost/user/profile');
             }
         }
     }

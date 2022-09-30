@@ -43,7 +43,7 @@ class UserModel
 
             $this->email = $result['CORREO'];
             $this->nickname = $result['APODO'];
-            $this->img = $result['IMGN'];
+            $this->img = $result['IMG'];
             $this->rol = $result['ROL'];
             $this->name = $result['NOMBRE'];
             $this->gender = $result['GENERO'];
@@ -78,33 +78,42 @@ class UserModel
     {
 
         try {
-            $query = $this->conn->prepare("CALL SP_SESSION(:email, :pwd, '', '', 'INI')");
+            $query = $this->conn->prepare("CALL SP_SESSION(:email, '', '', '', 'INI')");
 
             $query->execute([
-                'email' => $email,
-                'pwd' => $pwd
+                'email' => $email
             ]);
 
 
             $result = $query->fetch(PDO::FETCH_ASSOC);
 
-            $this->email = $result['CORREO'];
-            $this->nickname = $result['APODO'];
-            $this->img = $result['IMGN'];
-            $this->rol = $result['ROL'];
-            $this->name = $result['NOMBRE'];
-            $this->gender = $result['GENERO'];
-            $this->priv = $result['PRIV'];
+            if($query->rowCount() > 0){
+                if(password_verify($pwd, $result['PWD'])){
+                    $this->email = $result['CORREO'];
+                    $this->nickname = $result['APODO'];
+                    $this->img = $result['IMGN'];
+                    $this->rol = $result['ROL'];
+                    $this->name = $result['NOMBRE'];
+                    $this->gender = $result['GENERO'];
+                    $this->priv = $result['PRIV'];
 
-            return array(
-                'email' => $this->email,
-                'nickname' => $this->nickname,
-                'img' => $this->img,
-                'rol' => $this->rol,
-                'name' => $this->name,
-                'gender' => $this->gender,
-                'priv' => $this->priv
-            );
+                    return array(
+                        'email' => $this->email,
+                        'nickname' => $this->nickname,
+                        'img' => $this->img,
+                        'rol' => $this->rol,
+                        'name' => $this->name,
+                        'gender' => $this->gender,
+                        'priv' => $this->priv
+                    );
+                }
+
+                return [];
+            }
+
+            return [];
+
+
         } catch (PDOException $e) {
             echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
             return;
@@ -129,15 +138,15 @@ class UserModel
         }
     }
 
-    public function edit($email, $name, $nickname, $img){
+    public function edit($email, $name, $nickname, $gender){
         try {
-            $query = $this->conn->prepare("CALL SP_USUARIO(:email, :nickname, '', :img, :name, :gnder, '', 'EDT' )");
+
+            $query = $this->conn->prepare("CALL SP_USUARIO(:email, :nickname, '', '', :name, :gnder, '', 'EDT' )");
             $query->execute([
                 'email' => $email,
                 'nickname' => $nickname,
-                'img' => $img,
                 'name' => $name,
-                'gnder' => true
+                'gnder' => $gender
             ]);
             return;
         } catch (PDOException $e) {

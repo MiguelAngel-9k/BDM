@@ -1,6 +1,6 @@
 <?php include 'partials/head.php' ?>
 
-<?php $user = $data; ?>
+<?php $user = $data;?>
 
 <body class="bg-primary">
 
@@ -42,7 +42,8 @@
                     </li>
                     <li class="nav-item">
                         <a href="sales_user.html" class="nav-link">
-                            <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img'])?>'" class="rounded-circle mx-auto d-block">
+                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,'.base64_encode($user['img']).'"/>'; ?>
+                            <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block">
                         </a>
                     </li>
                 </ul>
@@ -54,7 +55,7 @@
     <div class="mt-5 container-fluid">
         <div class="row">
             <div class="col-lg-2 mx-4">
-                <img width="200" height="200" src="data:image/png;base64,'<?php echo base64_encode($user['img'])?>'" alt="User image" class="rounded-circle mx-auto d-block">
+                <img width="200" height="200" src="data:image/png;base64,'<?php echo base64_encode($data['img']) ?>'" alt="User image" class="rounded-circle mx-auto d-block">
             </div>
             <div class="col m-4">
                 <div class="row">
@@ -135,6 +136,12 @@
                         <li class="list-group-item">
                             <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editProfileModal">Editar
                                 Pefil</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editProfileModal">Cambiar avatar</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editProfileModal">Configuracion de cuenta</a>
                         </li>
                         <li class="list-group-item">
                             <a href="#" class="" data-bs-toggle="modal" data-bs-target="#carritoModal">
@@ -338,28 +345,36 @@
                         <div class="col">
                             <form action="http://localhost/user/edit" method="POST" class="row g-3" enctype="multipart/form-data">
                                 <div class="col-12">
-                                    <input type="hidden" name="email" id="nickname" class="form-control" value="<?php echo $data['nickname']?>">
+                                    <input type="hidden" name="email" id="email" class="form-control" value="<?php echo $data['email'] ?>">
                                 </div>
                                 <div class="col-12">
                                     <label for="nickname" class="form-label">User Nickname</label>
-                                    <input type="text" name="nickname" id="nickname" class="form-control" value="<?php echo $data['nickname']?>">
+                                    <input type="text" name="nickname" id="nickname" class="form-control" value="<?php echo $data['nickname'] ?>">
                                 </div>
                                 <div class="col-12">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="<?php echo $data['name']?>">
+                                    <input type="text" name="name" id="name" class="form-control" value="<?php echo $data['name'] ?>">
                                 </div>
                                 <div class="m-2 col-12 align-self-center">
                                     <div class="row">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="gender" id="gender">
-                                            <label class="form-check-label" for="gender">Genero</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php echo $user['gender'] == 1 ? "checked" : "" ;?>>
+                                            <label class="form-check-label" for="male">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="female" value="female" <?php echo $user['gender'] == 0 ? "checked" : "" ;?>>
+                                            <label class="form-check-label" for="female">
+                                                Female
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                               <!--  <div class="col-12">
                                     <label for="avatar" class="form-label">Change avatar Image</label>
                                     <input type="file" name="avatar" id="avatar" class="form-control">
-                                </div>
+                                </div> -->
                                 <div class="col d-grid gap-2">
                                     <input type="submit" value="Submit" id="create" class="btn btn-success">
                                 </div>

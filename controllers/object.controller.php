@@ -6,7 +6,7 @@ class Product extends Controller{
         parent:: __construct();
     }
 
-    public function render(){
+   /*  public function render(){
         $view = 'views/object/landing.php';
         if(file_exists($view)){
             require $view;
@@ -15,7 +15,7 @@ class Product extends Controller{
 
     public function render($path, $data=[]){
         echo 'product controller render';
-    }
+    } */
 
     public function newProduct(){
 

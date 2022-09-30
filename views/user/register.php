@@ -15,7 +15,7 @@
             <div class="col align-self-center">
                 <div class="row">
                     <h2 class="text-start text-primary">Create Account</h2>
-                    <form action="http://localhost/user/register" method="POST" class="row g-3">
+                    <form action="<?php echo constant('API')?>user/register" method="POST" class="row g-3">
                         <div class="col-12">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="email@example.com">
@@ -80,8 +80,8 @@
                                     <input type="password" name="pwd" id="pwd" class="form-control">
                                 </div>
                                 <div class="col d-grid gap-2">
-                                    <!-- <input type="submit" value="Submit" id="create" class="btn btn-success"> -->
-                                    <a class="btn btn-success" id="btnLogin">Inicar sesión</a>
+                                    <input type="submit" value="Submit" id="create" class="btn btn-success">
+                                    <!-- <a class="btn btn-success" id="btnLogin">Inicar sesión</a> -->
 
                                 </div>
                             </form>
