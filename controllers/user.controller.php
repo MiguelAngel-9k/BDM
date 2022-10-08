@@ -58,7 +58,14 @@ class User extends Controller
         $user = new UserModel();
         $user->get($_SESSION['USER']);
 
-        $this->render('user/profile',  $user->serialize());
+        $categories = new CategoryModel();
+
+        $data = array(
+            'USER' => $user->serialize(),
+            'CATEGOIRES' => $categories->getAll()
+        );
+
+        $this->render('user/profile',  $data);
     }
 
     public function login()
@@ -87,6 +94,26 @@ class User extends Controller
                 header('location: http://localhost/user/profile');
             }
         }
+    }
+
+    public function privacy(){
+        $post = file_get_contents("php://input");
+        $post = json_decode($post, true);
+
+        $msg = '';
+
+        if(isset($post['user']) && isset($post['mode'])){
+            $user = new UserModel();
+            $user->editPrivacy($post['user'], $post['mode']);
+            echo json_encode(array(
+                'privacy' => $post['mode']
+            ));
+            return;
+        }
+
+        echo json_encode(array(
+            'privacy' => 'Cannot change privacy account, try again'
+        ));
     }
 
     private function isName($name)

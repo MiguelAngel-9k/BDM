@@ -25,6 +25,25 @@ class UserModel
         }
     }
 
+    public function editPrivacy($user, $mode){
+
+        $privacy = $mode ? 'ON' : 'OFF';
+
+        try {
+            $query = $this->conn->prepare("CALL SP_USUARIO(:USUARIO, '', '', '', '', '', :PRIV, 'PRI')");
+            $query->execute([
+                'USUARIO' => $user,
+                'PRIV' => $privacy
+            ]);
+
+            if($query->rowCount() > 0){
+                return 'Privacy account changed';
+            }
+        } catch (PDOException $e) {
+            return 'Cannot turn edit privacy account, try again: '. $e->getMessage();
+        }
+    }
+
     public function setAll($data = [])
     {
         $this->email = $data['email'];

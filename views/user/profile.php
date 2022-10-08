@@ -1,6 +1,9 @@
 <?php include 'partials/head.php' ?>
 
-<?php $user = $data;?>
+<?php $user = $data['USER'];
+$categories = $data['CATEGOIRES'];
+// var_dump($user) 
+?>
 
 <body class="bg-primary">
 
@@ -42,13 +45,26 @@
                     </li>
                     <li class="nav-item">
                         <a href="sales_user.html" class="nav-link">
-                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,'.base64_encode($user['img']).'"/>'; ?>
+                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
                             <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block">
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
+    </nav>
+
+    <!-- CATEGOIRES NAVS -->
+    <nav class="nav">
+        <?php
+        foreach ($categories as $category) {
+        ?>
+            <a href='<?php echo constant('API') ?>category/get/<?php echo $category['ID'] ?>' class="nav-link">
+                <?php echo $category['NAME']; ?>
+            </a>
+        <?php
+        }
+        ?>
     </nav>
 
     <!-- USER INFORMATION -->
@@ -67,7 +83,7 @@
                         }
                         ?>
                     </h1>
-                    <small class="text-primary">
+                    <small id="user" class="text-primary">
                         <?php echo $user['email']; ?>
                     </small>
                 </div>
@@ -168,12 +184,18 @@
                         <li class="list-group-item">
                             <a href="purchase_report.html">Reporte de compras</a>
                         </li>
+                        <li class="list-group-item">
+                            <div class="text-light form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="privacy" <?php echo $user['priv'] == 1 ? "checked" : ""; ?>>
+                                <label class="form-check-label" for="privacy">Publico</label>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class="col m-2">
-                <p class="fs-1 fw-bold text-light text-center">Productos disponibles</p>
-                <div class="row justify-content-center">
+                <p id="wrapper-title" class="fs-1 fw-bold text-light text-center"><?php echo $user['priv'] == 1 ? 'Productos Disponibles' : 'Cuenta Privada' ?></p>
+                <div class="row justify-content-center <?php echo $user['priv'] == 1 ? 'd-flex' : 'd-none' ?>" id="wrapper">
                     <div class="col-lg-4 col-sm-6 col-12 col-md-4">
                         <div class="card rounded p-2 m-1" style="width:18rem;">
                             <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754237-MLA44715287415_012021-F.webp" alt="Imagen" class="card-img-top rounded">
@@ -358,20 +380,20 @@
                                 <div class="m-2 col-12 align-self-center">
                                     <div class="row">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php echo $user['gender'] == 1 ? "checked" : "" ;?>>
+                                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php echo $user['gender'] == 1 ? "checked" : ""; ?>>
                                             <label class="form-check-label" for="male">
                                                 Male
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gender" id="female" value="female" <?php echo $user['gender'] == 0 ? "checked" : "" ;?>>
+                                            <input class="form-check-input" type="radio" name="gender" id="female" value="female" <?php echo $user['gender'] == 0 ? "checked" : ""; ?>>
                                             <label class="form-check-label" for="female">
                                                 Female
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                               <!--  <div class="col-12">
+                                <!--  <div class="col-12">
                                     <label for="avatar" class="form-label">Change avatar Image</label>
                                     <input type="file" name="avatar" id="avatar" class="form-control">
                                 </div> -->
@@ -396,15 +418,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="<?php echo constant('API'); ?>category/add" method="POST" class="justify-content-center">
                         <div class="row">
+                            <input type="hidden" name="owner" value="<?php echo $user['email']; ?>">
                             <div class="m-2 col-12">
-                                <label for="category" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="category">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" name="name">
                             </div>
                         </div>
-                        <div class="d-grid gap-2">
+                        <div class="row">
+                            <div class="m-2 col-12">
+                                <label for="description" class="form-label">Descripcion</label>
+                                <input type="text" class="form-control" id="description" name="description">
+                            </div>
+                        </div>
+                        <div class="d-grid m-2 gap-2">
                             <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
+                            <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
                         </div>
                     </form>
                 </div>
@@ -519,6 +549,64 @@
 
     <?php include 'partials/tail.php' ?>
 
+    <script>
+
+        /* EMPAQUETAR FUNCIONALIDAD */
+        const URL = 'http://localhost'
+        const privacyCheck = document.querySelector('#privacy');
+
+        async function setPrivacy(data) {
+            try {
+                const response = await fetch(`${URL}/user/privacy`, {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                return response.json();
+            } catch {
+                return 'Cannot set privacy';
+            }
+        }
+
+        function privateAccount(){
+            const container = document.querySelector('#wrapper');
+            const containerTitle = document.querySelector('#wrapper-title');
+
+            container.classList.remove('d-flex');
+            container.classList.add('d-none');
+
+            containerTitle.textContent = 'Cuenta Privada'
+        }
+
+        function publicAccount(){
+            const container = document.querySelector('#wrapper');
+            const containerTitle = document.querySelector('#wrapper-title');
+
+            container.classList.remove('d-none');
+            container.classList.add('d-flex');
+
+            containerTitle.textContent = 'Productos Disponibles';
+        }
+
+        privacyCheck.addEventListener('change', (e) => {
+            if (e.target.id == 'privacy') {
+                setPrivacy({user: document.querySelector('#user').textContent.trim(), mode: e.target.checked})
+                    .then(res => {
+                        if(res.privacy){
+                            publicAccount();
+                        }else if(!res.privacy){
+                            privateAccount();
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    });
+            }
+        })
+    </script>
 </body>
 
 </html>
