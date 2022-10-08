@@ -2,7 +2,7 @@
 
 <?php $user = $data['USER'];
 $categories = $data['CATEGOIRES'];
-// var_dump($user) 
+var_dump($user)
 ?>
 
 <body class="bg-primary">
@@ -77,7 +77,7 @@ $categories = $data['CATEGOIRES'];
                 <div class="row">
                     <h1 class="d-flex text-primary border-bottom border-5 border-success p-2">
                         <?php
-                        echo $user['name'].'<p class="m-0 ms-1 p-0 fs-5 align-self-center"> ('.$user['nickname'].')</p>';
+                        echo $user['name'] . '<p class="m-0 ms-1 p-0 fs-5 align-self-center"> (' . $user['nickname'] . ')</p>';
                         /* if ($user['rol'] != 'V') {
                             echo '<p class="fs-6 fw-light">(Sale man)</p>';
                         } */
@@ -547,10 +547,95 @@ $categories = $data['CATEGOIRES'];
         </div>
     </div>
 
+    <?php if ($user['lg'] == 1) { ?>
+
+        <div class="modal fade" id="usr-img" data-bs-backdrop="static" aria-hidden="true" data-bs-keyboard="false" aria-labelledby="usr-img-modal" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="usr-img-modal">Vamos configurar tu cuenta en Mecadona!!</h1>
+                        <!-- <p>Comencemos con tu imagen, como los demas te reconoceran es muy importante.</p> -->
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                    </div>
+                    <div class="modal-body p-3">
+                        <div class="row">
+                            <h2 class="fs-5 p-3 border-bottom border-primary border-3">Comencemos con tu imagen, como los demas te reconoceran es muy importante.</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <img id="init-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" alt="" width="200" class="m-5 img-thumbnail rounded-circle float-start">
+                            </div>
+                            <div class="col m-4 align-self-center">
+                                <div class="mx-2">
+                                    <input accept="image/*" class="form-control" type="file" name="avatar-img" id="avatar-img">
+                                    <a id="put-img" class="btn btn-primary d-block mt-2">Listo!!</a>
+                                </div>
+                                <p class="fs-6 text-center">Podras cambiar tu imagen de perfil cuando lo desees.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Hide this modal and show the first with the button below.
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
+    <?php } ?>
+
     <?php include 'partials/tail.php' ?>
 
     <script>
+        const myModal = document.getElementById('carritoModal');
+        window.onload = () => {
+            $('#usr-img').modal('show');
+        }
 
+        const img = document.querySelector('#avatar-img');
+        const avatar = document.querySelector('#init-img');
+        const save = document.querySelector('#put-img');
+
+        img.addEventListener('change', e => {
+            let file = (e.target.files[0]);
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.addEventListener('load', function() {
+                avatar.src = this.result;
+            })
+        })
+
+        save.addEventListener('click', async e => {
+
+            const formData = new FormData();
+            const user = document.querySelector('#user');
+            formData.append('user', user.textContent.trim());
+            formData.append('img', img.files[0]);
+
+            fetch('http://localhost/user/ImageEdit', {
+                    method: 'PUT',
+                    body: JSON.stringify(formData)
+                })
+                .then(res => res.json())
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+
+        })
+    </script>
+
+    <script>
         /* EMPAQUETAR FUNCIONALIDAD */
         const URL = 'http://localhost'
         const privacyCheck = document.querySelector('#privacy');
@@ -559,7 +644,7 @@ $categories = $data['CATEGOIRES'];
             try {
                 const response = await fetch(`${URL}/user/privacy`, {
                     method: 'POST',
-                    headers:{
+                    headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
@@ -571,7 +656,7 @@ $categories = $data['CATEGOIRES'];
             }
         }
 
-        function privateAccount(){
+        function privateAccount() {
             const container = document.querySelector('#wrapper');
             const containerTitle = document.querySelector('#wrapper-title');
 
@@ -581,7 +666,7 @@ $categories = $data['CATEGOIRES'];
             containerTitle.textContent = 'Cuenta Privada'
         }
 
-        function publicAccount(){
+        function publicAccount() {
             const container = document.querySelector('#wrapper');
             const containerTitle = document.querySelector('#wrapper-title');
 
@@ -593,11 +678,14 @@ $categories = $data['CATEGOIRES'];
 
         privacyCheck.addEventListener('change', (e) => {
             if (e.target.id == 'privacy') {
-                setPrivacy({user: document.querySelector('#user').textContent.trim(), mode: e.target.checked})
+                setPrivacy({
+                        user: document.querySelector('#user').textContent.trim(),
+                        mode: e.target.checked
+                    })
                     .then(res => {
-                        if(res.privacy){
+                        if (res.privacy) {
                             publicAccount();
-                        }else if(!res.privacy){
+                        } else if (!res.privacy) {
                             privateAccount();
                         }
                     })

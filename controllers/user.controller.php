@@ -50,7 +50,7 @@ class User extends Controller
                 
                 session_start();
                 $_SESSION['USER'] = $user->getEmail();
-                header('location: http://localhost/user/profile');
+                header('location: http://localhost/user/profile/');
                 // $this->render('user/profile', $user->serialize());
             }
         }
@@ -87,6 +87,14 @@ class User extends Controller
                 }
             }
         }
+    }
+
+    public function ImageEdit(){
+
+        $post = file_get_contents("php://input");
+        $post = json_decode($post, true);
+        echo json_encode(array('user' => $post['user']));
+        // var_dump($post['user']);
     }
 
     public function Edit()

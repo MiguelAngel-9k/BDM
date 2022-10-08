@@ -13,6 +13,11 @@ CREATE PROCEDURE SP_SESSION(
 )
 BEGIN
 
+DECLARE EXIT HANDLER FOR 1062
+    BEGIN
+        SELECT 'EL CORREO O NOMBRE DE USUARIO YA EXISTEN' AS 'RESULTADO';
+    END;
+
     CASE
         WHEN _OP = 'INI' THEN
             SELECT 
@@ -23,7 +28,8 @@ BEGIN
                 USR_ROL AS ROL, 
                 USR_NMBRE AS NOMBRE, 
                 USR_GNRO AS GENERO, 
-                USR_PRIV AS PRIV
+                USR_PRIV AS PRIV,
+                FIRST_LOG AS LG
             FROM USUARIOS
             WHERE USR_CORREO = UPPER(_USUARIO);
         
@@ -107,7 +113,8 @@ BEGIN
                 USR_IMG AS IMG,
                 USR_NMBRE AS NOMBRE,
                 USR_GNRO AS GENERO,
-                USR_PRIV AS PRIV
+                USR_PRIV AS PRIV,
+                FIRST_LOG AS LG
             FROM USUARIOS
             WHERE USR_ST = 1 AND USR_CORREO = _CORREO;
 

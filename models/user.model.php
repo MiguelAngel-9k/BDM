@@ -12,6 +12,7 @@ class UserModel
     private $priv;
     private $gender;
     private $conn;
+    private $lg;
 
 
     public function __construct()
@@ -67,16 +68,18 @@ class UserModel
             $this->name = $result['NOMBRE'];
             $this->gender = $result['GENERO'];
             $this->priv = $result['PRIV'];
+            $this->lg = $result['LG'];
 
-            return array(
+            /* return array(
                 'email' => $this->email,
                 'nickname' => $this->nickname,
                 'img' => $this->img,
                 'rol' => $this->rol,
                 'name' => $this->name,
                 'gender' => $this->gender,
-                'priv' => $this->priv
-            );
+                'priv' => $this->priv,
+                'lg' => $
+            ); */
         } catch (PDOException $e) {
             echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
             return;
@@ -115,6 +118,7 @@ class UserModel
                     $this->name = $result['NOMBRE'];
                     $this->gender = $result['GENERO'];
                     $this->priv = $result['PRIV'];
+                    $this->lg = $result['LG'];
 
                     return array(
                         'email' => $this->email,
@@ -123,7 +127,8 @@ class UserModel
                         'rol' => $this->rol,
                         'name' => $this->name,
                         'gender' => $this->gender,
-                        'priv' => $this->priv
+                        'priv' => $this->priv,
+                        'lg' => $this->lg
                     );
                 }
 
@@ -203,7 +208,8 @@ class UserModel
             'rol' => $this->rol,
             'name' => $this->name,
             'gender' => $this->gender,
-            'priv' => $this->priv
+            'priv' => $this->priv,
+            'lg' => $this->lg
         );
     }
 }
