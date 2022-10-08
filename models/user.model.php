@@ -150,10 +150,15 @@ class UserModel
                 'NAME' => $this->name
             ]);
 
-            return;
+            //IF USER EMAIL OR USER NICKNAME ALREADY EXISTS ON DB, RETURNS
+            //AN ERROR MESSAGE
+            if(isset($query->fetch(PDO::FETCH_ASSOC)['RESULTADO']))
+                return $query->fetch(PDO::FETCH_ASSOC)['RESULTADO'];
+
+            return null;
         } catch (PDOException $e) {
             echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
-            return;
+            return 'Ups!!!... Algo ocurrio al crear tu usuario, tendremos a nuestros monos trabajando en ello.';
         }
     }
 

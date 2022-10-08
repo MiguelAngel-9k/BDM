@@ -77,10 +77,10 @@ $categories = $data['CATEGOIRES'];
                 <div class="row">
                     <h1 class="d-flex text-primary border-bottom border-5 border-success p-2">
                         <?php
-                        echo $user['name'];
-                        if ($user['rol'] == 'V') {
+                        echo $user['name'].'<p class="m-0 ms-1 p-0 fs-5 align-self-center"> ('.$user['nickname'].')</p>';
+                        /* if ($user['rol'] != 'V') {
                             echo '<p class="fs-6 fw-light">(Sale man)</p>';
-                        }
+                        } */
                         ?>
                     </h1>
                     <small id="user" class="text-primary">

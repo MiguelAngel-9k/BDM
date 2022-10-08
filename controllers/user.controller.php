@@ -35,8 +35,7 @@ class User extends Controller
 
     public function register()
     {
-        session_start();
-
+        
         if ($this->existsPOST(array('email', 'nickname', 'pwd', 'name'))) {
             if ($this->validData($_POST)) {
                 $user = new UserModel();
@@ -44,7 +43,12 @@ class User extends Controller
                 $user->setNickname($_POST['nickname']);
                 $user->setPwd($_POST['pwd']);
                 $user->setName($_POST['name']);
-                $user->register();
+                
+                if ($user->register() == null)
+                // header('location: http://localhost/error/page');
+                
+                
+                session_start();
                 $_SESSION['USER'] = $user->getEmail();
                 header('location: http://localhost/user/profile');
                 // $this->render('user/profile', $user->serialize());
@@ -85,9 +89,10 @@ class User extends Controller
         }
     }
 
-    public function Edit(){
-        if($this->existsPOST(array('nickname', 'name', 'email'))){
-            if($this->isName($_POST['name']) && $this->isNickname($_POST['nickname'])){
+    public function Edit()
+    {
+        if ($this->existsPOST(array('nickname', 'name', 'email'))) {
+            if ($this->isName($_POST['name']) && $this->isNickname($_POST['nickname'])) {
                 // $imgData = addslashes(file_get_contents($_FILES['avatar']['tmp_name']));
                 $user = new UserModel();
                 $user->edit($_POST['email'], $_POST['name'], $_POST['nickname'], $_POST['gender']);
@@ -96,13 +101,14 @@ class User extends Controller
         }
     }
 
-    public function privacy(){
+    public function privacy()
+    {
         $post = file_get_contents("php://input");
         $post = json_decode($post, true);
 
         $msg = '';
 
-        if(isset($post['user']) && isset($post['mode'])){
+        if (isset($post['user']) && isset($post['mode'])) {
             $user = new UserModel();
             $user->editPrivacy($post['user'], $post['mode']);
             echo json_encode(array(
@@ -138,7 +144,7 @@ class User extends Controller
 
     private function isEmail($email)
     {
-        if (!preg_match(constant('REGX_EMAIL'), $email)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "Correo no valido \n";
             return false;
         }
