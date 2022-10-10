@@ -25,10 +25,12 @@ class User extends Controller
                 $this->profile();
             }
         } else {
-            if ($_GET['dir'] == '/') {
+            //NGINX URL VALID $_GET[constant('URL')] == '/'
+            //APACHE URL VALID empty($_GET)
+            if ($_GET[constant('URL')] == '/') {
                 require "views/user/register.php";
             } else {
-                header('location: http://localhost/');
+                header('location:'.constant('API'));
             }
         }
     }

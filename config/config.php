@@ -13,5 +13,6 @@ define('PWD',  'quienSoy?Miguel9k');
 define('REGX_NME', "/^[a-zA-Z\s]*$/");
 
 //ADD YOUR PROYECT PATH
-define('API', 'http://localhost/');
+define('API', 'http://localhost/'); //URL FOR MY LOCAL
+// define('API', 'http://10.52.3.61/captura/bdm/'); //URL FOR WORK LOCAL
 ?>
