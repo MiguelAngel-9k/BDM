@@ -30,14 +30,14 @@ class User extends Controller
             if ($_GET[constant('URL')] == '/') {
                 require "views/user/register.php";
             } else {
-                header('location:'.constant('API'));
+                header('location:' . constant('API'));
             }
         }
     }
 
     public function register()
     {
-        
+
         if ($this->existsPOST(array('email', 'nickname', 'pwd', 'name'))) {
             if ($this->validData($_POST)) {
                 $user = new UserModel();
@@ -45,14 +45,14 @@ class User extends Controller
                 $user->setNickname($_POST['nickname']);
                 $user->setPwd($_POST['pwd']);
                 $user->setName($_POST['name']);
-                
+
                 if ($user->register() == null)
-                // header('location: http://localhost/error/page');
-                
-                
-                session_start();
+                    // header('location: http://localhost/error/page');
+
+
+                    session_start();
                 $_SESSION['USER'] = $user->getEmail();
-                header('location: http://localhost/user/profile/');
+                header('location:' . constant('API') . 'user/profile/');
                 // $this->render('user/profile', $user->serialize());
             }
         }
@@ -85,18 +85,28 @@ class User extends Controller
                 if (!empty($data)) {
                     $_SESSION['USER'] = $user->getEmail();
                     // var_dump($data);
-                    header("location: http://localhost/user/profile");
+                    header("location:" . constant('API'));
                 }
             }
         }
     }
 
-    public function ImageEdit(){
+    public function ImageEdit()
+    {
 
-        $post = file_get_contents("php://input");
-        $post = json_decode($post, true);
-        echo json_encode(array('user' => $post['user']));
-        // var_dump($post['user']);
+        if (!empty($_FILES)) {
+            var_dump($_FILES);
+            $imgData = file_get_contents($_FILES['img']['tmp_name']);
+            $user = new UserModel();
+            if ($user->changeAvatar($imgData, $_POST['user'])) {
+                echo json_encode(array(
+                    'msg' => 'Cambio de imagen exitoso'
+                ));
+            }
+        }
+
+        // $image = $_FILES['img'];
+        // echo json_encode($_POST);
     }
 
     public function Edit()
@@ -158,10 +168,10 @@ class User extends Controller
             echo "Correo no valido \n";
             return false;
         }
-
+        
         return true;
     }
-
+    
     private function isNickname($nickname)
     {
         if (!preg_match(constant('REGX_NKNAME'), $nickname)) {

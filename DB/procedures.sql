@@ -128,6 +128,12 @@ BEGIN
 
             SELECT 'PRIVACIDAD ACTUALIZADA' AS 'RESULTADO';
 
+        WHEN _OP = 'IMG' THEN
+
+            UPDATE USUARIOS 
+                SET USR_IMG = _IMGN
+            WHERE USR_CORREO = _CORREO;
+
     END CASE;
 
 END //

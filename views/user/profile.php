@@ -2,7 +2,7 @@
 
 <?php $user = $data['USER'];
 $categories = $data['CATEGOIRES'];
-var_dump($user)
+// var_dump($user)
 ?>
 
 <body class="bg-primary">
@@ -46,7 +46,7 @@ var_dump($user)
                     <li class="nav-item">
                         <a href="sales_user.html" class="nav-link">
                             <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                            <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block">
+                            <!-- <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block"> -->
                         </a>
                     </li>
                 </ul>
@@ -71,7 +71,9 @@ var_dump($user)
     <div class="mt-5 container-fluid">
         <div class="row">
             <div class="col-lg-2 mx-4">
-                <img width="200" height="200" src="data:image/png;base64,'<?php echo base64_encode($data['img']) ?>'" alt="User image" class="rounded-circle mx-auto d-block">
+                <?php echo '<img class="rounded-circle mx-auto d-block" width="200" height="200" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
+
+                <!-- <img width="200" height="200" src="data:image/jpeg;base64,'<?php echo base64_encode($data['img']) ?>'" alt="User image" class="rounded-circle mx-auto d-block"> -->
             </div>
             <div class="col m-4">
                 <div class="row">
@@ -107,7 +109,8 @@ var_dump($user)
                                 </div>
                             </div>
                             <div class="col my-auto">
-                                <img width="64" height="64" src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg" alt="" class="float-end rounded">
+                                <?php echo '<img width="64" height="64" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
+                                <!-- <img width="64" height="64" src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg" alt="" class="float-end rounded"> -->
                             </div>
                         </div>
                     </div>
@@ -568,7 +571,7 @@ var_dump($user)
                             <div class="col m-4 align-self-center">
                                 <div class="mx-2">
                                     <input accept="image/*" class="form-control" type="file" name="avatar-img" id="avatar-img">
-                                    <a id="put-img" class="btn btn-primary d-block mt-2">Listo!!</a>
+                                    <a id="put-img" class="btn btn-primary d-block mt-2" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Listo!!</a>
                                 </div>
                                 <p class="fs-6 text-center">Podras cambiar tu imagen de perfil cuando lo desees.</p>
                             </div>
@@ -578,17 +581,21 @@ var_dump($user)
             </div>
         </div>
         <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header d-block">
+                        <h1 class="modal-title fs-4" id="usr-img-modal">Que tipo de cuenta necesitas? <?php echo $user['nickname'] ?></h1>
+                        <p>Recuerda que no podras cambiar el tipo de cuenta despues.</p>
                     </div>
                     <div class="modal-body">
-                        Hide this modal and show the first with the button below.
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
+                        <div class="row justify-content-between p-3">
+                            <div id="customer" class=" rounded col-5 bg-body shadow-lg p-2">
+                                <h3 class="text-center">COMPRADOR</h3>
+                            </div>
+                            <div id="saler" class="text-white rounded col-5 bg-body shadow-lg p-2">
+                                <h3 class="text-center">VENDEDOR</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -597,6 +604,29 @@ var_dump($user)
     <?php } ?>
 
     <?php include 'partials/tail.php' ?>
+
+    <script>
+        const customerside = document.querySelector('#customer');
+        const salerside = document.querySelector('#saler');
+
+        document.addEventListener('click', e=>{
+            if(e.target.id == 'customer'){
+
+
+            }else if(e.targe.id == 'saler'){
+
+            }
+        })
+
+        async function setSide(side){
+            try {
+                return await fetch('http://localhost/user/side')
+            }catch {
+                
+            }
+        }
+
+    </script>
 
     <script>
         const myModal = document.getElementById('carritoModal');
@@ -625,11 +655,10 @@ var_dump($user)
             formData.append('img', img.files[0]);
 
             fetch('http://localhost/user/ImageEdit', {
-                    method: 'PUT',
-                    body: JSON.stringify(formData)
+                    method: 'POST',
+                    body: formData
                 })
-                .then(res => res.json())
-                .then(res => console.log(res))
+                .then(res => $('#usr-img').modal('hide'))
                 .catch(err => console.log(err));
 
         })

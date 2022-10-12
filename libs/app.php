@@ -11,7 +11,10 @@ class App{
         //OBTENGO LA URL Y SE DESGLOZA
         $url = isset($_GET[constant('URL')]) ? $_GET[constant('URL')] : null;
         $url = trim($url, '/');
+        //    controlador/metodo/parametro
         $url = explode('/', $url);
+        //    controlador/metodo/parametro
+
 
 
         if(empty($url[0])){ //CONTROLADOR

@@ -86,6 +86,22 @@ class UserModel
         }
     }
 
+    public function changeAvatar($img, $user){
+        try {
+
+            $query = $this->conn->prepare("CALL SP_USUARIO(:EMAIL, '', '', :IMG, '', '', '', 'IMG')");
+            $query->execute([
+                'EMAIL' => $user,
+                'IMG' => $img
+            ]);
+
+            return true;
+
+        } catch (PDOException $e) {
+            return "Algo paso al tratar de cambiar la imagen de avatar, intenta de nuevo, error: ".$e->getMessage();
+        }
+    }
+
     public function setEmail($email)
     {
         $this->email = $email;

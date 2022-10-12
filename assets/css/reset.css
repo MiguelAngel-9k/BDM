@@ -187,3 +187,19 @@ img.product-thumbnail:hover{
     transform: scale(1.2);
     cursor: pointer;
 }
+
+#customer{
+    background-image: url('../img/customer_bg_card.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
+
+#saler{
+    background-image: url('../img/saler_bg_card.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
