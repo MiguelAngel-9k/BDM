@@ -86,6 +86,26 @@ class UserModel
         }
     }
 
+    public function setSide($side, $user){
+        try {
+            $query = $this->conn->prepare("CALL SP_USUARIO(:EMAIL, '', :SIDE, '', '', '', '', 'SID')");
+            $query->execute([
+                'EMAIL' => $user,
+                'SIDE' => $side
+            ]);
+
+            return '';
+
+            if($query->rowCount() > 0){
+                return '';
+            }else{
+                return 'Something went wrong as we expected';
+            }
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function changeAvatar($img, $user){
         try {
 

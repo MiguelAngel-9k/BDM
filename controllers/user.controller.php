@@ -109,6 +109,30 @@ class User extends Controller
         // echo json_encode($_POST);
     }
 
+    public function side()
+    {
+        session_start();
+        if (isset($_SESSION['USER'])) {
+            $json = file_get_contents('php://input');
+            $post = json_decode($json, true);
+            $user = new UserModel();
+            $res = $user->setSide($post['side'], $_SESSION['USER']);
+            if (empty($res)) {
+                echo json_encode(array(
+                    'res' => 'success'
+                ));
+            } else {
+                echo json_encode(array(
+                    'res' => $res
+                ));
+            }
+        }else{
+            echo json_encode(array(
+                'res' => 'No Session'
+            ));
+        }
+    }
+
     public function Edit()
     {
         if ($this->existsPOST(array('nickname', 'name', 'email'))) {
@@ -168,10 +192,10 @@ class User extends Controller
             echo "Correo no valido \n";
             return false;
         }
-        
+
         return true;
     }
-    
+
     private function isNickname($nickname)
     {
         if (!preg_match(constant('REGX_NKNAME'), $nickname)) {

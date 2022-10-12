@@ -571,7 +571,7 @@ $categories = $data['CATEGOIRES'];
                             <div class="col m-4 align-self-center">
                                 <div class="mx-2">
                                     <input accept="image/*" class="form-control" type="file" name="avatar-img" id="avatar-img">
-                                    <a id="put-img" class="btn btn-primary d-block mt-2" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Listo!!</a>
+                                    <a id="put-img" class="btn btn-primary d-block mt-2" data-bs-target="#side" data-bs-toggle="modal">Listo!!</a>
                                 </div>
                                 <p class="fs-6 text-center">Podras cambiar tu imagen de perfil cuando lo desees.</p>
                             </div>
@@ -580,7 +580,7 @@ $categories = $data['CATEGOIRES'];
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal fade" id="side" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header d-block">
@@ -589,10 +589,10 @@ $categories = $data['CATEGOIRES'];
                     </div>
                     <div class="modal-body">
                         <div class="row justify-content-between p-3">
-                            <div id="customer" class=" rounded col-5 bg-body shadow-lg p-2">
+                            <div id="customer" class=" rounded col-5 bg-body shadow-lg p-2" data-bs-target="#welcome" data-bs-toggle="modal">
                                 <h3 class="text-center">COMPRADOR</h3>
                             </div>
-                            <div id="saler" class="text-white rounded col-5 bg-body shadow-lg p-2">
+                            <div id="saler" class="text-white rounded col-5 bg-body shadow-lg p-2" data-bs-target="#welcome" data-bs-toggle="modal">
                                 <h3 class="text-center">VENDEDOR</h3>
                             </div>
                         </div>
@@ -600,7 +600,23 @@ $categories = $data['CATEGOIRES'];
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
+        <div class="modal fade" id="welcome" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row justify-content-between p-3">
+                            <h3 class="text-center">
+                                Te damos la bienvenida!!, todo esta listo.
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Comenzar a navegar</button>
+                </div>
+            </div>
+        </div>
+        <!-- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a> -->
     <?php } ?>
 
     <?php include 'partials/tail.php' ?>
@@ -609,23 +625,47 @@ $categories = $data['CATEGOIRES'];
         const customerside = document.querySelector('#customer');
         const salerside = document.querySelector('#saler');
 
-        document.addEventListener('click', e=>{
-            if(e.target.id == 'customer'){
+        document.addEventListener('click', e => {
+            if (e.target.id == 'customer') {
+                setSide('C')
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res)
+                        $('#side').modal('hide');
+                    })
+                    .catch(err => console.log(err));
 
 
-            }else if(e.targe.id == 'saler'){
+            } else if (e.target.id == 'saler') {
+                setSide('V')
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res)
+                        $('#side').modal('hide');
+                    })
+                    .catch(err => console.log(err));
 
+                $('#side').modal('hide');
             }
+
+
         })
 
-        async function setSide(side){
+        async function setSide(side) {
             try {
-                return await fetch('http://localhost/user/side')
-            }catch {
-                
+                let res = await fetch('http://localhost/user/side', {
+                    method: "POST",
+                    body: JSON.stringify({
+                        side,
+                        user
+                    })
+                })
+
+                return res;
+            } catch {
+                return new Error('Cannot chose a side');
             }
         }
-
     </script>
 
     <script>

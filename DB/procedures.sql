@@ -134,6 +134,12 @@ BEGIN
                 SET USR_IMG = _IMGN
             WHERE USR_CORREO = _CORREO;
 
+        WHEN _OP = 'SID' THEN
+
+            UPDATE USUARIOS
+                SET USR_ROL = _ROL
+            WHERE USR_CORREO = _CORREO;
+
     END CASE;
 
 END //
