@@ -194,7 +194,7 @@ img.product-thumbnail:hover{
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
-}
+}   
 
 #saler{
     background-image: url('../img/saler_bg_card.jpg');
