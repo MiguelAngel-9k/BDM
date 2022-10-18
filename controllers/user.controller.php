@@ -50,7 +50,7 @@ class User extends Controller
                     // header('location: http://localhost/error/page');
 
 
-                    session_start();
+                session_start();
                 $_SESSION['USER'] = $user->getEmail();
                 header('location:' . constant('API') . 'user/profile/');
                 // $this->render('user/profile', $user->serialize());
@@ -109,6 +109,26 @@ class User extends Controller
         // echo json_encode($_POST);
     }
 
+    public function pass()
+    {
+        session_start();
+
+        if (isset($_SESSION['USER'])) {
+            if ($this->existsPOST(['owner', 'oldPass', 'newPass'])) {
+                if ($this->isPwd($_POST['newPass'])) {
+                    $user = new UserModel();
+                    $user->setPwd($_POST['newPass']);
+                    if ($user->editPass($_SESSION['USER'], $_POST['oldPass'], $_POST['newPass']))
+                        header('location:user/profile');
+                    else
+                        echo json_encode(array(
+                            'msg' => 'No se encontro al usuario, intente de nuevo'
+                        ));
+                }
+            }
+        }
+    }
+
     public function side()
     {
         session_start();
@@ -126,7 +146,7 @@ class User extends Controller
                     'res' => $res
                 ));
             }
-        }else{
+        } else {
             echo json_encode(array(
                 'res' => 'No Session'
             ));

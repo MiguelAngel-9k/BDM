@@ -132,6 +132,21 @@ class UserModel
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
 
+    public function editPass($user, $oldpass, $newpass){
+        try {
+            $query = $this->conn->prepare("CALL SP_SESSION(:USUARIO, :PASS, '', '', 'PWD')");
+            $query->execute([
+                'USUARIO'=> $user,
+                'PASS'=>$this->pwd
+            ]);
+            return true;
+
+        } catch (PDOException $e) {
+            echo "Algo paso al tratar de cambiar la contraseña, intenta de nuevo, error: ".$e->getMessage();
+            return false;
+        }
+    }
+
     public function login($email, $pwd)
     {
 

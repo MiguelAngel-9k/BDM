@@ -137,7 +137,8 @@ BEGIN
         WHEN _OP = 'SID' THEN
 
             UPDATE USUARIOS
-                SET USR_ROL = _ROL
+                SET USR_ROL = _ROL,
+                    FIRST_LOG = 0
             WHERE USR_CORREO = _CORREO;
 
     END CASE;

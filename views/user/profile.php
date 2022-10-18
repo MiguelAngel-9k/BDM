@@ -157,10 +157,10 @@ $categories = $data['CATEGOIRES'];
                                 Pefil</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editProfileModal">Cambiar avatar</a>
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#cambiar-avatar">Cambiar avatar</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editProfileModal">Configuracion de cuenta</a>
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editPassModal">Cambiar contraseña</a>
                         </li>
                         <li class="list-group-item">
                             <a href="#" class="" data-bs-toggle="modal" data-bs-target="#carritoModal">
@@ -370,15 +370,15 @@ $categories = $data['CATEGOIRES'];
                         <div class="col">
                             <form action="http://localhost/user/edit" method="POST" class="row g-3" enctype="multipart/form-data">
                                 <div class="col-12">
-                                    <input type="hidden" name="email" id="email" class="form-control" value="<?php echo $data['email'] ?>">
+                                    <input type="hidden" name="email" id="email" class="form-control" value="<?php echo $user['email'] ?>">
                                 </div>
                                 <div class="col-12">
                                     <label for="nickname" class="form-label">User Nickname</label>
-                                    <input type="text" name="nickname" id="nickname" class="form-control" value="<?php echo $data['nickname'] ?>">
+                                    <input type="text" name="nickname" id="nickname" class="form-control" value="<?php echo $user['nickname'] ?>">
                                 </div>
                                 <div class="col-12">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="<?php echo $data['name'] ?>">
+                                    <input type="text" name="name" id="name" class="form-control" value="<?php echo $user['name'] ?>">
                                 </div>
                                 <div class="m-2 col-12 align-self-center">
                                     <div class="row">
@@ -410,6 +410,38 @@ $categories = $data['CATEGOIRES'];
             </div>
         </div>
     </div>
+
+    <!-- CAMBIAR CONTRASENIA -->
+    <div class="modal fade" id="editPassModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editPass" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-primary">
+                <div class="modal-header">
+                    <h3 class="modal-title text-center" id="editPass">Cambiar contraseña</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?php echo constant('API'); ?>user/pass" method="POST" class="justify-content-center">
+                        <div class="row">
+                            <input type="hidden" name="owner" value="<?php echo $user['email']; ?>">
+                            <div class="m-2 col-12">
+                                <label for="oldPass" class="form-label">Contraseña</label>
+                                <input type="text" class="form-control" id="oldPass" name="oldPass">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="m-2 col-12">
+                                <label for="newPass" class="form-label">Nueva Contraseña</label>
+                                <input type="text" class="form-control" id="newPass" name="newPass">
+                            </div>
+                        </div>
+                        <div class="d-grid m-2 gap-2">
+                            <input type="submit" value="Cambiar" class="btn btn-success btn-block text-light">
+                            <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     <!-- AGREGAR CATEGORIA -->
     <!-- MODAL -->
@@ -550,6 +582,36 @@ $categories = $data['CATEGOIRES'];
         </div>
     </div>
 
+    <!-- CAMBIAR AVATAR -->
+    <div class="modal fade" id="cambiar-avatar" data-bs-backdrop="static" aria-hidden="true" data-bs-keyboard="false" aria-labelledby="usr-img-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4" id="usr-img-modal">Vamos configurar tu cuenta en Mecadona!!</h1>
+                    <!-- <p>Comencemos con tu imagen, como los demas te reconoceran es muy importante.</p> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="row">
+                        <h2 class="fs-5 p-3 border-bottom border-primary border-3">Comencemos con tu imagen, como los demas te reconoceran es muy importante.</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <?php echo '<img id="init-img" class="m-5 img-thumbnail rounded-circle float-start" width="200" height="200" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
+                        </div>
+                        <div class="col m-4 align-self-center">
+                            <div class="mx-2">
+                                <input accept="image/*" class="form-control" type="file" name="avatar-img" id="avatar-img">
+                                <a id="put-img" class="btn btn-primary d-block mt-2" data-bs-target="#side" data-bs-toggle="modal">Listo!!</a>
+                            </div>
+                            <p class="fs-6 text-center">Podras cambiar tu imagen de perfil cuando lo desees.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php if ($user['lg'] == 1) { ?>
 
         <div class="modal fade" id="usr-img" data-bs-backdrop="static" aria-hidden="true" data-bs-keyboard="false" aria-labelledby="usr-img-modal" tabindex="-1">
@@ -647,8 +709,6 @@ $categories = $data['CATEGOIRES'];
 
                 $('#side').modal('hide');
             }
-
-
         })
 
         async function setSide(side) {
@@ -669,7 +729,6 @@ $categories = $data['CATEGOIRES'];
     </script>
 
     <script>
-        const myModal = document.getElementById('carritoModal');
         window.onload = () => {
             $('#usr-img').modal('show');
         }
@@ -698,7 +757,14 @@ $categories = $data['CATEGOIRES'];
                     method: 'POST',
                     body: formData
                 })
-                .then(res => $('#usr-img').modal('hide'))
+                .then(res => {
+                    if ($('#usr-img') != undefined) {
+                        $('#usr-img').modal('hide');
+                        return;
+                    }
+                    location.reload();
+
+                })
                 .catch(err => console.log(err));
 
         })
