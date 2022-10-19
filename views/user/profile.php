@@ -442,185 +442,155 @@ $categories = $data['CATEGOIRES'];
                 </div>
             </div>
         </div>
-
-    <!-- AGREGAR CATEGORIA -->
-    <!-- MODAL -->
-    <div class="modal fade" id="addCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark text-primary">
-                <div class="modal-header">
-                    <h3 class="modal-title text-center" id="addCategoryLabel">Nueva Categoria</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="<?php echo constant('API'); ?>category/add" method="POST" class="justify-content-center">
-                        <div class="row">
-                            <input type="hidden" name="owner" value="<?php echo $user['email']; ?>">
-                            <div class="m-2 col-12">
-                                <label for="name" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="name" name="name">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="m-2 col-12">
-                                <label for="description" class="form-label">Descripcion</label>
-                                <input type="text" class="form-control" id="description" name="description">
-                            </div>
-                        </div>
-                        <div class="d-grid m-2 gap-2">
-                            <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
-                            <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <!-- CARRITO DE COMPRAS -->
-    <!-- MODAL -->
-    <div class="modal fade" id="carritoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="carritoModal" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content bg-dark text-primary">
-                <div class="modal-header">
-                    <h3 class="modal-title text-center" id="carritoLabel">Carrito de compras</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-light table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Gameboy advance</td>
-                                <td>$15.99</td>
-                                <td>Video Games</td>
-                                <td>10/05/2022</td>
-                            </tr>
-                            <tr>
-                                <td>Gameboy advance</td>
-                                <td>$15.99</td>
-                                <td>Video Games</td>
-                                <td>10/05/2022</td>
-                            </tr>
-                            <tr>
-                                <td>Gameboy advance</td>
-                                <td>$15.99</td>
-                                <td>Video Games</td>
-                                <td>10/05/2022</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-success">Comprar</a>
+        <!-- AGREGAR CATEGORIA -->
+        <!-- MODAL -->
+        <div class="modal fade" id="addCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-primary">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="addCategoryLabel">Nueva Categoria</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- AGREGAR PRODUCTO MODAL -->
-    <!-- MODAL -->
-    <div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content bg-primary text-primary">
-                <div class="modal-header">
-                    <h3 class="modal-title text-center" id="staticBackdropLabel">Nuevo Producto</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="row">
-                            <div class="m-2 col-8">
-                                <label for="pName" class="form-label">Nombre del producto</label>
-                                <input type="text" name="pName" id="pName" class="form-control">
-                            </div>
-                            <div class="m-2 col-2">
-                                <label for="pQty" class="form-label">Cantidad</label>
-                                <input type="text" class="form-control" id="pQty">
-                            </div>
-                            <div class="m-2 col-4">
-                                <label for="pPrice" class="form-label">Fijar percio base</label>
-                                <input type="text" name="pPrice" id="pPrice" class="form-control">
-                            </div>
-                            <div class="m-2 col-5 align-self-center">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el
-                                        precio</label>
+                    <div class="modal-body">
+                        <form action="<?php echo constant('API'); ?>category/add" method="POST" class="justify-content-center">
+                            <div class="row">
+                                <input type="hidden" name="owner" value="<?php echo $user['email']; ?>">
+                                <div class="m-2 col-12">
+                                    <label for="name" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="name" name="name">
                                 </div>
                             </div>
-                            <div class="m-2 col-12">
-                                <label for="pMedia" class="form-label">Imagenes o Videos</label>
-                                <input class="form-control" type="file" id="pMedia" multiple>
+                            <div class="row">
+                                <div class="m-2 col-12">
+                                    <label for="description" class="form-label">Descripcion</label>
+                                    <input type="text" class="form-control" id="description" name="description">
+                                </div>
                             </div>
-                            <div class="m-2 col-12">
-                                <label for="pCat" class="form-label">Categoria</label>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="1">Calzado</option>
-                                    <option value="2">Tecnologia</option>
-                                    <option value="3">Electronica</option>
-                                </select>
-                            </div>
-                            <div class="m-2 col-12">
-                                <label for="pDesc" class="form-label">Mas informacion acerca</label>
-                                <textarea class="form-control" id="pDesc" rows="3"></textarea>
-                            </div>
-                            <div class="m-2 d-grid gap-2">
+                            <div class="d-grid m-2 gap-2">
                                 <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
+                                <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CAMBIAR AVATAR -->
-    <div class="modal fade" id="cambiar-avatar" data-bs-backdrop="static" aria-hidden="true" data-bs-keyboard="false" aria-labelledby="usr-img-modal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="usr-img-modal">Vamos configurar tu cuenta en Mecadona!!</h1>
-                    <!-- <p>Comencemos con tu imagen, como los demas te reconoceran es muy importante.</p> -->
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-3">
-                    <div class="row">
-                        <h2 class="fs-5 p-3 border-bottom border-primary border-3">Comencemos con tu imagen, como los demas te reconoceran es muy importante.</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <?php echo '<img id="init-img" class="m-5 img-thumbnail rounded-circle float-start" width="200" height="200" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                        </div>
-                        <div class="col m-4 align-self-center">
-                            <div class="mx-2">
-                                <input accept="image/*" class="form-control" type="file" name="avatar-img" id="avatar-img">
-                                <a id="put-img" class="btn btn-primary d-block mt-2" data-bs-target="#side" data-bs-toggle="modal">Listo!!</a>
-                            </div>
-                            <p class="fs-6 text-center">Podras cambiar tu imagen de perfil cuando lo desees.</p>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <?php if ($user['lg'] == 1) { ?>
+        <!-- CARRITO DE COMPRAS -->
+        <!-- MODAL -->
+        <div class="modal fade" id="carritoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="carritoModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content bg-dark text-primary">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="carritoLabel">Carrito de compras</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-light table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Gameboy advance</td>
+                                    <td>$15.99</td>
+                                    <td>Video Games</td>
+                                    <td>10/05/2022</td>
+                                </tr>
+                                <tr>
+                                    <td>Gameboy advance</td>
+                                    <td>$15.99</td>
+                                    <td>Video Games</td>
+                                    <td>10/05/2022</td>
+                                </tr>
+                                <tr>
+                                    <td>Gameboy advance</td>
+                                    <td>$15.99</td>
+                                    <td>Video Games</td>
+                                    <td>10/05/2022</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-success">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div class="modal fade" id="usr-img" data-bs-backdrop="static" aria-hidden="true" data-bs-keyboard="false" aria-labelledby="usr-img-modal" tabindex="-1">
+        <!-- AGREGAR PRODUCTO MODAL -->
+        <!-- MODAL -->
+        <div class="modal fade" id="addProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content bg-primary text-primary">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="staticBackdropLabel">Nuevo Producto</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="row">
+                                <div class="m-2 col-8">
+                                    <label for="pName" class="form-label">Nombre del producto</label>
+                                    <input type="text" name="pName" id="pName" class="form-control">
+                                </div>
+                                <div class="m-2 col-2">
+                                    <label for="pQty" class="form-label">Cantidad</label>
+                                    <input type="text" class="form-control" id="pQty">
+                                </div>
+                                <div class="m-2 col-4">
+                                    <label for="pPrice" class="form-label">Fijar percio base</label>
+                                    <input type="text" name="pPrice" id="pPrice" class="form-control">
+                                </div>
+                                <div class="m-2 col-5 align-self-center">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el
+                                            precio</label>
+                                    </div>
+                                </div>
+                                <div class="m-2 col-12">
+                                    <label for="pMedia" class="form-label">Imagenes o Videos</label>
+                                    <input class="form-control" type="file" id="pMedia" multiple>
+                                </div>
+                                <div class="m-2 col-12">
+                                    <label for="pCat" class="form-label">Categoria</label>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option value="1">Calzado</option>
+                                        <option value="2">Tecnologia</option>
+                                        <option value="3">Electronica</option>
+                                    </select>
+                                </div>
+                                <div class="m-2 col-12">
+                                    <label for="pDesc" class="form-label">Mas informacion acerca</label>
+                                    <textarea class="form-control" id="pDesc" rows="3"></textarea>
+                                </div>
+                                <div class="m-2 d-grid gap-2">
+                                    <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAMBIAR AVATAR -->
+        <div class="modal fade" id="cambiar-avatar" data-bs-backdrop="static" aria-hidden="true" data-bs-keyboard="false" aria-labelledby="usr-img-cambiar" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-4" id="usr-img-modal">Vamos configurar tu cuenta en Mecadona!!</h1>
+                        <h1 class="modal-title fs-4" id="usr-img-cambiar">Vamos configurar tu cuenta en Mecadona!!</h1>
                         <!-- <p>Comencemos con tu imagen, como los demas te reconoceran es muy importante.</p> -->
-                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-3">
                         <div class="row">
@@ -628,7 +598,7 @@ $categories = $data['CATEGOIRES'];
                         </div>
                         <div class="row">
                             <div class="col-4">
-                                <img id="init-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" alt="" width="200" class="m-5 img-thumbnail rounded-circle float-start">
+                                <?php echo '<img id="init-img" class="m-5 img-thumbnail rounded-circle float-start" width="200" height="200" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
                             </div>
                             <div class="col m-4 align-self-center">
                                 <div class="mx-2">
@@ -642,194 +612,225 @@ $categories = $data['CATEGOIRES'];
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="side" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header d-block">
-                        <h1 class="modal-title fs-4" id="usr-img-modal">Que tipo de cuenta necesitas? <?php echo $user['nickname'] ?></h1>
-                        <p>Recuerda que no podras cambiar el tipo de cuenta despues.</p>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row justify-content-between p-3">
-                            <div id="customer" class=" rounded col-5 bg-body shadow-lg p-2" data-bs-target="#welcome" data-bs-toggle="modal">
-                                <h3 class="text-center">COMPRADOR</h3>
+
+        <?php if ($user['lg'] == 1) { ?>
+
+            <div class="modal fade" id="usr-img" data-bs-backdrop="static" aria-hidden="false" data-bs-keyboard="false" aria-labelledby="usr-img-modal" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-4" id="usr-img-modal">Vamos configurar tu cuenta en Mecadona!!</h1>
+                            <!-- <p>Comencemos con tu imagen, como los demas te reconoceran es muy importante.</p> -->
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                        </div>
+                        <div class="modal-body p-3">
+                            <div class="row">
+                                <h2 class="fs-5 p-3 border-bottom border-primary border-3">Comencemos con tu imagen, como los demas te reconoceran es muy importante.</h2>
                             </div>
-                            <div id="saler" class="text-white rounded col-5 bg-body shadow-lg p-2" data-bs-target="#welcome" data-bs-toggle="modal">
-                                <h3 class="text-center">VENDEDOR</h3>
+                            <div class="row">
+                                <div class="col-4">
+                                    <img id="init-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" alt="" width="200" class="m-5 img-thumbnail rounded-circle float-start">
+                                </div>
+                                <div class="col m-4 align-self-center">
+                                    <div class="mx-2">
+                                        <input accept="image/*" class="form-control" type="file" name="avatar-img" id="avatar-img">
+                                        <a id="put-img" class="btn btn-primary d-block mt-2" data-bs-target="#side" data-bs-toggle="modal">Listo!!</a>
+                                    </div>
+                                    <p class="fs-6 text-center">Podras cambiar tu imagen de perfil cuando lo desees.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="welcome" aria-hidden="true" tabindex="-1">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="row justify-content-between p-3">
-                            <h3 class="text-center">
-                                Te damos la bienvenida!!, todo esta listo.
-                            </h3>
+            <div class="modal fade" id="side" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header d-block">
+                            <h1 class="modal-title fs-4" id="usr-img-modal">Que tipo de cuenta necesitas? <?php echo $user['nickname'] ?></h1>
+                            <p>Recuerda que no podras cambiar el tipo de cuenta despues.</p>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row justify-content-between p-3">
+                                <div id="customer" class=" rounded col-5 bg-body shadow-lg p-2" data-bs-target="#welcome" data-bs-toggle="modal">
+                                    <h3 class="text-center">COMPRADOR</h3>
+                                </div>
+                                <div id="saler" class="text-white rounded col-5 bg-body shadow-lg p-2" data-bs-target="#welcome" data-bs-toggle="modal">
+                                    <h3 class="text-center">VENDEDOR</h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Comenzar a navegar</button>
+            </div>
+            <div class="modal fade" id="welcome" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row justify-content-between p-3">
+                                <h3 class="text-center">
+                                    Te damos la bienvenida!!, todo esta listo.
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="location.reload()">Comenzar a navegar</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a> -->
-    <?php } ?>
+            <!-- <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a> -->
+        <?php } ?>
 
-    <?php include 'partials/tail.php' ?>
+        <?php include 'partials/tail.php' ?>
 
-    <script>
-        const customerside = document.querySelector('#customer');
-        const salerside = document.querySelector('#saler');
+        <script>
+            const customerside = document.querySelector('#customer');
+            const salerside = document.querySelector('#saler');
 
-        document.addEventListener('click', e => {
-            if (e.target.id == 'customer') {
-                setSide('C')
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res)
-                        $('#side').modal('hide');
-                    })
-                    .catch(err => console.log(err));
+            document.addEventListener('click', e => {
+                if (e.target.id == 'customer') {
+                    setSide('C')
+                        .then(res => res.json())
+                        .then(res => {
+                            console.log(res)
+                            $('#side').modal('hide');
+                        })
+                        .catch(err => console.log(err));
 
 
-            } else if (e.target.id == 'saler') {
-                setSide('V')
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res)
-                        $('#side').modal('hide');
-                    })
-                    .catch(err => console.log(err));
+                } else if (e.target.id == 'saler') {
+                    setSide('V')
+                        .then(res => res.json())
+                        .then(res => {
+                            console.log(res)
+                            $('#side').modal('hide');
+                        })
+                        .catch(err => console.log(err));
 
-                $('#side').modal('hide');
-            }
-        })
-
-        async function setSide(side) {
-            try {
-                let res = await fetch('http://localhost/user/side', {
-                    method: "POST",
-                    body: JSON.stringify({
-                        side,
-                        user
-                    })
-                })
-
-                return res;
-            } catch {
-                return new Error('Cannot chose a side');
-            }
-        }
-    </script>
-
-    <script>
-        window.onload = () => {
-            $('#usr-img').modal('show');
-        }
-
-        const img = document.querySelector('#avatar-img');
-        const avatar = document.querySelector('#init-img');
-        const save = document.querySelector('#put-img');
-
-        img.addEventListener('change', e => {
-            let file = (e.target.files[0]);
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.addEventListener('load', function() {
-                avatar.src = this.result;
+                    $('#side').modal('hide');
+                }
             })
-        })
 
-        save.addEventListener('click', async e => {
+            async function setSide(side) {
+                try {
+                    let res = await fetch('http://localhost/user/side', {
+                        method: "POST",
+                        body: JSON.stringify({
+                            side,
+                            user
+                        })
+                    })
 
-            const formData = new FormData();
-            const user = document.querySelector('#user');
-            formData.append('user', user.textContent.trim());
-            formData.append('img', img.files[0]);
-
-            fetch('http://localhost/user/ImageEdit', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(res => {
-                    if ($('#usr-img') != undefined) {
-                        $('#usr-img').modal('hide');
-                        return;
-                    }
-                    location.reload();
-
-                })
-                .catch(err => console.log(err));
-
-        })
-    </script>
-
-    <script>
-        /* EMPAQUETAR FUNCIONALIDAD */
-        const URL = 'http://localhost'
-        const privacyCheck = document.querySelector('#privacy');
-
-        async function setPrivacy(data) {
-            try {
-                const response = await fetch(`${URL}/user/privacy`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                return response.json();
-            } catch {
-                return 'Cannot set privacy';
+                    return res;
+                } catch {
+                    return new Error('Cannot chose a side');
+                }
             }
-        }
+        </script>
 
-        function privateAccount() {
-            const container = document.querySelector('#wrapper');
-            const containerTitle = document.querySelector('#wrapper-title');
+        <script>
+            window.onload = () => {
+                $('#usr-img').modal('show');
+            }
 
-            container.classList.remove('d-flex');
-            container.classList.add('d-none');
+            const img = document.querySelector('#avatar-img');
+            const avatar = document.querySelector('#init-img');
+            const save = document.querySelector('#put-img');
 
-            containerTitle.textContent = 'Cuenta Privada'
-        }
+            img.addEventListener('change', e => {
+                let file = (e.target.files[0]);
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.addEventListener('load', function() {
+                    avatar.src = this.result;
+                })
+            })
 
-        function publicAccount() {
-            const container = document.querySelector('#wrapper');
-            const containerTitle = document.querySelector('#wrapper-title');
+            save.addEventListener('click', async e => {
 
-            container.classList.remove('d-none');
-            container.classList.add('d-flex');
+                const formData = new FormData();
+                const user = document.querySelector('#user');
+                formData.append('user', user.textContent.trim());
+                formData.append('img', img.files[0]);
 
-            containerTitle.textContent = 'Productos Disponibles';
-        }
-
-        privacyCheck.addEventListener('change', (e) => {
-            if (e.target.id == 'privacy') {
-                setPrivacy({
-                        user: document.querySelector('#user').textContent.trim(),
-                        mode: e.target.checked
+                fetch('http://localhost/user/ImageEdit', {
+                        method: 'POST',
+                        body: formData
                     })
                     .then(res => {
-                        if (res.privacy) {
-                            publicAccount();
-                        } else if (!res.privacy) {
-                            privateAccount();
+                        if ($('#usr-img') != undefined) {
+                            $('#usr-img').modal('hide');
+                            return;
                         }
+                        location.reload();
+
                     })
-                    .catch(err => {
-                        console.log(err)
+                    .catch(err => console.log(err));
+
+            })
+        </script>
+
+        <script>
+            /* EMPAQUETAR FUNCIONALIDAD */
+            const URL = 'http://localhost'
+            const privacyCheck = document.querySelector('#privacy');
+
+            async function setPrivacy(data) {
+                try {
+                    const response = await fetch(`${URL}/user/privacy`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
                     });
+
+                    return response.json();
+                } catch {
+                    return 'Cannot set privacy';
+                }
             }
-        })
-    </script>
+
+            function privateAccount() {
+                const container = document.querySelector('#wrapper');
+                const containerTitle = document.querySelector('#wrapper-title');
+
+                container.classList.remove('d-flex');
+                container.classList.add('d-none');
+
+                containerTitle.textContent = 'Cuenta Privada'
+            }
+
+            function publicAccount() {
+                const container = document.querySelector('#wrapper');
+                const containerTitle = document.querySelector('#wrapper-title');
+
+                container.classList.remove('d-none');
+                container.classList.add('d-flex');
+
+                containerTitle.textContent = 'Productos Disponibles';
+            }
+
+            privacyCheck.addEventListener('change', (e) => {
+                if (e.target.id == 'privacy') {
+                    setPrivacy({
+                            user: document.querySelector('#user').textContent.trim(),
+                            mode: e.target.checked
+                        })
+                        .then(res => {
+                            if (res.privacy) {
+                                publicAccount();
+                            } else if (!res.privacy) {
+                                privateAccount();
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        });
+                }
+            })
+        </script>
 </body>
 
 </html>
