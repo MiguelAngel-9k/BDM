@@ -722,7 +722,7 @@ $categories = $data['CATEGOIRES'];
 
         async function setSide(side) {
             try {
-                let res = await fetch('http://localhost/user/side', {
+                let res = await fetch('http://localhost/BDM/user/side', {
                     method: "POST",
                     body: JSON.stringify({
                         side,
@@ -762,7 +762,7 @@ $categories = $data['CATEGOIRES'];
             formData.append('user', user.textContent.trim());
             formData.append('img', img.files[0]);
 
-            await fetch('http://localhost/user/ImageEdit', {
+            await fetch('http://localhost/BDM/user/ImageEdit', {
                     method: 'POST',
                     body: formData
                 })
@@ -781,7 +781,7 @@ $categories = $data['CATEGOIRES'];
 
     <script>
         /* EMPAQUETAR FUNCIONALIDAD */
-        const URL = 'http://localhost'
+        const URL = 'http://localhost/BDM'
         const privacyCheck = document.querySelector('#privacy');
 
         async function setPrivacy(data) {

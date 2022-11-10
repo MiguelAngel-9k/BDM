@@ -27,7 +27,7 @@ class User extends Controller
         } else {
             //NGINX URL VALID $_GET[constant('URL')] == '/'
             //APACHE URL VALID empty($_GET)
-            if ($_GET[constant('URL')] == '/') {
+            if (empty($_GET)) {
                 require "views/user/register.php";
             } else {
                 header('location:' . constant('API'));
