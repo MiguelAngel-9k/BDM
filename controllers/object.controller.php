@@ -18,9 +18,9 @@ class Product extends Controller{
     } */
 
     public function newProduct(){
-
-
+        //$this->existsPOST(['pName', 'pQty', 'pPrice', ])
     }
+
 }
 
 ?>

@@ -50,6 +50,8 @@ DECLARE EXIT HANDLER FOR 1062
                 SYSDATE()
             );
 
+            SELECT "USUARIO INSERTADO" AS 'RESULTADO';
+
         WHEN _OP = 'PWD' THEN
             UPDATE USUARIOS
                 SET USR_PWD = _PWD

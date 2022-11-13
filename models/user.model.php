@@ -26,7 +26,8 @@ class UserModel
         }
     }
 
-    public function editPrivacy($user, $mode){
+    public function editPrivacy($user, $mode)
+    {
 
         $privacy = $mode ? 'ON' : 'OFF';
 
@@ -37,11 +38,11 @@ class UserModel
                 'PRIV' => $privacy
             ]);
 
-            if($query->rowCount() > 0){
+            if ($query->rowCount() > 0) {
                 return 'Privacy account changed';
             }
         } catch (PDOException $e) {
-            return 'Cannot turn edit privacy account, try again: '. $e->getMessage();
+            return 'Cannot turn edit privacy account, try again: ' . $e->getMessage();
         }
     }
 
@@ -86,7 +87,8 @@ class UserModel
         }
     }
 
-    public function setSide($side, $user){
+    public function setSide($side, $user)
+    {
         try {
             $query = $this->conn->prepare("CALL SP_USUARIO(:EMAIL, '', :SIDE, '', '', '', '', 'SID')");
             $query->execute([
@@ -96,9 +98,9 @@ class UserModel
 
             return '';
 
-            if($query->rowCount() > 0){
+            if ($query->rowCount() > 0) {
                 return '';
-            }else{
+            } else {
                 return 'Something went wrong as we expected';
             }
         } catch (PDOException $e) {
@@ -106,7 +108,8 @@ class UserModel
         }
     }
 
-    public function changeAvatar($img, $user){
+    public function changeAvatar($img, $user)
+    {
         try {
 
             $query = $this->conn->prepare("CALL SP_USUARIO(:EMAIL, '', '', :IMG, '', '', '', 'IMG')");
@@ -116,9 +119,8 @@ class UserModel
             ]);
 
             return true;
-
         } catch (PDOException $e) {
-            return "Algo paso al tratar de cambiar la imagen de avatar, intenta de nuevo, error: ".$e->getMessage();
+            return "Algo paso al tratar de cambiar la imagen de avatar, intenta de nuevo, error: " . $e->getMessage();
         }
     }
 
@@ -132,17 +134,17 @@ class UserModel
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
 
-    public function editPass($user, $oldpass, $newpass){
+    public function editPass($user, $oldpass, $newpass)
+    {
         try {
             $query = $this->conn->prepare("CALL SP_SESSION(:USUARIO, :PASS, '', '', 'PWD')");
             $query->execute([
-                'USUARIO'=> $user,
-                'PASS'=>$this->pwd
+                'USUARIO' => $user,
+                'PASS' => $this->pwd
             ]);
             return true;
-
         } catch (PDOException $e) {
-            echo "Algo paso al tratar de cambiar la contraseña, intenta de nuevo, error: ".$e->getMessage();
+            echo "Algo paso al tratar de cambiar la contraseña, intenta de nuevo, error: " . $e->getMessage();
             return false;
         }
     }
@@ -160,8 +162,8 @@ class UserModel
 
             $result = $query->fetch(PDO::FETCH_ASSOC);
 
-            if($query->rowCount() > 0){
-                if(password_verify($pwd, $result['PWD'])){
+            if ($query->rowCount() > 0) {
+                if (password_verify($pwd, $result['PWD'])) {
                     $this->email = $result['CORREO'];
                     $this->nickname = $result['APODO'];
                     $this->img = $result['IMGN'];
@@ -187,8 +189,6 @@ class UserModel
             }
 
             return [];
-
-
         } catch (PDOException $e) {
             echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
             return;
@@ -208,17 +208,15 @@ class UserModel
 
             //IF USER EMAIL OR USER NICKNAME ALREADY EXISTS ON DB, RETURNS
             //AN ERROR MESSAGE
-            if(isset($query->fetch(PDO::FETCH_ASSOC)['RESULTADO']))
-                return $query->fetch(PDO::FETCH_ASSOC)['RESULTADO'];
-
-            return null;
+            return $query->rowCount() > 0 ? $query->fetch(PDO::FETCH_ASSOC)['RESULTADO'] : null;
         } catch (PDOException $e) {
             echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
             return 'Ups!!!... Algo ocurrio al crear tu usuario, tendremos a nuestros monos trabajando en ello.';
         }
     }
 
-    public function edit($email, $name, $nickname, $gender){
+    public function edit($email, $name, $nickname, $gender)
+    {
         try {
 
             $query = $this->conn->prepare("CALL SP_USUARIO(:email, :nickname, '', '', :name, :gnder, '', 'EDT' )");

@@ -46,15 +46,19 @@ class User extends Controller
                 $user->setPwd($_POST['pwd']);
                 $user->setName($_POST['name']);
 
-                if ($user->register() == null)
+                $user->register() == null;
                     // header('location: http://localhost/error/page');
 
 
                 session_start();
                 $_SESSION['USER'] = $user->getEmail();
-                header('location:' . constant('API') . 'user/profile/');
+                header('location: '.constant('API').'user/profile/');
                 // $this->render('user/profile', $user->serialize());
+            }else{
+                echo 'Invalid data';
             }
+        }else{
+            echo 'Value missing';
         }
     }
 
