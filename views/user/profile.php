@@ -1,8 +1,9 @@
 <?php include 'partials/head.php' ?>
 
 <?php $user = $data['USER'];
-$categories = $data['CATEGOIRES'];
-// var_dump($user)
+$categories = $data['CATEGOIRES'];/* 
+foreach($categories as $category)
+    var_dump($category['ID']); */
 ?>
 
 <body class="bg-primary">
@@ -540,7 +541,8 @@ $categories = $data['CATEGOIRES'];
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form id="addProduct" action="<?php echo constant('API'); ?>product/newProduct" method="POST">
+                        <input type="hidden" name="pOwner" value="<?php echo $user['email'] ?>" />
                         <div class="row">
                             <div class="m-2 col-8">
                                 <label for="pName" class="form-label">Nombre del producto</label>
@@ -548,7 +550,7 @@ $categories = $data['CATEGOIRES'];
                             </div>
                             <div class="m-2 col-2">
                                 <label for="pQty" class="form-label">Cantidad</label>
-                                <input type="text" class="form-control" id="pQty">
+                                <input type="text" class="form-control" id="pQty" name="pQty">
                             </div>
                             <div class="m-2 col-4">
                                 <label for="pPrice" class="form-label">Fijar percio base</label>
@@ -556,9 +558,8 @@ $categories = $data['CATEGOIRES'];
                             </div>
                             <div class="m-2 col-5 align-self-center">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el
-                                        precio</label>
+                                    <input class="form-check-input" type="checkbox" id="pCot" name="pCot">
+                                    <label class="form-check-label" for="cot">Mostrar el precio</label>
                                 </div>
                             </div>
                             <div class="m-2 col-12">
@@ -567,15 +568,16 @@ $categories = $data['CATEGOIRES'];
                             </div>
                             <div class="m-2 col-12">
                                 <label for="pCat" class="form-label">Categoria</label>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="1">Calzado</option>
-                                    <option value="2">Tecnologia</option>
-                                    <option value="3">Electronica</option>
+                                <select class="form-select" aria-label="Default select example" id="pCat" name="pCat">
+                                   <?php
+                                        foreach($categories as $category)
+                                           echo "<option value = '".$category['ID']."'> ".$category['NAME']." </option> ";
+                                   ?>
                                 </select>
                             </div>
                             <div class="m-2 col-12">
                                 <label for="pDesc" class="form-label">Mas informacion acerca</label>
-                                <textarea class="form-control" id="pDesc" rows="3"></textarea>
+                                <textarea class="form-control" id="pDesc" name="pDesc" rows="3"></textarea>
                             </div>
                             <div class="m-2 d-grid gap-2">
                                 <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
@@ -848,6 +850,16 @@ $categories = $data['CATEGOIRES'];
             }
         })
     </script>
+
+   <!--  <script>
+
+        const prductoForm = document.querySelector('#addProduct');
+        prductoForm.addEventListener('change', e => {
+            if(e.target.id = 'cot')
+                alert(e.target.checked);
+        })
+
+    </script> -->
 </body>
 
 </html>

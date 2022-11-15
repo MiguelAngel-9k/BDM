@@ -7,6 +7,7 @@ include_once 'libs/controller.php';
 //MODELS
 include_once 'models/user.model.php';
 include_once 'models/category.model.php';
+include_once 'models/product.model.php';
 
 include 'config/config.php';
 
