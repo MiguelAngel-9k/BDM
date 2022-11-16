@@ -21,7 +21,7 @@ class ProudctModel{
         }
     }
 
-    function add($name, $desc, $cot=false, $price, $qty, $owner){
+    function add($name, $desc, $cot=false, $price, $qty, $owner, $media){
         try {
             $query = $this->conn->prepare("CALL SP_OBJETOS(0, :NAME, :DESC, :COT, :PRICE, :QTY, :OWNER, 'INI')");
             $query->execute([
@@ -33,10 +33,29 @@ class ProudctModel{
                 'OWNER' => $owner
             ]);
 
+            //NO SE PUEDEN USAR DOS QUERYS A LA VEZ, HACER FUNCION PARA 
+            //INSERTAR LAS IMAGENES DE MANERA INDEPENDIENTE 
+            //SI ES VIDEO SE GUARDA DE MANERA LOCAL EN EL SERVIDOR
+            //SI ES IMAGEN SE GUARDA EN LA BASE DE DATOS COMO BLOB
+            $productIserted = $query->fetch(PDO::FETCH_ASSOC)['RESULTADO'];
+            $query->closeCursor();
+            $mediaQuery = $this->conn->prepare("CALL SP_MULTIMEDIA(0, :PROD, :REC, :EXT, :PESO, :TIPO, 'INS')");
+            foreach($media as $resource){
+               $mediaQuery->execute([
+                    "PROD" => $productIserted,
+                    "REC" => file_get_contents($resource[0]['tmp_name']),
+                    "EXT" => $resource[0]['ext'],
+                    "PESO" => $resource[0]['size'],
+                    "TIPO" => $resource[0]['type']
+               ]);
+               $mediaQuery->fetchAll(PDO::FETCH_ASSOC);
+               $mediaQuery->closeCursor();
+            }
+            
+
             return $query->rowCount() > 0 ? true : false;
         } catch (PDOException $e) {
-            echo 'Error al buscar al usuario ' . $e->getMessage() . "\n";
-            return 'Ups!!!... Algo ocurrio al crear un nuevo producto.';
+            return 'Error al insertar producto ' . $e->getMessage() . "\n";
         }
     }
 

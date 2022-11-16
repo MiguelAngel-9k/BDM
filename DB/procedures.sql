@@ -165,7 +165,7 @@ CREATE PROCEDURE SP_OBJETOS(
 BEGIN
 
     CASE
-        WHEN _OP = 'INI' THEN
+        WHEN _OP = 'INI' THEN #INSERTAR
             INSERT INTO OBJETOS(
                 OBJ_NMBRE,
                 OBJ_DESC,
@@ -184,13 +184,54 @@ BEGIN
                 SYSDATE()
             );
 
-            SELECT 'OBJETO AGREGADO' AS 'RESULTADO';
+            SELECT 
+                ID_OBJ AS 'RESULTADO' 
+            FROM OBJETOS ORDER BY ID_OBJ DESC LIMIT 1;
+
         WHEN _OP = 'APB' THEN #APROBAR
             UPDATE OBJETOS
                 SET OBJ_ST = 0
             WHERE ID_OBJ = _OBJ;
 
             SELECT 'OBJETO APROBADO' AS 'RESULTADO';
+
+    END CASE;
+
+END //
+DELIMITER ;
+
+USE MERCADONA_DB;
+DROP PROCEDURE IF EXISTS SP_MULTIMEDIA;
+DELIMITER //
+CREATE PROCEDURE SP_MULTIMEDIA(
+    IN _MULTIMEDIA_ID BIGINT,
+    IN _OBJ BIGINT,
+    IN _RECURSO MEDIUMBLOB,
+    IN _EXTENSION VARCHAR(10),
+    IN _PESO VARCHAR(50),
+    IN _TIPO VARCHAR(10),
+    IN _OP CHAR(3)
+)
+BEGIN
+
+    CASE
+
+        WHEN _OP = 'INS' THEN #INSERTAR IMAGENES PRODUCTO
+            INSERT INTO MULTIMEDIA(
+                ID_OBJ,
+                MEDIA_REC,
+                MEDIA_EXT,
+                MEDIA_PESO,
+                MEDIA_TIPO
+            ) VALUES(
+                _OBJ,
+                _RECURSO,
+                _EXTENSION,
+                _PESO,
+                _TIPO
+            );
+
+            SELECT 'RECURSO INSERTADO' AS 'RESULTADO';
 
     END CASE;
 
