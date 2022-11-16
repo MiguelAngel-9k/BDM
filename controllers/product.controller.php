@@ -18,7 +18,10 @@ class Product extends Controller{
     } */
 
     public function newProduct(){
-        if($this->existsPOST(['pName', 'pQty', 'pPrice', 'pCat', 'pDesc', 'pOwner'])){
+
+        var_dump($_FILES['pMedia']);
+
+        /* if($this->existsPOST(['pName', 'pQty', 'pPrice', 'pCat', 'pDesc', 'pOwner'])){
             $product = new ProudctModel();
             $cot = isset($_POST['pCot']);
             $product->add(
@@ -32,7 +35,7 @@ class Product extends Controller{
 
             header('location: '.constant('API'));
 
-        }
+        } */
     }
 
 }

@@ -541,7 +541,7 @@ foreach($categories as $category)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addProduct" action="<?php echo constant('API'); ?>product/newProduct" method="POST">
+                    <form id="addProduct" action="<?php echo constant('API'); ?>product/newProduct" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="pOwner" value="<?php echo $user['email'] ?>" />
                         <div class="row">
                             <div class="m-2 col-8">
@@ -564,7 +564,7 @@ foreach($categories as $category)
                             </div>
                             <div class="m-2 col-12">
                                 <label for="pMedia" class="form-label">Imagenes o Videos</label>
-                                <input class="form-control" type="file" id="pMedia" multiple>
+                                <input class="form-control" type="file" id="pMedia" name="pMedia[]" multiple="multiple">
                             </div>
                             <div class="m-2 col-12">
                                 <label for="pCat" class="form-label">Categoria</label>
