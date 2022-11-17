@@ -168,6 +168,8 @@ BEGIN
     CASE
         WHEN _OP = 'INI' THEN #INSERTAR
 
+            SET @COTIZACION = (SELECT IF(_COT = 1, b'1', b'0'));
+
             DROP TABLE IF EXISTS HOLDER;
             CREATE TEMPORARY TABLE HOLDER(
                 CATEGORIA INT NOT NULL PRIMARY KEY
@@ -186,7 +188,7 @@ BEGIN
             )VALUES(
                 _NMBRE,
                 _DESC,
-                _COT,
+                @COTIZACION,
                 _PRECIO,
                 _CANT,
                 _VEND,
@@ -196,6 +198,10 @@ BEGIN
             SELECT 
                 ID_OBJ AS 'RESULTADO' 
             FROM OBJETOS ORDER BY ID_OBJ DESC LIMIT 1;
+
+        WHEN _OP = 'GTO' THEN #OBTNER POR DUENIO
+            SELECT * FROM VW_PORTADA_OBJETO
+                WHERE VENDEDOR = _VEND;
 
         WHEN _OP = 'APB' THEN #APROBAR
             UPDATE OBJETOS

@@ -1,7 +1,10 @@
 <?php include 'partials/head.php' ?>
 
 <?php $user = $data['USER'];
-$categories = $data['CATEGOIRES'];/* 
+$categories = $data['CATEGOIRES'];
+$products = $data['PRODUCTS'];
+// var_dump($products);
+/* 
 foreach($categories as $category)
     var_dump($category['ID']); */
 ?>
@@ -202,51 +205,35 @@ foreach($categories as $category)
                 <div class="col m-2">
                     <p id="wrapper-title" class="fs-1 fw-bold text-light text-center"><?php echo $user['priv'] == 1 ? 'Productos Disponibles' : 'Cuenta Privada' ?></p>
                     <div class="row justify-content-center <?php echo $user['priv'] == 1 ? 'd-flex' : 'd-none' ?>" id="wrapper">
-                        <div class="col-lg-4 col-sm-6 col-12 col-md-4">
-                            <div class="card rounded p-2 m-1" style="width:18rem;">
-                                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754237-MLA44715287415_012021-F.webp" alt="Imagen" class="card-img-top rounded">
-                                <div class="card-body">
-                                    <h3 class="card-title">
-                                        Bocinas JBL
-                                    </h3>
-                                    <p class="card-text">
-                                        cupiditate molestias distinctio, officiis quidem nobis?
-                                    </p>
-                                    <small class="text-success fw-bold fs-4">
-                                        $1,500
-                                    </small>
-                                    <a href="product.html" class="my-2 btn text-light d-block btn-success">
-                                        Comprar
-                                    </a>
-                                    <a href="#" class="my-2 btn text-light d-block btn-success-light">
-                                        Añadir al carrito
-                                    </a>
+                        <?php
+                        foreach ($products as $product) {
+                        ?>
+                            <div class="col-lg-4 col-sm-6 col-12 col-md-4">
+                                <div class="card rounded p-2 m-1" style="width:18rem;">
+                                    <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($product->getCover()) . '" alt="Imagen" class="card-img-top rounded">' ?>
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            <?php echo $product->getName(); ?>
+                                        </h3>
+                                        <p class="card-text">
+                                            <?php echo $product->getDescription(); ?>
+                                        </p>
+                                        <small class="text-success fw-bold fs-4">
+                                            <?php echo "$".$product->getPrice(); ?>
+                                        </small>
+                                        <a href="<?php echo $product->getID(); ?>" class="my-2 btn text-light d-block btn-success">
+                                            Comprar
+                                        </a>
+                                        <a href="#" class="my-2 btn text-light d-block btn-success-light">
+                                            Añadir al carrito
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-12 col-md-4">
-                            <div class="card rounded p-2 m-1" style="width:18rem;">
-                                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754237-MLA44715287415_012021-F.webp" alt="Imagen" class="card-img-top">
-                                <div class="card-body">
-                                    <h3 class="card-title">
-                                        Bocinas JBL
-                                    </h3>
-                                    <p class="card-text">
-                                        cupiditate molestias distinctio, officiis quidem nobis?
-                                    </p>
-                                    <small class="text-success fw-bold fs-4">
-                                        $1,500
-                                    </small>
-                                    <a href="product.html" class="my-2 btn text-light d-block btn-success">
-                                        Comprar
-                                    </a>
-                                    <a href="#" class="my-2 btn text-light d-block btn-success-light">
-                                        Añadir al carrito
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-12 col-md-4">
+                        <?php
+                        }
+                        ?>
+                        <!--<div class="col-lg-4 col-sm-6 col-12 col-md-4">
                             <div class="card rounded p-2 m-1" style="width:18rem;">
                                 <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754237-MLA44715287415_012021-F.webp" alt="Imagen" class="card-img-top">
                                 <div class="card-body">
@@ -334,6 +321,28 @@ foreach($categories as $category)
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-4 col-sm-6 col-12 col-md-4">
+                            <div class="card rounded p-2 m-1" style="width:18rem;">
+                                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_754237-MLA44715287415_012021-F.webp" alt="Imagen" class="card-img-top">
+                                <div class="card-body">
+                                    <h3 class="card-title">
+                                        Bocinas JBL
+                                    </h3>
+                                    <p class="card-text">
+                                        cupiditate molestias distinctio, officiis quidem nobis?
+                                    </p>
+                                    <small class="text-success fw-bold fs-4">
+                                        $1,500
+                                    </small>
+                                    <a href="product.html" class="my-2 btn text-light d-block btn-success">
+                                        Comprar
+                                    </a>
+                                    <a href="#" class="my-2 btn text-light d-block btn-success-light">
+                                        Añadir al carrito
+                                    </a>
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
         </div>
@@ -569,10 +578,10 @@ foreach($categories as $category)
                             <div class="m-2 col-12">
                                 <label for="pCat" class="form-label">Categoria</label>
                                 <select class="form-select" aria-label="Default select example" id="pCat" name="pCat">
-                                   <?php
-                                        foreach($categories as $category)
-                                           echo "<option value = '".$category['ID']."'> ".$category['NAME']." </option> ";
-                                   ?>
+                                    <?php
+                                    foreach ($categories as $category)
+                                        echo "<option value = '" . $category['ID'] . "'> " . $category['NAME'] . " </option> ";
+                                    ?>
                                 </select>
                             </div>
                             <div class="m-2 col-12">
@@ -851,7 +860,7 @@ foreach($categories as $category)
         })
     </script>
 
-   <!--  <script>
+    <!--  <script>
 
         const prductoForm = document.querySelector('#addProduct');
         prductoForm.addEventListener('change', e => {

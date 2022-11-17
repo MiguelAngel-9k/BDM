@@ -51,7 +51,7 @@ class Product extends Controller{
                 $_POST['pQty'],
                 $_POST['pOwner'],
                 $media,
-                1
+                $_POST['pCat']
             );
 
             header('location: '.constant('API'));

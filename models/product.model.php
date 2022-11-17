@@ -3,6 +3,7 @@
 class ProudctModel{
     
     private $id;
+    private $cover;
     private $name;
     private $description;
     private $contization = false;
@@ -21,7 +22,7 @@ class ProudctModel{
         }
     }
 
-    function add($name, $desc, $cot=false, $price, $qty, $owner, $media, $category){
+    function add($name, $desc, $cot, $price, $qty, $owner, $media, $category){
         try {
             $query = $this->conn->prepare("CALL SP_OBJETOS(0, :NAME, :DESC, :COT, :PRICE, :QTY, :OWNER, :CAT, 'INI')");
             $query->execute([
@@ -42,6 +43,32 @@ class ProudctModel{
             return $query->rowCount() > 0 ? true : false;
         } catch (PDOException $e) {
             return 'Error al insertar producto ' . $e->getMessage() . "\n";
+        }
+    }
+
+    function getByOwner($owner){
+        try {
+            $query = $this->conn->prepare("CALL SP_OBJETOS(0, '', '', 0, 0, 0, :OWNER, 0, 'GTO')");
+            $query->execute(['OWNER' => $owner]);
+
+            $buffer = [];
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                $product = new ProudctModel();
+                $product->setName($row['TITULO']);
+                $product->setCover($row['PORTADA']);
+                $product->setDescription($row['DESCRIPCION']);
+                $product->setPrice($row['PRECIO']);
+                $product->setID($row['OBJETO']);
+                $product->setOwner($row['VENDEDOR']);
+
+                array_push($buffer, $product);
+            }
+
+            return $buffer;
+
+
+        } catch (PDOException $e) {
+            return 'Error al obtener los productos por usuario ' . $e->getMessage() . "\n";
         }
     }
 
@@ -74,6 +101,7 @@ class ProudctModel{
     function setPrice($price){ $this->price = $price; }
     function setQuantity($quantity){ $this->quantity = $quantity; }
     function setOwner($owner){ $this->owner = $owner; }
+    function setCover($cover){ $this->cover = $cover; }
 
     //GETTERS
     function getID(){ return $this->id; }
@@ -83,7 +111,6 @@ class ProudctModel{
     function getPrice(){ return $this->price; }
     function getQuantity(){ return $this->quantity; }
     function getOwner(){ return $this->owner; }
+    function getCover(){ return $this->cover; }
 
 }
-
-?>

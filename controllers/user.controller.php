@@ -69,10 +69,12 @@ class User extends Controller
         $user->get($_SESSION['USER']);
 
         $categories = new CategoryModel();
+        $products = new ProudctModel();
 
         $data = array(
             'USER' => $user->serialize(),
-            'CATEGOIRES' => $categories->getAll()
+            'CATEGOIRES' => $categories->getAll(),
+            'PRODUCTS' => $products->getByOwner($_SESSION['USER'])
         );
 
         $this->render('user/profile',  $data);
