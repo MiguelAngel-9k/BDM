@@ -160,12 +160,21 @@ CREATE PROCEDURE SP_OBJETOS(
     IN _PRECIO  FLOAT,
     IN _CANT    INT,
     IN _VEND    VARCHAR(50),
+    IN _CAT     INT,
     IN _OP      CHAR(3)
 )
 BEGIN
 
     CASE
         WHEN _OP = 'INI' THEN #INSERTAR
+
+            DROP TABLE IF EXISTS HOLDER;
+            CREATE TEMPORARY TABLE HOLDER(
+                CATEGORIA INT NOT NULL PRIMARY KEY
+            );
+
+            INSERT INTO HOLDER VALUES(_CAT);
+
             INSERT INTO OBJETOS(
                 OBJ_NMBRE,
                 OBJ_DESC,

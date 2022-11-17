@@ -32,26 +32,13 @@ class Product extends Controller{
                 'ext' => pathinfo($files['name'][$filePosition], PATHINFO_EXTENSION)
             ]);
 
+            if($singleMedia['type'] === 'video'){
+                move_uploaded_file($singleMedia['tmp_name'], '/');
+                $singleMedia['name'] = '/';
+            }
+
             array_push($media, $singleMedia);
         }
-
-        // var_dump($media);
-        
-
-        /* echo '<ul>';
-        $count = 0;
-        foreach ($media as $single) {
-            echo "<li> Item Numero $count </li>";
-            echo "<ul>";
-            echo "<li>".$single[0]['name']."</li>";
-            echo "<li>".$single[0]['type']."</li>";
-            echo "<li>".$single[0]['tmp_name']."</li>";
-            echo "<li>".$single[0]['size']."</li>";
-            echo "<li>".$single[0]['ext']."</li>";
-            echo "</ul>";
-            $count++;
-        }   
-        echo '</ul>'; */
 
         if($this->existsPOST(['pName', 'pQty', 'pPrice', 'pCat', 'pDesc', 'pOwner'])){
             $product = new ProudctModel();
@@ -63,19 +50,16 @@ class Product extends Controller{
                 $_POST['pPrice'],
                 $_POST['pQty'],
                 $_POST['pOwner'],
-                $media
+                $media,
+                1
             );
 
-            // header('location: '.constant('API'));
+            header('location: '.constant('API'));
 
         }
     }
 
 }
-
-//AGREGAR MULTIPLES ARCHVOS MULTIMEDIA
-//AGREGAR A COTIZACIONES DE SER NECESARIO
-//AGREGAR A LAS CATEGORIAS POR OBJETO
 
 
 
