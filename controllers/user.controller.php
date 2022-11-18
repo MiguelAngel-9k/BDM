@@ -91,7 +91,8 @@ class User extends Controller
                 if (!empty($data)) {
                     $_SESSION['USER'] = $user->getEmail();
                     // var_dump($data);
-                    header("location:" . constant('API'));
+                    //header("location:" . constant('API'));
+                    header("location:" . constant('API')."product/landing");
                 }
             }
         }

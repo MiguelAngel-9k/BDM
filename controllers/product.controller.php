@@ -6,16 +6,25 @@ class Product extends Controller{
         parent:: __construct();
     }
 
-   /*  public function render(){
-        $view = 'views/object/landing.php';
-        if(file_exists($view)){
-            require $view;
+    public function render($path, $data = [])
+    {
+        session_start();
+
+        if (isset($_SESSION['USER'])) {
+            if (!empty($path)) {
+                $url = explode('/', $path);
+                $view = "views/$url[0]/$url[1].php";
+
+                if (file_exists($view)) {
+                    require "views/$url[0]/$url[1].php";
+                }
+            } else {
+                require "views/object/landing.php";
+            }
+        } else {
+            header('location:' . constant('API'));
         }
     }
-
-    public function render($path, $data=[]){
-        echo 'product controller render';
-    } */
 
     public function newProduct(){
 
@@ -57,6 +66,24 @@ class Product extends Controller{
             header('location: '.constant('API'));
 
         }
+    }
+
+    public function landing(){
+
+        session_start();
+        if(isset($_SESSION['USER'])){
+
+            $user = new UserModel();
+            $user->get($_SESSION['USER']);
+            $categories = new CategoryModel();
+
+            $data = [
+                'user' => $user->serialize(),
+                'categories' => $categories->getAll()
+            ];
+            $this->render('', $data);
+        }
+        header('location:'.constant('API'));
     }
 
 }
