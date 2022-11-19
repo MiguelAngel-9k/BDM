@@ -248,6 +248,10 @@ class UserModel
         return $this->email;
     }
 
+    public function getRol(){
+        return $this->rol;
+    }
+
     public function serialize()
     {
         return array(

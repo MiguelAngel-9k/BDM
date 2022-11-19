@@ -33,7 +33,7 @@ class App{
                     
                     if(isset($url[2])){ //ARGS
 
-                        var_dump(array_slice($url, 2));
+                        $controller->{$url[1]}(array_slice($url, 2));
                         
                     }else{ //NO ARGS
                         $controller->{$url[1]}();

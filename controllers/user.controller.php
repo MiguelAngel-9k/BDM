@@ -74,7 +74,7 @@ class User extends Controller
         $data = array(
             'USER' => $user->serialize(),
             'CATEGOIRES' => $categories->getAll(),
-            'PRODUCTS' => $products->getByOwner($_SESSION['USER'])
+            'PRODUCTS' => $user->getRol() == 'A' ? $products->getRequests() : $products->getByOwner($_SESSION['USER'])
         );
 
         $this->render('user/profile',  $data);

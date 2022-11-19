@@ -86,6 +86,32 @@ class Product extends Controller{
         header('location:'.constant('API'));
     }
 
+    public function aprove($args= []){
+        $product = new ProudctModel();
+        $product->updateStatus($args[0]);
+
+        header('location: '.constant('API'));
+    }
+
+    public function preview($args = []){
+
+        session_start();
+        $product = new ProudctModel();
+        $user = new UserModel();
+        $user->get($_SESSION['USER']);
+        if(isset($_SESSION['USER'])){
+            $data = [
+                'PRODUCT' => $product->get($args[0]),
+                'USER' => $user->serialize()
+            ];
+
+            $this->render('object/preview', $data);
+            return;
+        }
+
+        header('location: '.constant('API'));
+    }
+
 }
 
 
