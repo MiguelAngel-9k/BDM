@@ -9,7 +9,7 @@ define('REGX_PWD',  "/^((?=.+[A-Za-z])(?=.+\d)(?=.+[@$!%*#?&])[A-Za-z\d@$!%*#?&]
 define('SNAME', '127.0.0.1');
 define('UNAME', 'root');
 define('DNAME', 'MERCADONA_DB');
-define('PWD',  "quienSoy_Kingslayer9k");
+define('PWD',  "");
 
 define('REGX_NME', "/^[a-zA-Z\s]*$/");
 

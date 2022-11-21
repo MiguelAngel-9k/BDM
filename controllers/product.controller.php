@@ -29,25 +29,6 @@ class Product extends Controller{
     public function newProduct(){
 
         $media = [];
-        $files = $_FILES['pMedia'];
-
-
-        for ($filePosition=0; $filePosition < (count($files) - 2) ; $filePosition++) { 
-            $singleMedia = array([
-                'name' => $files['name'][$filePosition],
-                'type' => explode( '/',$files['type'][$filePosition])[0],
-                'tmp_name' => $files['tmp_name'][$filePosition],
-                'size' => $files['size'][$filePosition],
-                'ext' => pathinfo($files['name'][$filePosition], PATHINFO_EXTENSION)
-            ]);
-
-            if($singleMedia['type'] === 'video'){
-                move_uploaded_file($singleMedia['tmp_name'], '/');
-                $singleMedia['name'] = '/';
-            }
-
-            array_push($media, $singleMedia);
-        }
 
         if($this->existsPOST(['pName', 'pQty', 'pPrice', 'pCat', 'pDesc', 'pOwner'])){
             $product = new ProudctModel();
@@ -67,7 +48,32 @@ class Product extends Controller{
 
         }
     }
+    public function newList(){
+        $user = new UserModel();
+            $user->get($_SESSION['USER']);
+            $categories = new CategoryModel();
+            $productt = new ProudctModel();
+            $data = [
+                'user' => $user->serialize(),
+                'categories' => $categories->getAll(),
+               'productos'=> $productt->getAll(),
+            ];
+        if($this->existsPOST(['NameList', 'descripcion','owner'])){
+            $List = new  Wish_list();
+            echo $List->add(
+                $_POST['NameList'],
+                $_POST['descripcion'],
+               file_get_contents($_FILES['pMedia']['tmp_name']),
+                $_POST['owner'],
+                $_POST['privacy']
+            );
 
+            $this->render('whis_list/whis_list', $data);
+
+        }else{
+            header('location: '.constant('API'));
+        }
+    }
     public function landing(){
 
         session_start();
@@ -76,21 +82,39 @@ class Product extends Controller{
             $user = new UserModel();
             $user->get($_SESSION['USER']);
             $categories = new CategoryModel();
-
+            $productt = new ProudctModel();
             $data = [
                 'user' => $user->serialize(),
-                'categories' => $categories->getAll()
+                'categories' => $categories->getAll(),
+               'productos'=> $productt->getAll(),
             ];
             $this->render('', $data);
         }
         header('location:'.constant('API'));
     }
-
+    
     public function aprove($args= []){
         $product = new ProudctModel();
         $product->updateStatus($args[0]);
 
         header('location: '.constant('API'));
+    }
+    public function whis_list(){
+        session_start();
+        if(isset($_SESSION['USER'])){
+
+            $user = new UserModel();
+            $user->get($_SESSION['USER']);
+            $categories = new CategoryModel();
+            $productt = new ProudctModel();
+            $data = [
+                'user' => $user->serialize(),
+                'categories' => $categories->getAll(),
+               'productos'=> $productt->getAll(),
+            ];
+            $this->render('whis_list/whis_list', $data);
+        }
+        header('location:'.constant('API'));
     }
 
     public function preview($args = []){

@@ -311,4 +311,41 @@ BEGIN
 END //
 DELIMITER ; 
 
+
+
+
+DROP PROCEDURE IF EXISTS SP_LISTAS;
+DELIMITER //
+CREATE PROCEDURE SP_LISTAS(
+    IN _NOMBRE VARCHAR(50),
+    IN _DESCRIPCION VARCHAR(255),
+   IN _IMGN    MEDIUMBLOB,
+   IN _OWNER VARCHAR(50),
+   IN _PRIV    CHAR(3),
+    IN _OP CHAR(3)
+)
+BEGIN
+
+    CASE
+        WHEN _OP = 'INS' THEN
+        SET @PRIVACIDAD = (SELECT IF(_PRIV = 'ON',b'1',b'0'));
+            INSERT INTO d_listas(
+                DL_NOMBRE,
+                DL_DESC,
+                DL_IMGN,
+                DL_USR,
+                DL_ALTA,
+                DL_PRIV
+            )VALUES(
+                _NOMBRE,
+                _DESCRIPCION,
+                _IMGN,
+                _OWNER,
+                SYSDATE(),
+                @PRIVACIDAD
+            );
+    END CASE;
+END //
+DELIMITER ; 
+
 SELECT * FROM MERCADONA_DB.CATEGORIAS;

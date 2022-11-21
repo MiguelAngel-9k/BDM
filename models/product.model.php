@@ -107,7 +107,32 @@ class ProudctModel
             return 'Error al obtener los productos por usuario ' . $e->getMessage() . "\n";
         }
     }
+    
+    function getAll(){
+        try {
+            $query = $this->conn->prepare("CALL SP_OBJETOS(0, '', '', 0, 0, 0, '', 0, 'ALL')");
+            $query->execute();
 
+            $buffer = [];
+            while($row = $query->fetch(PDO::FETCH_ASSOC)){
+                $product = new ProudctModel();
+                $product->setName($row['TITULO']);
+                $product->setCover($row['PORTADA']);
+                $product->setDescription($row['DESCRIPCION']);
+                $product->setPrice($row['PRECIO']);
+                $product->setID($row['OBJETO']);
+                $product->setOwner($row['VENDEDOR']);
+
+                array_push($buffer, $product);
+            }
+
+            return $buffer;
+
+
+        } catch (PDOException $e) {
+            return 'Error al obtener los productos por usuario ' . $e->getMessage() . "\n";
+        }
+    }
     private function setMedia($media, $prod)
     {
         $query = $this->conn->prepare("CALL SP_MULTIMEDIA(0, :PROD, :REC, :EXT, :PESO, :TIPO, 'INS')");
