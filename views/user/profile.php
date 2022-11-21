@@ -3,7 +3,7 @@
 <?php $user = $data['USER'];
 $categories = $data['CATEGOIRES'];
 $products = $data['PRODUCTS'];
-// var_dump($products);
+$lists = $data['WLISTS'];
 /* 
 foreach($categories as $category)
     var_dump($category['ID']); */
@@ -88,56 +88,24 @@ foreach($categories as $category)
             <!-- WISH LISTS -->
             <div class="col-lg-3">
                 <div class="list-group border-bottom border-success border-5" id="wish-container">
-                    <div class="my-2 list-group-item list-group">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <a href="#" class="fs-5 fw-normal">Compras Skate</a>
-                                </div>
-                                <div class="row">
-                                    <p class="fst-italic fw-light text-primary fs-6">10/08/22</p>
-                                </div>
-                            </div>
-                            <div class="col my-auto">
-                                <?php echo '<img width="64" height="64" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                                <!-- <img width="64" height="64" src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg" alt="" class="float-end rounded"> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-group my-2">
-                        <div class="list-group-item list-group">
+                    <?php foreach ($lists as $list) { ?>
+                        <div class="my-2 list-group-item list-group">
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <a href="#" class="fs-5 fw-normal">Bocinas para fiestas</a>
+                                        <a href="#" class="fs-5 fw-normal"><?php echo $list->getName(); ?></a>
                                     </div>
                                     <div class="row">
-                                        <p class="fst-italic fw-light text-primary fs-6">10/08/22</p>
+                                        <p class="fst-italic fw-light text-primary fs-6"><?php echo $list->getDate(); ?></p>
                                     </div>
                                 </div>
                                 <div class="col my-auto">
-                                    <img width="64" height="64" src="https://m.media-amazon.com/images/I/71KC6YWsyLL._AC_SS450_.jpg" alt="" class="float-end rounded">
+                                    <?php echo '<img width="64" height="64" src="data:image/jpeg;base64,' . base64_encode($list->getCover()) . '"/>'; ?>
+                                    <!-- <img width="64" height="64" src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg" alt="" class="float-end rounded"> -->
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="list-group my-2">
-                        <div class="list-group-item list-group action">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <a href="#" class="fs-5 fw-normal">Monitores</a>
-                                    </div>
-                                    <div class="row">
-                                        <p class="fst-italic fw-light text-primary fs-6">10/08/22</p>
-                                    </div>
-                                </div>
-                                <div class="col my-auto">
-                                    <img width="64" height="64" src="https://static-geektopia.com/storage/t/p/128/128028/816x381/aw3423dw.webp" alt="" class="float-end rounded">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
                 <div class="row m-3">
                     <h3 class="text-primary">Opciones</h3>
@@ -167,7 +135,7 @@ foreach($categories as $category)
                             </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="wish_list.html">
+                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addListModal">
                                 Wish lists
                             </a>
                         </li>
@@ -240,15 +208,15 @@ foreach($categories as $category)
                                 </thead>
                                 <tbody>
                                     <?php foreach ($products as $product) { ?>
-                                            <tr>
-                                                <td><?php echo $product->getName(); ?> </td>
-                                                <td>$<?php echo $product->getPrice(); ?> </td>
-                                                <td><?php echo $product->getCategory(); ?> </td>
-                                                <td><?php echo $product->getDate(); ?> </td>
-                                                <td><?php echo $product->getQuantity(); ?>Pz </td>
-                                                <td><a class="btn text-light btn-success-light" href="<?php echo constant('API')."product/preview/".$product->getID(); ?>">See more</a></td>
-                                                <td><a class="btn btn-success" href="<?php echo constant('API')."product/aprove/".$product->getID(); ?>">Aprove</a></td>
-                                            </tr>
+                                        <tr>
+                                            <td><?php echo $product->getName(); ?> </td>
+                                            <td>$<?php echo $product->getPrice(); ?> </td>
+                                            <td><?php echo $product->getCategory(); ?> </td>
+                                            <td><?php echo $product->getDate(); ?> </td>
+                                            <td><?php echo $product->getQuantity(); ?>Pz </td>
+                                            <td><a class="btn text-light btn-success-light" href="<?php echo constant('API') . "product/preview/" . $product->getID(); ?>">See more</a></td>
+                                            <td><a class="btn btn-success" href="<?php echo constant('API') . "product/aprove/" . $product->getID(); ?>">Aprove</a></td>
+                                        </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -393,6 +361,46 @@ foreach($categories as $category)
                             </div>
                             <div class="d-grid m-2 gap-2">
                                 <input type="submit" value="Agregar" class="btn btn-success btn-block text-light">
+                                <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL -->
+        <!-- CREAR LISTA -->
+        <div class="modal fade" id="addListModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addListModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-primary">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="addListModal">New Wish List</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="<?php echo constant('API'); ?>wishList/new" method="POST" class="justify-content-center" enctype="multipart/form-data">
+                            <div class="row">
+                                <input type="hidden" name="owner" value="<?php echo $user['email']; ?>">
+                                <div class="m-2 col-12">
+                                    <label for="name" class="form-label">Wish list name</label>
+                                    <input type="text" class="form-control" id="wName" name="wName">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="m-2 col-12">
+                                    <label for="wDescription" class="form-label">Descripcion</label>
+                                    <input type="text" class="form-control" id="wDescription" name="wDescription">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="m-2 col-12">
+                                    <label for="wCover" class="form-label">Wish list image</label>
+                                    <input type="file" name="wCover" id="wCover" class="form-control">
+                                </div>
+                            </div>
+                            <div class="d-grid m-2 gap-2">
+                                <input type="submit" value="Create" class="btn btn-success btn-block text-light">
                                 <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
                             </div>
                         </form>

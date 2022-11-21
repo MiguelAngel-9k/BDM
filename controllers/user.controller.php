@@ -70,11 +70,13 @@ class User extends Controller
 
         $categories = new CategoryModel();
         $products = new ProudctModel();
+        $list = new WishListModel();
 
         $data = array(
             'USER' => $user->serialize(),
             'CATEGOIRES' => $categories->getAll(),
-            'PRODUCTS' => $user->getRol() == 'A' ? $products->getRequests() : $products->getByOwner($_SESSION['USER'])
+            'PRODUCTS' => $user->getRol() == 'A' ? $products->getRequests() : $products->getByOwner($_SESSION['USER']),
+            'WLISTS' => $list->getByOwner($_SESSION['USER'])
         );
 
         $this->render('user/profile',  $data);

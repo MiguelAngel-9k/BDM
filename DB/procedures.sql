@@ -317,4 +317,52 @@ BEGIN
 END //
 DELIMITER ; 
 
+USE MERCADONA_DB;
+DROP PROCEDURE IF EXISTS SP_WISHLIST;
+DELIMITER //
+CREATE PROCEDURE SP_WISHLIST(
+    IN _LIST INT,
+    IN _NAME VARCHAR(50),
+    IN _DESC VARCHAR(255),
+    IN _COVER MEDIUMBLOB,
+    IN _OWNER VARCHAR(60),
+    IN _PRIV CHAR(3),
+    IN _OP CHAR(3)
+)
+BEGIN
+
+    CASE
+        WHEN _OP = 'ADD' THEN 
+            INSERT INTO D_LISTAS(
+                DL_NOMBRE,
+                DL_DESC,
+                DL_IMGN, 
+                DL_USR,
+                DL_ALTA
+            )VALUES(
+                _NAME,
+                _DESC,
+                _COVER,
+                _OWNER,
+                SYSDATE()
+            );
+
+        WHEN _OP = 'GET' THEN 
+            SELECT
+                DL_IMGN,
+                ID_LISTA, 
+                DL_NOMBRE, 
+                DL_DESC, 
+                DL_USR, 
+                DATE_FORMAT(DL_ALTA, '%d/%m/%Y') AS DL_ALTA, 
+                DL_PRIV 
+            FROM D_LISTAS
+            WHERE DL_USR = _OWNER;
+
+            SELECT * FROM D_LISTAS;
+    END CASE;
+
+END //
+DELIMITER ;
+
 SELECT * FROM MERCADONA_DB.CATEGORIAS;

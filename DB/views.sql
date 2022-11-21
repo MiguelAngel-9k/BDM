@@ -43,7 +43,7 @@ CREATE VIEW VW_OBJECT AS
         M.MEDIA_REC AS RECURSO,
         O.OBJ_NMBRE AS OBJETO,
         O.ID_OBJ AS ID_OBJ,
-        IF(O.OBJ_PRECIO > 0, 'In Stock', 'No Stock') AS 'STOCK',
+        IF(O.OBJ_CANT > 0, 'In Stock', 'No Stock') AS 'STOCK',
         U.USR_APODO AS VENDEDOR,
         O.OBJ_PRECIO AS PRECIO,
         O.OBJ_DESC AS DESCRIPCION

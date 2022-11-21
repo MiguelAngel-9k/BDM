@@ -91,6 +91,10 @@ class ProudctModel
 
             $buffer = [];
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+
+                if(isset($buffer[$row['OBJETO']]))
+                    continue;
+
                 $product = new ProudctModel();
                 $product->setName($row['TITULO']);
                 $product->setCover($row['PORTADA']);
@@ -99,7 +103,7 @@ class ProudctModel
                 $product->setID($row['OBJETO']);
                 $product->setOwner($row['VENDEDOR']);
 
-                array_push($buffer, $product);
+                $buffer[$row['OBJETO']] = $product;
             }
 
             return $buffer;
@@ -136,8 +140,12 @@ class ProudctModel
             $sql = $this->conn->prepare("CALL SP_SOLICITUDES(0, '', 'ALL')");
             $sql->execute();
 
-            $buffer = [];
+            $requests = [];
             while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+
+                if(isset($requests[$row['ID_OBJETO']]))
+                    continue;
+
                 $request = new ProudctModel();
                 $request->setID($row['ID_OBJETO']);
                 $request->setName($row['OBJETO']);
@@ -147,10 +155,10 @@ class ProudctModel
                 $request->setQuantity($row['CANTIDAD']);
                 $request->setPrice($row['PRECIO']);
 
-                array_push($buffer, $request);
+                $requests[$row['ID_OBJETO']] = $request;
             }
 
-            return $buffer;
+            return $requests;
         } catch (PDOException $e) {
             echo 'Error al traer las solicitudes de objetos';
             return;

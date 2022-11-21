@@ -113,7 +113,19 @@ class Product extends Controller{
     }
 
     public function product($args = []){
-        echo $args[0];
+        session_start();
+        $product = new ProudctModel();
+        $user = new UserModel();
+        $user->get($_SESSION['USER']);
+        if(isset($_SESSION['USER'])){
+            $data = [
+                'PRODUCT' => $product->get($args[0]),
+                'USER' => $user->serialize()
+            ];
+
+            $this->render('object/product', $data);
+            return;
+        }
     }
 
 }
