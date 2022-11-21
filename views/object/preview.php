@@ -78,7 +78,7 @@ $product =  $data['PRODUCT'];
                 </div>
             </div>
             <div class="col text-primary">
-                <a href="#" class="btn btn-block btn-success">Aprove</a>
+                <a href="<?php echo constant('API').'/product/aprove/'.$product['id']; ?>" class="btn btn-block btn-success">Aprove</a>
             </div>
         </div>
     </div>

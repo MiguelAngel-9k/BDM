@@ -201,9 +201,9 @@ BEGIN
 
         WHEN _OP = 'GTO' THEN #OBTNER POR DUENIO
             SELECT * FROM VW_PORTADA_OBJETO
-                WHERE VENDEDOR = _VEND AND STA;
+                WHERE VENDEDOR = _VEND;
 
-        WHEN _OP = 'GET' THEN #APROBAR
+        WHEN _OP = 'GET' THEN #APROBAR (OBSOLETO)
             SELECT * FROM VW_OBJECT WHERE ID_OBJ = OBJ;
 
 
@@ -224,7 +224,7 @@ BEGIN
 
     CASE
         WHEN _OP = 'ALL' THEN #OBTIENE TODAS LAS PETICIONES PENDIENTES
-            SELECT * FROM VW_OBJETO_CATEGORIA;
+            SELECT * FROM VW_OBJETO_CATEGORIA WHERE ESTADO = 'No aprovado';
 
         WHEN _OP = 'APR' THEN #APROVAR OBJETO
             UPDATE OBJETOS SET OBJ_ST = b'0' WHERE ID_OBJ = _OBJ;
@@ -300,6 +300,7 @@ BEGIN
                 SYSDATE(),
                 1
             );
+
         WHEN _OP = 'ALL' THEN
             SELECT
                 CAT_ID AS ID,
@@ -307,6 +308,11 @@ BEGIN
                 CAT_DESC AS 'DESCRIPTION'
             FROM CATEGORIAS
             WHERE CAT_ST = 1;
+
+        WHEN _OP = 'PCA' THEN #OBTENER OBJETOS POR CATEGORIA
+            SELECT * FROM VW_OBJETO_CATEGORIA
+                WHERE ID_CAT = _CATEGORIA AND ESTADO = 'Aprovado';
+
     END CASE;
 END //
 DELIMITER ; 

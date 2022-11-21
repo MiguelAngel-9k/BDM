@@ -112,6 +112,10 @@ class Product extends Controller{
         header('location: '.constant('API'));
     }
 
+    public function product($args = []){
+        echo $args[0];
+    }
+
 }
 
 

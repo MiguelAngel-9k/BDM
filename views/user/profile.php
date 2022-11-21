@@ -25,18 +25,6 @@ foreach($categories as $category)
 
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Profile
-                        </a>
-                    </li>
-                </ul> -->
                 <form action="" class="d-flex w-75 position-relative ">
                     <input type="search" class="form-control me-2" placeholder="Buscar" aria-label="Search">
                     <button class="btn position-absolute" active style="right: 10px;" type="submit">Busqueda</button>
@@ -63,7 +51,7 @@ foreach($categories as $category)
         <?php
         foreach ($categories as $category) {
         ?>
-            <a href='<?php echo constant('API') ?>category/get/<?php echo $category['ID'] ?>' class="nav-link">
+            <a href='<?php echo constant('API') ?>category/category/<?php echo $category['ID'] ?>' class="nav-link">
                 <?php echo $category['NAME']; ?>
             </a>
         <?php
@@ -84,9 +72,7 @@ foreach($categories as $category)
                     <h1 class="d-flex text-primary border-bottom border-5 border-success p-2">
                         <?php
                         echo $user['name'] . '<p class="m-0 ms-1 p-0 fs-5 align-self-center"> (' . $user['nickname'] . ')</p>';
-                        /* if ($user['rol'] != 'V') {
-                            echo '<p class="fs-6 fw-light">(Sale man)</p>';
-                        } */
+
                         ?>
                     </h1>
                     <small id="user" class="text-primary">

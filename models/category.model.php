@@ -42,6 +42,36 @@ class CategoryModel{
         }
     }
 
+    public function getProducts($category){
+        try {
+            $sql = $this->conn->prepare("CALL SP_CATEGORIAS(:CATEGORY, '', '', '', 'PCA')");
+            $sql->execute(['CATEGORY'=>$category]);
+
+            $products  = [];
+            while($row = $sql->fetch(PDO::FETCH_ASSOC)){
+
+                if(isset($products[$row['ID_OBJETO']]))
+                    continue;
+
+                $product = new ProudctModel();
+                $product->setName($row['OBJETO']);
+                $product->setCover($row['PORTADA']);
+                $product->setDescription($row['DESCRIPCION']);
+                $product->setPrice($row['PRECIO']);
+                $product->setID($row['ID_OBJETO']);
+                $product->setOwner($row['VENDEDOR']);
+
+                $products[$row['ID_OBJETO']] = $product;
+            }
+
+            return $products;
+
+        } catch (PDOException $e) {
+            echo 'Error al insertar al obtener los productos por categoria ' . $e->getMessage() . "\n";
+            return;
+        }
+    }
+
     public function create(){
         try {
             $query = $this->conn->prepare("CALL SP_CATEGORIAS(0, :NAME, :DESC, :USR, 'INS')");
