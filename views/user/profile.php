@@ -93,7 +93,7 @@ foreach($categories as $category)
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <a href="#" class="fs-5 fw-normal"><?php echo $list->getName(); ?></a>
+                                        <a href="<?php echo constant('API') . 'wishList/list/' . $list->getID(); ?>" class="fs-5 fw-normal"><?php echo $list->getName(); ?></a>
                                     </div>
                                     <div class="row">
                                         <p class="fst-italic fw-light text-primary fs-6"><?php echo $list->getDate(); ?></p>

@@ -3,6 +3,7 @@
 <?php $user = $data['USER'];
 // $categories = $data['CATEGOIRES'];
 $product = $data['PRODUCT'];
+$lists = $data['WLISTS'];
 // var_dump($product);
 /* 
 foreach($categories as $category)
@@ -31,7 +32,7 @@ foreach($categories as $category)
                 </form>
                 <ul class="nav justify-content-end">
                     <li class="nav-item">
-                        <a href="<?php echo constant('API')?>" class="nav-link fs-6 profile-name">
+                        <a href="<?php echo constant('API') ?>" class="nav-link fs-6 profile-name">
                             <?php echo $user['name']; ?>
                         </a>
                     </li>
@@ -68,7 +69,7 @@ foreach($categories as $category)
             </div>
             <div class="col-5 text-primary">
                 <div class="row">
-                    <h1 class="fw-normal"><?php echo $product['name']?></h1>
+                    <h1 class="fw-normal"><?php echo $product['name'] ?></h1>
                     <span class="badge <?php echo $product['qty'] == 'In Stock' ? 'bg-good' : 'bg-danger' ?>"><?php echo $product['qty'] ?></span>
                     <p>Saler: <a class="text-primary fw-bold"><?php echo $product['owner'] ?></a></p>
                 </div>
@@ -92,12 +93,15 @@ foreach($categories as $category)
                         <h6 class="card-subtitle mb-2 <?php echo $product['qty'] == 'In Stock' ? 'text-good' : 'text-danger' ?>"><?php echo $product['qty'] ?></h6>
                         <a href="#" class="btn btn-block btn-success">Add to cart</a>
                         <a href="#" class="btn btn-block btn-success">Buy Now</a>
-                        <select class="form-select m-2" aria-label="Default select example">
-                            <option selected>Add to Wish List</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+                        <form action="<?php echo constant('API') ?>wishList/addProducto" method="POST" id="addToList">
+                            <input type="hidden" name="product" id="product" value="<?php echo $product['id']?>">
+                            <select class="form-select m-2" aria-label="Default select example" name="list" id="list">
+                                <option selected>Add to Wish List</option>
+                                <?php foreach ($lists as $list) { ?>
+                                    <option value="<?php echo $list->getID(); ?>"><?php echo $list->getName(); ?></option>
+                                <?php } ?>
+                            </select>
+                        </form>
                         <p><?php echo $product['desc'] ?></p>
                     </div>
                 </div>
@@ -210,8 +214,37 @@ foreach($categories as $category)
         </div>
     </div>
 
-    <!-- BOOTSTRAP JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <?php include_once 'partials/tail.php' ?>
+
+    <script>
+
+        const baseURL = 'http://localhost/BDM/'
+
+        const listCB = document.querySelector('#list');
+        listCB.addEventListener('change', e => {
+           const listId = e.target.value;
+           const productId = document.querySelector('#product').value;
+
+            addToList(listId, productId)
+                .then( res => res.json() )
+                .then( res => alert(res[0].res) )
+                .catch( err => console.log(err) );
+        })
+
+
+        async function addToList(list, obj){
+            const data = new FormData();
+            
+            return await fetch(`${baseURL}wishList/addProduct`, {
+                method: 'POST',
+                body: JSON.stringify({list, obj})
+            });
+
+        }
+
+        
+
+    </script>
 
     <script src="assets/js/nodes/buttons.js"></script>
     <script src="assets/js/nodes/card.js"></script>

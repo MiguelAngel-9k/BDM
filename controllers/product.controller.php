@@ -116,11 +116,13 @@ class Product extends Controller{
         session_start();
         $product = new ProudctModel();
         $user = new UserModel();
+        $list = new WishListModel();
         $user->get($_SESSION['USER']);
         if(isset($_SESSION['USER'])){
             $data = [
                 'PRODUCT' => $product->get($args[0]),
-                'USER' => $user->serialize()
+                'USER' => $user->serialize(),
+                'WLISTS' => $list->getByOwner($_SESSION['USER'])
             ];
 
             $this->render('object/product', $data);

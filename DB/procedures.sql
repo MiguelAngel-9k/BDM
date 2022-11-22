@@ -321,12 +321,13 @@ USE MERCADONA_DB;
 DROP PROCEDURE IF EXISTS SP_WISHLIST;
 DELIMITER //
 CREATE PROCEDURE SP_WISHLIST(
-    IN _LIST INT,
+    IN _LISTA INT,
     IN _NAME VARCHAR(50),
     IN _DESC VARCHAR(255),
     IN _COVER MEDIUMBLOB,
     IN _OWNER VARCHAR(60),
     IN _PRIV CHAR(3),
+    IN _OBJ BIGINT,
     IN _OP CHAR(3)
 )
 BEGIN
@@ -360,6 +361,29 @@ BEGIN
             WHERE DL_USR = _OWNER;
 
             SELECT * FROM D_LISTAS;
+        WHEN _OP = 'ADI' THEN
+            INSERT INTO D_LISTAS_DETALLE(
+                ID_LISTA, 
+                ID_OBJETO,
+                OBJ_NBRE, 
+                OBJ_DESC,
+                OBJ_PRECIO,
+                ALTA
+            )VALUES(
+                _LISTA,
+                _OBJ,
+                (SELECT OBJ_NMBRE FROM OBJETOS WHERE ID_OBJ = _OBJ),
+                (SELECT OBJ_DESC FROM OBJETOS WHERE ID_OBJ = _OBJ),
+                (SELECT OBJ_PRECIO FROM OBJETOS WHERE ID_OBJ = _OBJ),
+                SYSDATE()
+            );
+
+        WHEN _OP = 'GEL' THEN #GET LIST
+            SELECT * FROM VW_LISTAS WHERE LISTA = _LISTA;
+
+        WHEN _OP = 'LIS' THEN #LIST ITEMS
+            SELECT * FROM VW_LISTA_OBJETOS WHERE LISTA = _LISTA;
+
     END CASE;
 
 END //
