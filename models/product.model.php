@@ -39,7 +39,7 @@ class ProudctModel
                 return "No se encontro producto con ese id";
 
             $buffer = [];
-            while ($row = $sql->fetch(PDO::FETCH_ASSOC)){
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
                 array_push($buffer, $row);
                 array_push($this->media, $row['RECURSO']);
             }
@@ -52,9 +52,8 @@ class ProudctModel
             $this->setDescription($buffer[0]['DESCRIPCION']);
 
             return $this->serialize();
-
         } catch (PDOException $e) {
-            return 'Error al obtener el objeto'.$e->getMessage();
+            return 'Error al obtener el objeto' . $e->getMessage();
         }
     }
 
@@ -92,7 +91,7 @@ class ProudctModel
             $buffer = [];
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 
-                if(isset($buffer[$row['OBJETO']]))
+                if (isset($buffer[$row['OBJETO']]))
                     continue;
 
                 $product = new ProudctModel();
@@ -143,7 +142,7 @@ class ProudctModel
             $requests = [];
             while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
 
-                if(isset($requests[$row['ID_OBJETO']]))
+                if (isset($requests[$row['ID_OBJETO']]))
                     continue;
 
                 $request = new ProudctModel();
@@ -194,7 +193,40 @@ class ProudctModel
         }
     }
 
-    function serialize(){
+    public function lookFor($desc)
+    {
+        try {
+
+            $sql = $this->conn->prepare("CALL SP_OBJETOS(0, '', :DESC, 0, 0, 0, '', 0, 'BUS')");
+            $sql->execute(["DESC" => $desc]);
+
+
+            $products = [];
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+
+                if (isset($products[$row['OBJETO']]))
+                    continue;
+
+                $product = new ProudctModel();
+                $product->setName($row['TITULO']);
+                $product->setCover($row['PORTADA']);
+                $product->setDescription($row['DESCRIPCION']);
+                $product->setPrice($row['PRECIO']);
+                $product->setID($row['OBJETO']);
+                $product->setOwner($row['VENDEDOR']);
+
+                $products[$row['OBJETO']] = $product;
+            }
+
+            return $products;
+        } catch (PDOException $e) {
+            echo 'Cannot look for an objet: ' . $e->getMessage();
+            return;
+        }
+    }
+
+    function serialize()
+    {
         return array(
             "id" => $this->id,
             "name" => $this->name,

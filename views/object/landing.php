@@ -13,7 +13,6 @@ $categories = $data['categories']
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div class="container-fluid">
             <a href="#" class="text-primary navbar-brand fs-4 fw-bold">
-                <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" width="128"> -->
                 Mercadona
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,20 +21,8 @@ $categories = $data['categories']
 
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Profile
-                        </a>
-                    </li>
-                </ul> -->
-                <form action="products.html" class="d-flex w-75 position-relative ">
-                    <input type="search" class="form-control me-2" placeholder="Find some" aria-label="Seach">
+                <form action="<?php echo constant('API') ?>product/search" method="POST" class="d-flex w-75 position-relative ">
+                    <input type="search" name="search" class="form-control me-2" placeholder="Find some" aria-label="Seach">
                     <button class="btn position-absolute" active style="right: 10px;" type="submit">Seach</button>
                 </form>
                 <ul class="nav justify-content-end">

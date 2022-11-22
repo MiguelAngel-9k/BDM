@@ -206,6 +206,12 @@ BEGIN
         WHEN _OP = 'GET' THEN #APROBAR (OBSOLETO)
             SELECT * FROM VW_OBJECT WHERE ID_OBJ = OBJ;
 
+        WHEN _OP = 'BUS' THEN #BUSCAR
+            SELECT * FROM VW_PORTADA_OBJETO
+                WHERE 
+                    TITULO LIKE CONCAT('%', _DESC, '%') OR
+                    DESCRIPCION LIKE CONCAT('%', _DESC, '%');
+
 
     END CASE;
 

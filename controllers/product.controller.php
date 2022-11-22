@@ -130,6 +130,23 @@ class Product extends Controller{
         }
     }
 
+    public function search(){
+        session_start();
+        if($this->existsPOST(['search'])){
+            $product = new ProudctModel();
+            $user = new UserModel();
+            $user->get($_SESSION['USER']);
+            
+
+            $data = [
+                "products" => $product->lookFor($_POST['search']),
+                "user" => $user->serialize()
+            ];
+
+            $this->render('object/products', $data);
+        }
+    }
+
 }
 
 
