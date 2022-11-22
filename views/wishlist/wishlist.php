@@ -73,6 +73,9 @@ $items = $data['items'];
                         <p class="fs-4"><?php echo $list['description'] ?></p>
                         <small><?php echo $list['owner'] ?></small>
                     </div>
+                    <div class="col">
+                        <a href="<?php echo constant('API').'wishList/removeList/'.$list['id']?>" class="btn btn-danger">Eliminar lista</a>
+                    </div>
                 </div>
                 <!-- WISH LIST CONTENT -->
                 <?php foreach ($items as $item) { ?>
@@ -90,7 +93,7 @@ $items = $data['items'];
                                 <!-- <input type="hidden" value="<?php echo $item->getID(); ?>" id="item" /> -->
                                 <!-- <input type="hidden" value="<?php echo $list['id'] ?>" id="list" /> -->
                                 <input value="Agregar al carrito" type="submit" class="text-primary justify-content-end btn btn-success-light">
-                                <a id="deleteItem" href="<?php echo constant('API').'wishList/removeItem/'.$item->getID().'/'.$$list['id']; ?>" class="text-primary justify-content-end btn btn-danger">Eliminar de la lista</a>
+                                <a id="deleteItem" href="<?php echo constant('API').'wishList/removeItem/'.$item->getID().'/'.$list['id']; ?>" class="text-primary justify-content-end btn btn-danger">Eliminar de la lista</a>
                             </div>
                         </div>
                     </a>

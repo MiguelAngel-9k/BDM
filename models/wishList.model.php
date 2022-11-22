@@ -141,6 +141,40 @@ class WishListModel extends Model
         }
     }
 
+    public function deleteItem($list, $item){
+        try{
+
+            $sql = $this->conn->prepare("CALL SP_WISHLIST(:LIST, '', '', '', '', '', :ITEM, 'ELI')");
+            $sql->execute([
+                'LIST' => $list,
+                'ITEM' => $item
+            ]);
+
+            if($sql->rowCount() > 0)
+                return true;
+
+            return false;
+
+        } catch (PDOException $e) {
+            return 'Cannot delete item list: ' . $e->getMessage();
+        }
+    }
+
+    public function deleteList($list){
+        try{
+            $sql = $this->conn->prepare("CALL SP_WISHLIST(:LIST, '', '', '', '', '', 0, 'ELL')");
+            $sql->execute(['LIST' => $list]);
+
+            if($sql->rowCount() > 0)
+                return true;
+
+            return false;
+        }catch (PDOException $e) {
+            return 'Cannot delete list: ' . $e->getMessage();
+        }
+    }
+
+
     public function serialize()
     {
         return [
@@ -153,6 +187,7 @@ class WishListModel extends Model
             'description' => $this->desc
         ];
     }
+
 
     function setID($id)
     {

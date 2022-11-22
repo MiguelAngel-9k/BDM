@@ -82,13 +82,17 @@ class WishList extends Controller
 
     public function removeItem($args = []){
 
-        echo 'REMOVIENDO ITEM ES '.$args[0].' De la lista '.$args[1];
+        $list = new WishListModel();
+        $list->deleteItem($args[1], $args[0]);
+        header('location:'.constant('API').'/wishList/list/'.$args[1]);
 
-        /* $json = file_get_contents('php://input');
-        $post = json_decode($json, true);
-        echo json_encode(array(
-            'list' => $post['list'],
-            'item' => $post['item']
-        )); */
+    }
+
+    public function removeList($args = []){
+        
+        $list = new WishListModel();
+        $list->deleteList($args[0]);
+        header('location:'.constant('API'));
+
     }
 }
