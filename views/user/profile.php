@@ -450,7 +450,7 @@ foreach($categories as $category)
                             </tbody>
                         </table>
                         <div class="d-grid gap-2">
-                            <a href="#" class="btn btn-success">Comprar</a>
+                            <a href="<?php echo constant('API') ?>product/purchase" class="btn btn-success">Comprar</a>
                         </div>
                     </div>
                 </div>

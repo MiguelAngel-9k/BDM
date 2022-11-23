@@ -165,4 +165,34 @@ class Product extends Controller{
         
     }
 
+    public function cotizar(){
+        $json = file_get_contents('php://input');
+        $post = json_decode($json, true);
+        $product = new ProudctModel();
+        $res = $product->cotizar($post['item'], $post['cant'], $post['user']);
+        if($res != null)
+            echo json_encode(array(
+                'price' => $res['price'] 
+            ));
+    }
+
+    public function purchase(){
+
+        session_start();
+
+        if(isset($_SESSION['USER'])){
+            $user = new UserModel();
+            $products = new ProudctModel();
+            $user->get($_SESSION['USER']);
+            $data = [
+                'user' => $user->serialize(),
+                'cart' => $products->getCarrito($_SESSION['USER'])
+            ];
+            $this->render('object/purchase', $data);
+
+        }
+    
+
+    }
+
 }

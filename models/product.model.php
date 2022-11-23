@@ -289,6 +289,35 @@ class ProudctModel
         }
     }
 
+    public function cotizar($item, $cantidad, $user)
+    {
+        try {
+            $sql = $this->conn->prepare("CALL SP_COTIZACIONES(:USER, :OBJ, :CANT)");
+            $sql->execute([
+                "USER" => $user,
+                "OBJ" => $item,
+                "CANT" => $cantidad
+            ]);
+
+            if($sql->rowCount() > 0){
+                $res = $sql->fetch(PDO::FETCH_ASSOC);
+                $product = new ProudctModel();
+                $product->setOwner($res['USUARIO']);
+                $product->setID($res['OBJ']);
+                $product->setQuantity($res['CANTIDAD']);
+                $product->setPrice($res['PORCENTAJE']);
+
+                return $product->serialize();
+            }
+
+            return null;
+
+        } catch (PDOException $e) {
+            echo 'Cannot cotizar item: ' . $e->getMessage();
+            return;
+        }
+    }
+
     function serialize()
     {
         return array(

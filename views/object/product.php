@@ -49,7 +49,6 @@ foreach($categories as $category)
 
     <div class="container-fluid bg-primary">
         <div class="row">
-            <p class="text-primary m-3">Video Games > Video Games</p>
             <div class="col-4">
                 <div class="row">
                     <!-- IMAGES LIST -->
@@ -77,6 +76,8 @@ foreach($categories as $category)
                     <div class="col-3">
                         <span>
                             <h2>$<?php echo $product['price'] ?></h2>
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cotizar">Cotizar</a>
+
                         </span>
                     </div>
                     <div class="col">
@@ -91,7 +92,7 @@ foreach($categories as $category)
                             $<?php echo $product['price'] ?>
                         </h5>
                         <h6 class="card-subtitle mb-2 <?php echo $product['qty'] == 'In Stock' ? 'text-good' : 'text-danger' ?>"><?php echo $product['qty'] ?></h6>
-                        <a href="<?php echo constant('API').'/product/addToCart/'.$product['id'] ?>" class="btn btn-block btn-success">Add to cart</a>
+                        <a href="<?php echo constant('API').'product/addToCart/'.$product['id'] ?>" class="btn btn-block btn-success">Add to cart</a>
                         <a href="#" class="btn btn-block btn-success">Buy Now</a>
                         <form action="<?php echo constant('API') ?>wishList/addProducto" method="POST" id="addToList">
                             <input type="hidden" name="product" id="product" value="<?php echo $product['id']?>">
@@ -214,6 +215,40 @@ foreach($categories as $category)
         </div>
     </div>
 
+    <div class="modal fade" id="cotizar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cotizarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-primary">
+                    <div class="modal-header">
+                        <h3 class="modal-title text-center" id="cotizarLabel">Cotizar producto</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="<?php echo constant('API').'product/addToCart/'.$product['id'] ?>" method="POST">
+                            <div class="row">
+                                <input type="hidden" id="user" value="<?php echo $user['email']; ?>">
+                                <input type="hidden" id="item" value="<?php echo $product['id']; ?>">
+                                <div class="m-2 col-12">
+                                    <label for="cant" class="form-label">Cantidad</label>
+                                    <input type="text" class="form-control" id="cant">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="m-2 col-12">
+                                    <label for="description" class="form-label">Precio cotizado</label>
+                                    <input type="text" class="form-control text-dark" id="precioCotizado" readonly>
+                                </div>
+                            </div>
+                            <div class="d-grid m-2 gap-2">
+                                <a id="ask" class="btn btn-success btn-block text-light">Cotizar</a>
+                                <input value="Add to cart" type="submit" id="accept" class="btn btn-secondary btn-block text-light"/>
+                                <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <?php include_once 'partials/tail.php' ?>
 
     <script>
@@ -227,7 +262,7 @@ foreach($categories as $category)
 
             addToList(listId, productId)
                 .then( res => res.json() )
-                .then( res => alert(res[0].res) )
+                .then( res => 'Agregado' )
                 .catch( err => console.log(err) );
         })
 
@@ -242,7 +277,40 @@ foreach($categories as $category)
 
         }
 
-        
+    </script>
+
+    <script>
+
+
+        const askBtn = document.querySelector('#ask');
+        askBtn.addEventListener('click', e => {
+            const item = document.querySelector('#item');
+            const cant = document.querySelector('#cant');
+            const user = document.querySelector('#user');
+
+            console.log(item.value, cant.value, user.value);
+
+            cotizar(cant.value, item.value, user.value)
+                .then( res => res.json() )
+                .then( res =>{
+                    const price = document.querySelector('#precioCotizado');
+                    price.value = `$${res.price}`;
+                })
+                .catch( err => console.log(err) );
+        })
+
+        const cotizar = async(cant, item, user) => {
+
+
+            return await fetch(`${baseURL}product/cotizar`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    item,
+                    cant,
+                    user
+                })
+            })
+        }
 
     </script>
 
