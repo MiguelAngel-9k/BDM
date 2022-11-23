@@ -334,6 +334,23 @@ class ProudctModel
         );
     }
 
+    public function setPayment($user, $comment, $rate){
+        try{
+            $sql = $this->conn->prepare("CALL SP_VENTA(:COMMENT, :CALIF, :USUARIO)");
+            $sql->execute([
+                "COMMENT" => $comment,
+                "CALIF" => $rate,
+                "USUARIO" => $user
+            ]);
+
+            return true;
+
+        }catch (PDOException $e) {
+            echo 'Cannot pay: ' . $e->getMessage();
+            return;
+        }
+    }
+
 
     //SETTERS
     function setID($id)

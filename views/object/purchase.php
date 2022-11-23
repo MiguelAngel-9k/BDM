@@ -61,7 +61,11 @@ $carts = $data['cart'];
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($carts as $cart) { ?>
+
+                        <?php
+                        $ammount = 0;
+                        foreach ($carts as $cart) {
+                        ?>
                             <tr>
                                 <td><?php echo $cart->getName() ?></td>
                                 <td>$<?php echo $cart->getPrice() ?></td>
@@ -69,10 +73,18 @@ $carts = $data['cart'];
                                 <td><?php echo $cart->getQuantity() ?></td>
                                 <td><?php echo $cart->getDate() ?></td>
                             </tr>
-                        <?php } ?>
+                        <?php
+
+                        $ammount += $cart->getPrice();
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="row">
+            <h3 class="text-primary text-end">Total $: <?php echo $ammount ?></h3>
+            <a href="<?php echo constant('API').'product/pay/'.$user['email'] ?>" class="fs-5 btn btn-primary">Pay</a>
         </div>
 
     </div>
