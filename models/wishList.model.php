@@ -16,15 +16,16 @@ class WishListModel extends Model
     private $desc;
 
 
-    public function add($name, $cover, $owner, $desc)
+    public function add($name, $cover, $owner, $desc, $privacy)
     {
         try {
-            $sql = $this->conn->prepare("CALL SP_WISHLIST(0, :NAME, :DESC, :COVER, :OWNER, '', 0, 'ADD')");
+            $sql = $this->conn->prepare("CALL SP_WISHLIST(0, :NAME, :DESC, :COVER, :OWNER, :PRIV, 0, 'ADD')");
             $sql->execute([
                 "NAME" => $name,
                 "DESC" => $desc,
                 "OWNER" => $owner,
-                "COVER" => $cover
+                "COVER" => $cover,
+                "PRIV" => $privacy
             ]);
 
             if ($sql->rowCount() < 0)
@@ -186,6 +187,23 @@ class WishListModel extends Model
             'privacy' => $this->privacy,
             'description' => $this->desc
         ];
+    }
+
+    public function updatePrivacy($list, $priv){
+        try{
+            $sql = $this->conn->prepare("CALL SP_WISHLIST(:LIST, '', '', '', '', :PRIV, 0, 'PRV')");
+        $sql->execute([
+            "LIST" => $list,
+            "PRIV" => $priv
+        ]);
+
+        if($sql->rowCount() > 0)
+            return true;
+
+        return false;
+        }catch (PDOException $e) {
+            return 'Cannot update privacy: ' . $e->getMessage();
+        }
     }
 
 

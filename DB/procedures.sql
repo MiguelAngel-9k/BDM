@@ -345,13 +345,15 @@ BEGIN
                 DL_DESC,
                 DL_IMGN, 
                 DL_USR,
-                DL_ALTA
+                DL_ALTA,
+                DL_PRIV
             )VALUES(
                 _NAME,
                 _DESC,
                 _COVER,
                 _OWNER,
-                SYSDATE()
+                SYSDATE(),
+                (IF(_PRIV = 'On', b'1', b'0'))
             );
 
         WHEN _OP = 'GET' THEN 
@@ -397,6 +399,67 @@ BEGIN
         WHEN _OP = 'ELL' THEN #ELIMINAR LISTA
             DELETE FROM D_LISTAS
                 WHERE ID_LISTA = _LISTA;
+
+        WHEN _OP = 'PRV' THEN #EDITAR PRIVACIDAD
+            UPDATE D_LISTAS
+                SET DL_PRIV = ((IF(_PRIV = 'On', b'1', b'0')))
+            WHERE ID_LISTA = _LISTA;
+
+    END CASE;
+
+END //
+DELIMITER ;
+
+
+USE MERCADONA_DB;
+DROP PROCEDURE IF EXISTS SP_CARRITO;
+DELIMITER //
+CREATE PROCEDURE SP_CARRITO(
+    IN _CARRITO BIGINT,
+    IN _USUARIO VARCHAR(60),
+    IN _OBJETO BIGINT,
+    IN _CANT INT,
+    IN _OP CHAR(3)
+)
+BEGIN
+    DECLARE CONTINUE HANDLER FOR 1062
+    BEGIN
+        SET @CARRITO = (SELECT ID_CARRITO FROM CARRITO_COMPRAS WHERE CARR_USR = _USUARIO);
+        UPDATE CARRITO_COMPRAS_DETALLE
+            SET CARR_CANT = INCREASE_CARR_CANT(@CARRITO, _OBJETO)
+            WHERE ID_CARRITO = @CARRITO AND ID_OBJETO = _OBJETO;
+        END;
+
+    CASE 
+
+        WHEN _OP = 'INS' THEN #INSERTAR ELEMENTO AL CARRITO
+            SET @CARRITO = (SELECT ID_CARRITO FROM CARRITO_COMPRAS WHERE CARR_USR = _USUARIO);
+            INSERT INTO CARRITO_COMPRAS_DETALLE(
+                    ID_CARRITO,
+                    ID_OBJETO,
+                    CARR_CANT,
+                    ALTA,
+                    ST,
+                    PRECIO
+                )
+                VALUES(
+                    @CARRITO,
+                    _OBJETO,
+                    1,
+                    SYSDATE(),
+                    'A',
+                    (SELECT OBJ_PRECIO FROM OBJETOS WHERE ID_OBJ = _OBJETO)
+                );
+
+        WHEN _OP = 'GET' THEN #OBTENER CARRITO
+            SELECT * FROM VW_CARRITO_DETALLE
+                WHERE USUARIO = _USUARIO;
+
+        WHEN _OP = 'ELI' THEN #ELIMINAR DEL CARRITO
+            DELETE FROM CARRITO_COMPRAS_DETALLE
+                WHERE ID_CARRITO = _CARRITO AND ID_OBJETO = _OBJETO;
+
+            
 
     END CASE;
 

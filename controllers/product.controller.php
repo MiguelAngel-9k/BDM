@@ -147,8 +147,22 @@ class Product extends Controller{
         }
     }
 
+    public function addToCart($args = []){
+        session_start();
+        if(isset($_SESSION['USER'])){
+            $product = new ProudctModel();
+            echo $product->addCart($_SESSION['USER'], $args[0]);
+            header('location:'.constant('API').'product/product/'.$args[0]);
+        }else{
+            header('location:'.constant('API'));
+        }
+    }
+
+    public function removeFromCart($args = []){
+        $product = new ProudctModel();
+        $product->deleteCart($args[0], $args[1]);
+        header('location:'.constant('API'));
+        
+    }
+
 }
-
-
-
-?>

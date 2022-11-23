@@ -14,6 +14,7 @@ class ProudctModel
     private $category;
     private $date;
     private $media = [];
+    private $cart;
 
     private $conn;
 
@@ -225,6 +226,69 @@ class ProudctModel
         }
     }
 
+    public function addCart($usr, $item)
+    {
+        try {
+            $sql = $this->conn->prepare("CALL SP_CARRITO(0, :USR, :OBJ, 0, 'INS')");
+            $sql->execute([
+                "USR" => $usr,
+                "OBJ" => $item
+            ]);
+
+            if ($sql->rowCount() > 0)
+                return true;
+
+            return false;
+        } catch (PDOException $e) {
+            echo 'Cannot add item to cart: ' . $e->getMessage();
+            return;
+        }
+    }
+
+    public function getCarrito($usr)
+    {
+        try {
+            $sql = $this->conn->prepare("CALL SP_CARRITO(0, :USR, 0, 0, 'GET')");
+            $sql->execute(["USR" => $usr]);
+
+            $products = [];
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                $product = new ProudctModel();
+                $product->setOwner($row['USUARIO']);
+                $product->setID($row['OBJETO']);
+                $product->setCart($row['CARRITO']);
+                $product->setName($row['NOMBRE']);
+                $product->setCategory($row['CATEGORIA']);
+                $product->setPrice($row['PRECIO']);
+                $product->setDate($row['FECHA']);
+                $product->setQuantity($row['CANTIDAD']);
+
+                array_push($products, $product);
+            }
+
+            return $products;
+        } catch (PDOException $e) {
+            echo 'Cannot get cart: ' . $e->getMessage();
+            return;
+        }
+    }
+
+    public function deleteCart($cart, $item)
+    {
+        try {
+            $sql = $this->conn->prepare("CALL SP_CARRITO(:CART, '', :ITEM, 0, 'ELI')");
+            $sql->execute(["CART" => $cart, "ITEM" => $item]);
+
+            if ($sql->rowCount() > 0)
+                return true;
+
+            return false;
+        } catch (PDOException $e) {
+            echo 'Cannot delete item from cart: ' . $e->getMessage();
+            return;
+        }
+    }
+
     function serialize()
     {
         return array(
@@ -283,6 +347,10 @@ class ProudctModel
     {
         $this->date = $date;
     }
+    function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
 
     //GETTERS
     function getID()
@@ -324,5 +392,9 @@ class ProudctModel
     function getDate()
     {
         return $this->date;
+    }
+    function getCart()
+    {
+        return $this->cart;
     }
 }

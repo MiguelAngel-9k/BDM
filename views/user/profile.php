@@ -4,6 +4,8 @@
 $categories = $data['CATEGOIRES'];
 $products = $data['PRODUCTS'];
 $lists = $data['WLISTS'];
+$carts = $data['CART'];
+
 /* 
 foreach($categories as $category)
     var_dump($category['ID']); */
@@ -393,6 +395,10 @@ foreach($categories as $category)
                                     <input type="text" class="form-control" id="wDescription" name="wDescription">
                                 </div>
                             </div>
+                            <div class="text-light form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" name="wPrivate">
+                                <label class="form-check-label" for="wPrivate">Publico</label>
+                            </div>
                             <div class="row">
                                 <div class="m-2 col-12">
                                     <label for="wCover" class="form-label">Wish list image</label>
@@ -419,34 +425,28 @@ foreach($categories as $category)
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <table class="table table-light table-striped">
+                        <table class="table table-dark table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Categoria</th>
+                                    <th scope="col">Cantidad</th>
                                     <th scope="col">Fecha</th>
+                                    <th scope="col">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Gameboy advance</td>
-                                    <td>$15.99</td>
-                                    <td>Video Games</td>
-                                    <td>10/05/2022</td>
-                                </tr>
-                                <tr>
-                                    <td>Gameboy advance</td>
-                                    <td>$15.99</td>
-                                    <td>Video Games</td>
-                                    <td>10/05/2022</td>
-                                </tr>
-                                <tr>
-                                    <td>Gameboy advance</td>
-                                    <td>$15.99</td>
-                                    <td>Video Games</td>
-                                    <td>10/05/2022</td>
-                                </tr>
+                                <?php foreach ($carts as $cart) { ?>
+                                    <tr>
+                                        <td><?php echo $cart->getName() ?></td>
+                                        <td>$<?php echo $cart->getPrice() ?></td>
+                                        <td><?php echo $cart->getCategory() ?></td>
+                                        <td><?php echo $cart->getQuantity() ?></td>
+                                        <td><?php echo $cart->getDate() ?></td>
+                                        <td><a href="<?php echo constant('API').'product/removeFromCart/'.$cart->getCart().'/'.$cart->getID() ?>" class="btn btn-danger">Eliminar</a></td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                         <div class="d-grid gap-2">

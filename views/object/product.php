@@ -91,7 +91,7 @@ foreach($categories as $category)
                             $<?php echo $product['price'] ?>
                         </h5>
                         <h6 class="card-subtitle mb-2 <?php echo $product['qty'] == 'In Stock' ? 'text-good' : 'text-danger' ?>"><?php echo $product['qty'] ?></h6>
-                        <a href="#" class="btn btn-block btn-success">Add to cart</a>
+                        <a href="<?php echo constant('API').'/product/addToCart/'.$product['id'] ?>" class="btn btn-block btn-success">Add to cart</a>
                         <a href="#" class="btn btn-block btn-success">Buy Now</a>
                         <form action="<?php echo constant('API') ?>wishList/addProducto" method="POST" id="addToList">
                             <input type="hidden" name="product" id="product" value="<?php echo $product['id']?>">

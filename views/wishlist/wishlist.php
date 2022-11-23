@@ -75,6 +75,7 @@ $items = $data['items'];
                     </div>
                     <div class="col">
                         <a href="<?php echo constant('API').'wishList/removeList/'.$list['id']?>" class="btn btn-danger">Eliminar lista</a>
+                        <a href="<?php echo constant('API').'wishList/privacy/'.$list['id'].'/'.$list['privacy']?>" class="btn btn-primary">Change privacy</a>
                     </div>
                 </div>
                 <!-- WISH LIST CONTENT -->
@@ -92,8 +93,7 @@ $items = $data['items'];
                             <div class="g-grid g-2">
                                 <!-- <input type="hidden" value="<?php echo $item->getID(); ?>" id="item" /> -->
                                 <!-- <input type="hidden" value="<?php echo $list['id'] ?>" id="list" /> -->
-                                <input value="Agregar al carrito" type="submit" class="text-primary justify-content-end btn btn-success-light">
-                                <a id="deleteItem" href="<?php echo constant('API').'wishList/removeItem/'.$item->getID().'/'.$list['id']; ?>" class="text-primary justify-content-end btn btn-danger">Eliminar de la lista</a>
+                                <a id="deleteItem" href="<?php echo constant('API').'wishList/removeItem/'.$item->getID().'/'.$list['id']; ?>" class="text-primary justify-content-end btn btn-danger">Delete from list</a>
                             </div>
                         </div>
                     </a>

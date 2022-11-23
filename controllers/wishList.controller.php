@@ -40,7 +40,8 @@ class WishList extends Controller
                 $_POST['wName'],
                 $imgData,
                 $_POST['owner'],
-                $_POST['wDescription']
+                $_POST['wDescription'],
+                isset($_POST['wPrivate']) ? 'On' : 'Off'
             );
         }
         //imagen por defcto por si no agrega una imagen
@@ -94,5 +95,17 @@ class WishList extends Controller
         $list->deleteList($args[0]);
         header('location:'.constant('API'));
 
+    }
+
+    public function privacy($args = []){
+        $list = new WishListModel();
+
+        $priv = $args[1] === 'Public List'
+            ? 'Off'
+            : 'On';
+
+        $list->updatePrivacy($args[0], $priv);
+
+        header('location: '.constant('API').'wishList/list/'.$args[0]);
     }
 }
