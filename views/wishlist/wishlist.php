@@ -10,39 +10,7 @@ $items = $data['items'];
 ?>
 
 <body class="bg-primary">
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary sticky-top">
-        <div class="container-fluid">
-            <a href="<?php echo constant('API') ?>product/landing" class="text-primary navbar-brand fs-4 fw-bold">
-                <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" width="128"> -->
-                Mercadona
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <form action="" class="d-flex w-75 position-relative ">
-                    <input type="search" class="form-control me-2" placeholder="Buscar" aria-label="Search">
-                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Busqueda</button>
-                </form>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a href="<?php echo constant('API') ?>" class="nav-link fs-6 profile-name">
-                            <?php echo $user['name']; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="sales_user.html" class="nav-link">
-                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                            <!-- <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block"> -->
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'partials/header.php' ?>
 
     <!-- CONTENT     -->
     <div class="mt-5 container-fluid">
@@ -74,8 +42,8 @@ $items = $data['items'];
                         <small><?php echo $list['owner'] ?></small>
                     </div>
                     <div class="col">
-                        <a href="<?php echo constant('API').'wishList/removeList/'.$list['id']?>" class="btn btn-danger">Eliminar lista</a>
-                        <a href="<?php echo constant('API').'wishList/privacy/'.$list['id'].'/'.$list['privacy']?>" class="btn btn-primary">Change privacy</a>
+                        <a href="<?php echo constant('API') . 'wishList/removeList/' . $list['id'] ?>" class="btn btn-danger">Eliminar lista</a>
+                        <a href="<?php echo constant('API') . 'wishList/privacy/' . $list['id'] . '/' . $list['privacy'] ?>" class="btn btn-primary">Change privacy</a>
                     </div>
                 </div>
                 <!-- WISH LIST CONTENT -->
@@ -93,7 +61,7 @@ $items = $data['items'];
                             <div class="g-grid g-2">
                                 <!-- <input type="hidden" value="<?php echo $item->getID(); ?>" id="item" /> -->
                                 <!-- <input type="hidden" value="<?php echo $list['id'] ?>" id="list" /> -->
-                                <a id="deleteItem" href="<?php echo constant('API').'wishList/removeItem/'.$item->getID().'/'.$list['id']; ?>" class="text-primary justify-content-end btn btn-danger">Delete from list</a>
+                                <a id="deleteItem" href="<?php echo constant('API') . 'wishList/removeItem/' . $item->getID() . '/' . $list['id']; ?>" class="text-primary justify-content-end btn btn-danger">Delete from list</a>
                             </div>
                         </div>
                     </a>

@@ -13,39 +13,8 @@ foreach($categories as $category)
 <body class="bg-primary">
 
 
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary sticky-top">
-        <div class="container-fluid">
-            <a href="<?php echo constant('API') ?>product/landing" class="text-primary navbar-brand fs-4 fw-bold">
-                <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" width="128"> -->
-                Mercadona
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <form action="" class="d-flex w-75 position-relative ">
-                    <input type="search" class="form-control me-2" placeholder="Buscar" aria-label="Search">
-                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Busqueda</button>
-                </form>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a href="<?php echo constant('API') ?>" class="nav-link fs-6 profile-name">
-                            <?php echo $user['name']; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="sales_user.html" class="nav-link">
-                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                            <!-- <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block"> -->
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'partials/header.php' ?>
 
     <div class="container-fluid bg-primary">
         <div class="row">
@@ -76,8 +45,13 @@ foreach($categories as $category)
                     <div class="col-3">
                         <span>
                             <h2>$<?php echo $product['price'] ?></h2>
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cotizar">Cotizar</a>
-
+                            <?php
+                            if ($product['price'] == 'Cotizar') {
+                            ?>
+                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cotizar">Cotizar</a>
+                            <?php
+                            }
+                            ?>
                         </span>
                     </div>
                     <div class="col">
@@ -92,10 +66,11 @@ foreach($categories as $category)
                             $<?php echo $product['price'] ?>
                         </h5>
                         <h6 class="card-subtitle mb-2 <?php echo $product['qty'] == 'In Stock' ? 'text-good' : 'text-danger' ?>"><?php echo $product['qty'] ?></h6>
-                        <a href="<?php echo constant('API').'product/addToCart/'.$product['id'] ?>" class="btn btn-block btn-success">Add to cart</a>
-                        <a href="#" class="btn btn-block btn-success">Buy Now</a>
+                        <?php if ($product['price'] != 'Cotizar') { ?>
+                            <a href="<?php echo constant('API') . 'product/addToCart/' . $product['id'] ?>" class="btn btn-block btn-success">Add to cart</a>
+                        <?php } ?>
                         <form action="<?php echo constant('API') ?>wishList/addProducto" method="POST" id="addToList">
-                            <input type="hidden" name="product" id="product" value="<?php echo $product['id']?>">
+                            <input type="hidden" name="product" id="product" value="<?php echo $product['id'] ?>">
                             <select class="form-select m-2" aria-label="Default select example" name="list" id="list">
                                 <option selected>Add to Wish List</option>
                                 <?php foreach ($lists as $list) { ?>
@@ -108,7 +83,7 @@ foreach($categories as $category)
                 </div>
             </div>
         </div>
-        <div class="row px-5">
+        <!-- <div class="row px-5">
             <h3 class="text-primary">Top reviws</h3>
             <ul class="list-group">
                 <li class="list-group-item  text-primary bg-secondary rounded p-3  m-2">
@@ -160,7 +135,7 @@ foreach($categories as $category)
                     </p>
                 </li>
             </ul>
-            <!-- <a href="#">Show more</a> -->
+            <!-- <a href="#">Show more</a> --
             <span class="d-flex m-2 text-primary">
                 <img width="60" height="60" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" alt="User image" class="mx-2 rounded-circle float-left">
                 <p class="fw-light">Jhon Peterson</p>
@@ -191,10 +166,10 @@ foreach($categories as $category)
             <div class="col-1 align-items-center d-flex">
                 <p id="next" class="text-light mx-auto text-center bg-success">NEXT</p>
             </div>
-        </div>
-        <!-- FOOTER -->
+        </div> -->
+        <!-- FOOTER --
         <div class="row bg-dark">
-            <!-- FOOTER -->
+            <!-- FOOTER --
             <div class="col">
                 <div class="row">
                     <p class="text-light text-center border-bottom border-2 my-2">Back to top</p>
@@ -213,9 +188,9 @@ foreach($categories as $category)
                 </h3>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="modal fade" id="cotizar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cotizarLabel" aria-hidden="true">
+        <div class="modal fade" id="cotizar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cotizarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark text-primary">
                     <div class="modal-header">
@@ -223,7 +198,7 @@ foreach($categories as $category)
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="<?php echo constant('API').'product/addToCart/'.$product['id'] ?>" method="POST">
+                        <form action="<?php echo constant('API') . 'product/addToCart/' . $product['id'] ?>" method="POST">
                             <div class="row">
                                 <input type="hidden" id="user" value="<?php echo $user['email']; ?>">
                                 <input type="hidden" id="item" value="<?php echo $product['id']; ?>">
@@ -240,7 +215,7 @@ foreach($categories as $category)
                             </div>
                             <div class="d-grid m-2 gap-2">
                                 <a id="ask" class="btn btn-success btn-block text-light">Cotizar</a>
-                                <input value="Add to cart" type="submit" id="accept" class="btn btn-secondary btn-block text-light"/>
+                                <input value="Add to cart" type="submit" id="accept" class="btn btn-secondary btn-block text-light" />
                                 <!-- <a id="btn-category" class="btn btn-success btn-block text-light">Agrergar</a> -->
                             </div>
                         </form>
@@ -249,73 +224,71 @@ foreach($categories as $category)
             </div>
         </div>
 
-    <?php include_once 'partials/tail.php' ?>
+        <?php include_once 'partials/tail.php' ?>
 
-    <script>
+        <script>
+            const baseURL = 'http://localhost/BDM/'
 
-        const baseURL = 'http://localhost/BDM/'
+            const listCB = document.querySelector('#list');
+            listCB.addEventListener('change', e => {
+                const listId = e.target.value;
+                const productId = document.querySelector('#product').value;
 
-        const listCB = document.querySelector('#list');
-        listCB.addEventListener('change', e => {
-           const listId = e.target.value;
-           const productId = document.querySelector('#product').value;
-
-            addToList(listId, productId)
-                .then( res => res.json() )
-                .then( res => 'Agregado' )
-                .catch( err => console.log(err) );
-        })
-
-
-        async function addToList(list, obj){
-            const data = new FormData();
-            
-            return await fetch(`${baseURL}wishList/addProduct`, {
-                method: 'POST',
-                body: JSON.stringify({list, obj})
-            });
-
-        }
-
-    </script>
-
-    <script>
-
-
-        const askBtn = document.querySelector('#ask');
-        askBtn.addEventListener('click', e => {
-            const item = document.querySelector('#item');
-            const cant = document.querySelector('#cant');
-            const user = document.querySelector('#user');
-
-            console.log(item.value, cant.value, user.value);
-
-            cotizar(cant.value, item.value, user.value)
-                .then( res => res.json() )
-                .then( res =>{
-                    const price = document.querySelector('#precioCotizado');
-                    price.value = `$${res.price}`;
-                })
-                .catch( err => console.log(err) );
-        })
-
-        const cotizar = async(cant, item, user) => {
-
-
-            return await fetch(`${baseURL}product/cotizar`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    item,
-                    cant,
-                    user
-                })
+                addToList(listId, productId)
+                    .then(res => res.json())
+                    .then(res => 'Agregado')
+                    .catch(err => console.log(err));
             })
-        }
 
-    </script>
 
-    <script src="assets/js/nodes/buttons.js"></script>
-    <script src="assets/js/nodes/card.js"></script>
-    <!-- <script src="assets/js/carousel.js"></script> -->
-    <script src="carousel.js"></script>
+            async function addToList(list, obj) {
+                const data = new FormData();
+
+                return await fetch(`${baseURL}wishList/addProduct`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        list,
+                        obj
+                    })
+                });
+
+            }
+        </script>
+
+        <script>
+            const askBtn = document.querySelector('#ask');
+            askBtn.addEventListener('click', e => {
+                const item = document.querySelector('#item');
+                const cant = document.querySelector('#cant');
+                const user = document.querySelector('#user');
+
+                console.log(item.value, cant.value, user.value);
+
+                cotizar(cant.value, item.value, user.value)
+                    .then(res => res.json())
+                    .then(res => {
+                        const price = document.querySelector('#precioCotizado');
+                        price.value = `$${res.price}`;
+                    })
+                    .catch(err => console.log(err));
+            })
+
+            const cotizar = async (cant, item, user) => {
+
+
+                return await fetch(`${baseURL}product/cotizar`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        item,
+                        cant,
+                        user
+                    })
+                })
+            }
+        </script>
+
+        <script src="assets/js/nodes/buttons.js"></script>
+        <script src="assets/js/nodes/card.js"></script>
+        <!-- <script src="assets/js/carousel.js"></script> -->
+        <script src="carousel.js"></script>
 </body>

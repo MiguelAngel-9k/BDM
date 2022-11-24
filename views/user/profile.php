@@ -14,39 +14,7 @@ foreach($categories as $category)
 <body class="bg-primary">
 
 
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary sticky-top">
-        <div class="container-fluid">
-            <a href="<?php echo constant('API') ?>product/landing" class="text-primary navbar-brand fs-4 fw-bold">
-                <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="" width="128"> -->
-                Mercadona
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <form action="" class="d-flex w-75 position-relative ">
-                    <input type="search" class="form-control me-2" placeholder="Buscar" aria-label="Search">
-                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Busqueda</button>
-                </form>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a href="sales_user.html" class="nav-link fs-6 profile-name">
-                            <?php echo $user['name']; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="sales_user.html" class="nav-link">
-                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                            <!-- <img width="32" height="32" src="data:image/png;base64,'<?php echo base64_encode($user['img']) ?>'" class="rounded-circle mx-auto d-block"> -->
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'partials/header.php' ?>
 
     <!-- CATEGOIRES NAVS -->
     <nav class="nav">
@@ -89,26 +57,28 @@ foreach($categories as $category)
         <div class="row mt-4">
             <!-- WISH LISTS -->
             <div class="col-lg-3">
-                <div class="list-group border-bottom border-success border-5" id="wish-container">
-                    <?php foreach ($lists as $list) { ?>
-                        <div class="my-2 list-group-item list-group">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <a href="<?php echo constant('API') . 'wishList/list/' . $list->getID(); ?>" class="fs-5 fw-normal"><?php echo $list->getName(); ?></a>
+                <?php if ($user['rol'] == 'C') { ?>
+                    <div class="list-group border-bottom border-success border-5" id="wish-container">
+                        <?php foreach ($lists as $list) { ?>
+                            <div class="my-2 list-group-item list-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row">
+                                            <a href="<?php echo constant('API') . 'wishList/list/' . $list->getID(); ?>" class="fs-5 fw-normal"><?php echo $list->getName(); ?></a>
+                                        </div>
+                                        <div class="row">
+                                            <p class="fst-italic fw-light text-primary fs-6"><?php echo $list->getDate(); ?></p>
+                                        </div>
                                     </div>
-                                    <div class="row">
-                                        <p class="fst-italic fw-light text-primary fs-6"><?php echo $list->getDate(); ?></p>
+                                    <div class="col my-auto">
+                                        <?php echo '<img width="64" height="64" src="data:image/jpeg;base64,' . base64_encode($list->getCover()) . '"/>'; ?>
+                                        <!-- <img width="64" height="64" src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg" alt="" class="float-end rounded"> -->
                                     </div>
-                                </div>
-                                <div class="col my-auto">
-                                    <?php echo '<img width="64" height="64" src="data:image/jpeg;base64,' . base64_encode($list->getCover()) . '"/>'; ?>
-                                    <!-- <img width="64" height="64" src="http://www.codiceskateshop.com/media/catalog/product/cache/1/image/600x800/9df78eab33525d08d6e5fb8d27136e95/t/a/tabla-baker-brand-logo-black-white_1.jpg" alt="" class="float-end rounded"> -->
                                 </div>
                             </div>
-                        </div>
-                    <?php } ?>
-                </div>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
                 <div class="row m-3">
                     <h3 class="text-primary">Opciones</h3>
                     <ul class="list-group list-group-flush">
@@ -122,31 +92,39 @@ foreach($categories as $category)
                         <li class="list-group-item">
                             <a href="#" class="" data-bs-toggle="modal" data-bs-target="#editPassModal">Cambiar contraseña</a>
                         </li>
-                        <li class="list-group-item">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#carritoModal">
-                                Carrito</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addProduct">
-                                Agregar producto
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                                Agregar Categoria
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addListModal">
-                                Wish lists
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="sales_report.html">Reporte de ventas</a>
-                        </li>
-                        <li class="list-group-item">
+                        <?php if ($user['rol'] == 'C') { ?>
+                            <li class="list-group-item">
+                                <a href="#" class="" data-bs-toggle="modal" data-bs-target="#carritoModal">
+                                    Carrito</a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($user['rol'] == 'V') { ?>
+                            <li class="list-group-item">
+                                <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addProduct">
+                                    Agregar producto
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                    Agregar Categoria
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($user['rol'] == 'C') { ?>
+                            <li class="list-group-item">
+                                <a href="#" class="" data-bs-toggle="modal" data-bs-target="#addListModal">
+                                    Wish lists
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($user['rol'] == 'V') { ?>
+                            <li class="list-group-item">
+                                <a href="<?php echo constant('API') ?>/user/sales">Reporte de ventas</a>
+                            </li>
+                        <?php } ?>
+                        <!-- <li class="list-group-item">
                             <a href="purchase_report.html">Reporte de compras</a>
-                        </li>
+                        </li> -->
                         <li class="list-group-item">
                             <div class="text-light form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="privacy" <?php echo $user['priv'] == 1 ? "checked" : ""; ?>>
@@ -177,11 +155,8 @@ foreach($categories as $category)
                                         <small class="text-success fw-bold fs-4">
                                             <?php echo "$" . $product->getPrice(); ?>
                                         </small>
-                                        <a href="<?php echo $product->getID(); ?>" class="my-2 btn text-light d-block btn-success">
-                                            Comprar
-                                        </a>
-                                        <a href="#" class="my-2 btn text-light d-block btn-success-light">
-                                            Añadir al carrito
+                                        <a href="<?php echo constant('API') . '/product/product/' . $product->getID() ?>" class="my-2 btn text-light d-block btn-success">
+                                            See more
                                         </a>
                                     </div>
                                 </div>
@@ -444,7 +419,7 @@ foreach($categories as $category)
                                         <td><?php echo $cart->getCategory() ?></td>
                                         <td><?php echo $cart->getQuantity() ?></td>
                                         <td><?php echo $cart->getDate() ?></td>
-                                        <td><a href="<?php echo constant('API').'product/removeFromCart/'.$cart->getCart().'/'.$cart->getID() ?>" class="btn btn-danger">Eliminar</a></td>
+                                        <td><a href="<?php echo constant('API') . 'product/removeFromCart/' . $cart->getCart() . '/' . $cart->getID() ?>" class="btn btn-danger">Eliminar</a></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

@@ -196,6 +196,21 @@ class User extends Controller
         ));
     }
 
+    public function sales(){
+        session_start();
+        if(isset($_SESSION['USER'])){
+            $product = new ProudctModel();
+            $user = new UserModel();
+            $user->get($_SESSION['USER']);
+            $data = [
+                'user' => $user->serialize(),
+                'sales' => $product->sales($_SESSION['USER'])
+            ];
+
+            $this->render('user/reporte', $data);
+        }
+    }
+
     private function isName($name)
     {
         if (!preg_match(constant('REGX_NME'), $name)) {

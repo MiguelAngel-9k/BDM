@@ -8,37 +8,7 @@ $product =  $data['PRODUCT'];
 
 <body>
 
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-        <div class="container-fluid">
-            <a href="landing_page.html" class="text-primary navbar-brand fs-4 fw-bold">
-                Mercadona
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <form action="products.html" class="d-flex w-75 position-relative ">
-                    <input type="search" class="form-control me-2" placeholder="Find some" aria-label="Seach">
-                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Seach</button>
-                </form>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a href="<?php echo constant('API') ?>" class="nav-link fs-6 profile-name">
-                            <?php echo $user['name'] ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="sales_user.html" class="nav-link">
-                            <?php echo '<img width="32" height="32" src="data:image/jpeg;base64,' . base64_encode($user['img']) . '"/>'; ?>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'partials/header.php' ?>
     <div class="container-fluid bg-primary vh-100 p-5">
         <div class="row bg-dark rounded">
             <p class="text-primary m-3">Video Games > Video Games</p>
@@ -78,7 +48,7 @@ $product =  $data['PRODUCT'];
                 </div>
             </div>
             <div class="col text-primary">
-                <a href="<?php echo constant('API').'/product/aprove/'.$product['id']; ?>" class="btn btn-block btn-success">Aprove</a>
+                <a href="<?php echo constant('API') . '/product/aprove/' . $product['id']; ?>" class="btn btn-block btn-success">Aprove</a>
             </div>
         </div>
     </div>

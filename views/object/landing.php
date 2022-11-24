@@ -9,37 +9,7 @@ $categories = $data['categories']
 
 <body class="bg-primary">
 
-    <!-- MAIN NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-        <div class="container-fluid">
-            <a href="#" class="text-primary navbar-brand fs-4 fw-bold">
-                Mercadona
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="menu">
-                <form action="<?php echo constant('API') ?>product/search" method="POST" class="d-flex w-75 position-relative ">
-                    <input type="search" name="search" class="form-control me-2" placeholder="Find some" aria-label="Seach">
-                    <button class="btn position-absolute" active style="right: 10px;" type="submit">Seach</button>
-                </form>
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a href="<?php echo constant('API'); ?>user/profile " class="nav-link fs-6 profile-name">
-                            <?php echo $user['name']; ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="sales_user.html" class="nav-link">
-                            <img width="32" height="32" src="data:image/jpeg;base64,<?php echo base64_encode($user['img']) ?>" alt="User image" class="rounded-circle mx-auto d-block">
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include 'partials/header.php' ?>
     <!-- MAIN CONTENT -->
     <div class="container-fluid" id="main">
         <div class="row my-2 py-3">
@@ -81,13 +51,15 @@ $categories = $data['categories']
             ?>
                 <div style="background-color: #d6d6d6;" class="m-2 p-3 rounded col h-50">
                     <h2 class="text-light"><?php echo $category['NAME'] ?></h2>
-                    <img src="https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T1/images/G/01/AmazonExports/Fuji/2020/May/Dashboard/Fuji_Dash_Electronics_1x._SY304_CB432774322_.jpg" alt="" class="thumbnail rounded mx-auto d-block">
+                    <a href='<?php echo constant('API') ?>category/category/<?php echo $category['ID'] ?>' class="nav-link">
+                        <img src="https://images-na.ssl-images-amazon.com/images/W/WEBP_402378-T1/images/G/01/AmazonExports/Fuji/2020/May/Dashboard/Fuji_Dash_Electronics_1x._SY304_CB432774322_.jpg" alt="" class="thumbnail rounded mx-auto d-block">
+                    </a>
                 </div>
             <?php
             }
             ?>
         </div>
-        <div class="row justify-content-center p-3 m-3">
+        <!-- <div class="row justify-content-center p-3 m-3">
             <h2>Lo mas comprado</h2>
             <div class="col-1 align-items-center d-flex">
                 <p id="prev" class="text-light mx-auto text-center bg-success">PREV</p>
@@ -100,7 +72,7 @@ $categories = $data['categories']
             <div class="col-1 align-items-center d-flex">
                 <p id="next" class="text-light mx-auto text-center bg-success">NEXT</p>
             </div>
-        </div>
+        </div> -->
         <!-- FOOTER -->
         <div class="row bg-dark">
             <!-- FOOTER -->
