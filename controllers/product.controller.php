@@ -34,23 +34,28 @@ class Product extends Controller
         $media = [];
         $files = $_FILES['pMedia'];
 
-
+        // var_dump($files);
         for ($filePosition = 0; $filePosition < (count($files) - 2); $filePosition++) {
-            $singleMedia = array([
+            $singleMedia = [
                 'name' => $files['name'][$filePosition],
                 'type' => explode('/', $files['type'][$filePosition])[0],
                 'tmp_name' => $files['tmp_name'][$filePosition],
                 'size' => $files['size'][$filePosition],
                 'ext' => pathinfo($files['name'][$filePosition], PATHINFO_EXTENSION)
-            ]);
+            ];
 
-            if ($singleMedia['type'] === 'video') {
-                move_uploaded_file($singleMedia['tmp_name'], '/');
-                $singleMedia['name'] = '/';
+            if ($singleMedia['type'] == 'video') {
+                $time = new DateTime();
+                $name = "media/vid{$time->getTimestamp()}{$filePosition}.{$singleMedia['ext']}";
+                move_uploaded_file($singleMedia['tmp_name'], $name);
+                // echo $name.'<br/>';
+                $singleMedia['tmp_name'] = $name;
             }
 
             array_push($media, $singleMedia);
         }
+
+        // var_dump($media);
 
         if ($this->existsPOST(['pName', 'pQty', 'pPrice', 'pCat', 'pDesc', 'pOwner'])) {
             $product = new ProudctModel();

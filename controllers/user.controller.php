@@ -1,3 +1,4 @@
+
 <?php
 
 class User extends Controller
@@ -47,17 +48,17 @@ class User extends Controller
                 $user->setName($_POST['name']);
 
                 $user->register() == null;
-                    // header('location: http://localhost/error/page');
+                // header('location: http://localhost/error/page');
 
 
                 session_start();
                 $_SESSION['USER'] = $user->getEmail();
-                header('location: '.constant('API').'user/profile/');
+                header('location: ' . constant('API') . 'user/profile/');
                 // $this->render('user/profile', $user->serialize());
-            }else{
+            } else {
                 echo 'Invalid data';
             }
-        }else{
+        } else {
             echo 'Value missing';
         }
     }
@@ -95,7 +96,7 @@ class User extends Controller
                     $_SESSION['USER'] = $user->getEmail();
                     // var_dump($data);
                     //header("location:" . constant('API'));
-                    header("location:" . constant('API')."product/landing");
+                    header("location:" . constant('API') . "product/landing");
                 }
             }
         }
@@ -196,9 +197,10 @@ class User extends Controller
         ));
     }
 
-    public function sales(){
+    public function sales()
+    {
         session_start();
-        if(isset($_SESSION['USER'])){
+        if (isset($_SESSION['USER'])) {
             $product = new ProudctModel();
             $user = new UserModel();
             $user->get($_SESSION['USER']);
@@ -209,6 +211,15 @@ class User extends Controller
 
             $this->render('user/reporte', $data);
         }
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_unset($_SESSION['user']);
+        session_destroy();
+
+        header('location: '.constant('API'));
     }
 
     private function isName($name)

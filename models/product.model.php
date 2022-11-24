@@ -15,6 +15,8 @@ class ProudctModel
     private $date;
     private $media = [];
     private $cart;
+    public $medType;
+    public $medExt;
 
     private $conn;
 
@@ -42,7 +44,12 @@ class ProudctModel
             $buffer = [];
             while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
                 array_push($buffer, $row);
-                array_push($this->media, $row['RECURSO']);
+                $media = array(
+                    'resource' => $row['RECURSO'],
+                    'ext' => $row['EXTENSION'],
+                    'type' => $row['TIPO']
+                );
+                array_push($this->media, $media);
             }
 
             $this->setID($buffer[0]['ID_OBJ']);
@@ -74,7 +81,7 @@ class ProudctModel
 
             $prod = $query->fetch(PDO::FETCH_ASSOC)['RESULTADO'];
             $query->closeCursor();
-            $this->setMedia($media, $prod);
+            if ($this->setMedia($media, $prod) == null) return 'No se agrego la imagen';
 
 
             return $query->rowCount() > 0 ? true : false;
@@ -102,6 +109,8 @@ class ProudctModel
                 $product->setPrice($row['PRECIO']);
                 $product->setID($row['OBJETO']);
                 $product->setOwner($row['VENDEDOR']);
+                $product->medType = $row['TIPO'];
+                $product->medExt = $row['EXTENSION'];
 
                 $buffer[$row['OBJETO']] = $product;
             }
@@ -116,20 +125,20 @@ class ProudctModel
     {
         $query = $this->conn->prepare("CALL SP_MULTIMEDIA(0, :PROD, :REC, :EXT, :PESO, :TIPO, 'INS')");
         foreach ($media as $resource) {
-            if (!$resource[0]['name']) break;
+            if (!$resource) break;
 
             try {
                 $query->execute([
                     "PROD" => $prod,
-                    "REC" => file_get_contents($resource[0]['tmp_name']),
-                    "EXT" => $resource[0]['ext'],
-                    "PESO" => $resource[0]['size'],
-                    "TIPO" => $resource[0]['type']
+                    "REC" => file_get_contents($resource['tmp_name']),
+                    "EXT" => $resource['ext'],
+                    "PESO" => $resource['size'],
+                    "TIPO" => $resource['type']
                 ]);
                 $query->closeCursor();
             } catch (PDOException $e) {
-                echo 'Error al insertar las imagenes del producto';
-                return;
+                echo 'Error al insertar las imagenes del producto' . $e->getMessage();
+                return null;
             }
         }
     }
@@ -299,8 +308,12 @@ class ProudctModel
                 "CANT" => $cantidad
             ]);
 
-            if($sql->rowCount() > 0){
+            if ($sql->rowCount() > 0) {
                 $res = $sql->fetch(PDO::FETCH_ASSOC);
+
+                if (isset($row['none']))
+                    return null;
+
                 $product = new ProudctModel();
                 $product->setOwner($res['USUARIO']);
                 $product->setID($res['OBJ']);
@@ -311,7 +324,6 @@ class ProudctModel
             }
 
             return null;
-
         } catch (PDOException $e) {
             echo 'Cannot cotizar item: ' . $e->getMessage();
             return;
@@ -334,8 +346,9 @@ class ProudctModel
         );
     }
 
-    public function setPayment($user, $comment, $rate){
-        try{
+    public function setPayment($user, $comment, $rate)
+    {
+        try {
             $sql = $this->conn->prepare("CALL SP_VENTA(:COMMENT, :CALIF, :USUARIO)");
             $sql->execute([
                 "COMMENT" => $comment,
@@ -344,21 +357,21 @@ class ProudctModel
             ]);
 
             return true;
-
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo 'Cannot pay: ' . $e->getMessage();
             return;
         }
     }
 
-    public function sales($user){
+    public function sales($user)
+    {
         try {
             $sql = $this->conn->prepare("SELECT * FROM REPORTE_VENTA_DETALLE WHERE VENDEDOR = :USER");
             $sql->execute(["USER" => $user]);
 
 
             $sales = [];
-            while($row = $sql->fetch(PDO::FETCH_ASSOC)){
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
                 $sale = new ProudctModel();
                 $sale->setDate($row['FECHA_VENTA']);
                 $sale->setCategory($row['CATEGORIA']);
@@ -371,7 +384,6 @@ class ProudctModel
             }
 
             return $sales;
-
         } catch (PDOException $e) {
             echo 'Cannot get sales report: ' . $e->getMessage();
             return;

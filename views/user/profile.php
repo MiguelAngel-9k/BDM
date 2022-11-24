@@ -126,6 +126,9 @@ foreach($categories as $category)
                             <a href="purchase_report.html">Reporte de compras</a>
                         </li> -->
                         <li class="list-group-item">
+                            <a href="<?php echo constant('API')?>/user/logout">Logout</a>
+                        </li>
+                        <li class="list-group-item">
                             <div class="text-light form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch" id="privacy" <?php echo $user['priv'] == 1 ? "checked" : ""; ?>>
                                 <label class="form-check-label" for="privacy">Publico</label>

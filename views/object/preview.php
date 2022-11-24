@@ -6,7 +6,7 @@ $product =  $data['PRODUCT'];
 
 ?>
 
-<body>
+<body class="bg-primary">
 
     <?php include 'partials/header.php' ?>
     <div class="container-fluid bg-primary vh-100 p-5">
@@ -17,15 +17,20 @@ $product =  $data['PRODUCT'];
                     <!-- IMAGES LIST -->
                     <div class="col-2">
                         <ul class="list-group list-group-flush">
-                            <?php foreach ($product['media'] as $media) { ?>
-                                <li class="list-group-item">
-                                    <img width="80" height="80" src="data:image/jpeg;base64,<?php echo base64_encode($media) ?>" alt="" class="rounded thumbnail d-block mx-auto">
-                                </li>
-                            <?php } ?>
+                            <?php
+                            foreach ($product['media'] as $media) {
+                                if ($media['type'] == 'image') {
+                            ?>
+                                    <li class="list-group-item">
+                                        <img width="80" height="80" src="data:<?php echo $media['type'] ?>/jpeg;base64,<?php echo base64_encode($media['resource']) ?>" alt="" class="rounded thumbnail d-block mx-auto">
+                                    </li>
+
+                            <?php }
+                            } ?>
                         </ul>
                     </div>
                     <div class="col">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($product['media'][0]) ?>" alt="" class="product-thumbnail img-fluid mx-auto d-block">
+                        <img src="data:<?php echo $product['media'][0]['type'] ?>/jpeg;base64,<?php echo base64_encode($product['media'][0]['resource']) ?>" alt="" class="product-thumbnail img-fluid mx-auto d-block">
                     </div>
                 </div>
             </div>
@@ -50,6 +55,25 @@ $product =  $data['PRODUCT'];
             <div class="col text-primary">
                 <a href="<?php echo constant('API') . '/product/aprove/' . $product['id']; ?>" class="btn btn-block btn-success">Aprove</a>
             </div>
+        </div>
+        <div class="row">
+            <h1 class="text-primary text-center m-2">Resources</h1>
+            <ul class="list-group list-group-flush">
+                <?php
+                foreach ($product['media'] as $media) {
+                    if ($media['type'] == 'video') {
+                ?>
+                        <video width="320" height="240" autoplay muted>
+                            <source src="data:<?php echo $media['type'] ?>/<?php echo $media['ext'] ?>;base64,<?php echo base64_encode($media['resource']) ?>" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+
+                <?php }
+                } ?>
+                <li class="list-group-item">
+                    <img src="https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/71rXQLfFiAL._SX342_.jpg" class="d-block mx-auto img-fluid">
+                </li>
+            </ul>
         </div>
     </div>
 
