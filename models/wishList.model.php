@@ -14,6 +14,8 @@ class WishListModel extends Model
     private $date;
     private $privacy;
     private $desc;
+    public $ext;
+    public $type;
 
 
     public function add($name, $cover, $owner, $desc, $privacy)
@@ -100,6 +102,8 @@ class WishListModel extends Model
                 $list->setOwner($row['AUTOR']);
                 $list->setDescription($row['DESCRIPCION']);
                 $list->setCover($row['PORTADA']);
+                $list->type = $row['TIPO'];
+                $list->ext = $row['EXTENSION'];
 
                 return $list->serialize();
             }

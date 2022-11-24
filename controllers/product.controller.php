@@ -188,6 +188,10 @@ class Product extends Controller
             echo json_encode(array(
                 'price' => $res['price']
             ));
+        else
+        echo json_encode(array(
+            'price' => 0
+        ));
     }
 
     public function purchase()

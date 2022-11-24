@@ -451,28 +451,49 @@ BEGIN
 
         WHEN _OP = 'INS' THEN #INSERTAR ELEMENTO AL CARRITO
             SET @CARRITO = (SELECT ID_CARRITO FROM CARRITO_COMPRAS WHERE CARR_USR = _USUARIO);
-            INSERT INTO CARRITO_COMPRAS_DETALLE(
-                    ID_CARRITO,
-                    ID_OBJETO,
-                    CARR_CANT,
-                    ALTA,
-                    ST,
-                    PRECIO
-                )
-                VALUES(
-                    @CARRITO,
-                    _OBJETO,
-                    1,
-                    SYSDATE(),
-                    'A',
-                    (SELECT OBJ_PRECIO FROM OBJETOS WHERE ID_OBJ = _OBJETO)
-                );
+
+            SET @CANTIDAD = (SELECT OBJ_CANT FROM OBJETOS WHERE ID_OBJ = _OBJETO);
+
+            IF( @CANTIDAD > 0) THEN
+                UPDATE OBJETOS SET OBJ_CANT = (@CANTIDAD - 1) WHERE ID_OBJ = _OBJETO; 
+                INSERT INTO CARRITO_COMPRAS_DETALLE(
+                        ID_CARRITO,
+                        ID_OBJETO,
+                        CARR_CANT,
+                        ALTA,
+                        ST,
+                        PRECIO
+                    )
+                    VALUES(
+                        @CARRITO,
+                        _OBJETO,
+                        1,
+                        SYSDATE(),
+                        'A',
+                        (SELECT OBJ_PRECIO FROM OBJETOS WHERE ID_OBJ = _OBJETO)
+                    );
+            ELSE
+                SELECT 'No hay suficientes';
+            END IF;
+
 
         WHEN _OP = 'GET' THEN #OBTENER CARRITO
-            SELECT * FROM VW_CARRITO_DETALLE
+            SELECT
+                USUARIO,
+                OBJETO,
+                CARRITO,
+                NOMBRE,
+                CATEGORIA,
+                ROUND(PRECIO, 2) AS PRECIO,
+                FECHA,
+                CANTIDAD
+            FROM VW_CARRITO_DETALLE
                 WHERE USUARIO = _USUARIO AND PRECIO <> 'Cotizar';
 
         WHEN _OP = 'ELI' THEN #ELIMINAR DEL CARRITO
+
+            SET @CANTIDAD = (SELECT CARR_CANT FROM CARRITO_COMPRAS_DETALLE WHERE ID_CARRITO = _CARRITO AND ID_OBJETO = _OBJETO);
+            UPDATE OBJETOS SET OBJ_CANT = (OBJ_CANT + @CANTIDAD) WHERE ID_OBJ = _OBJETO;
             DELETE FROM CARRITO_COMPRAS_DETALLE
                 WHERE ID_CARRITO = _CARRITO AND ID_OBJETO = _OBJETO;
 
@@ -489,32 +510,36 @@ DELIMITER //
 CREATE PROCEDURE SP_COTIZACIONES(
     IN _USUARIO VARCHAR(60),
     IN _OBJ BIGINT,
-    IN _CANTIDAD TINYINT
+    IN _CANTIDAD INT
 )
 BEGIN
 
     DECLARE CONTINUE HANDLER FOR 1062
     BEGIN
-        IF(_CANTIDAD = (SELECT CANTIDAD 
-                        FROM COTIZACIONES 
-                        WHERE OBJ = _OBJ AND 
-                        USUARIO = _USUARIO )) THEN
+        IF(INVENTARIO(_OBJ, _CANTIDAD) = 1) THEN
+            IF(_CANTIDAD = (SELECT CANTIDAD 
+                            FROM COTIZACIONES 
+                            WHERE OBJ = _OBJ AND 
+                            USUARIO = _USUARIO )) THEN
 
-            SELECT * FROM COTIZACIONES
-                WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
-        ELSE 
-            UPDATE COTIZACIONES
-                SET CANTIDAD = _CANTIDAD,
-                    PORCENTAJE = COTIZAR(_CANTIDAD, _OBJ)
-                WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
+                SELECT * FROM COTIZACIONES
+                    WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
+            ELSE 
+                UPDATE COTIZACIONES
+                    SET CANTIDAD = _CANTIDAD,
+                        PORCENTAJE = COTIZAR(_CANTIDAD, _OBJ)
+                    WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
+            END IF;
         END IF;
     END;
 
-    INSERT INTO COTIZACIONES
-        VALUES(_USUARIO, _OBJ, _CANTIDAD, COTIZAR(_CANTIDAD, _OBJ));
+    IF(INVENTARIO(_OBJ, _CANTIDAD) = 1) THEN
+        INSERT INTO COTIZACIONES
+            VALUES(_USUARIO, _OBJ, _CANTIDAD, COTIZAR(_CANTIDAD, _OBJ));
 
-    SELECT * FROM COTIZACIONES
-            WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
+        SELECT * FROM COTIZACIONES
+                WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
+    END IF;
 
 END //
 DELIMITER ;

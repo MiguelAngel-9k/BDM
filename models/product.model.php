@@ -368,7 +368,7 @@ class ProudctModel
     public function sales($user)
     {
         try {
-            $sql = $this->conn->prepare("SELECT * FROM REPORTE_VENTA_DETALLE WHERE VENDEDOR = :USER");
+            $sql = $this->conn->prepare("SELECT FECHA_VENTA, CATEGORIA, PRODUCTO, PRECIO, EXISTENCIA, VENDEDOR FROM REPORTE_VENTA_DETALLE WHERE VENDEDOR = :USER");
             $sql->execute(["USER" => $user]);
 
 
@@ -390,7 +390,33 @@ class ProudctModel
             echo 'Cannot get sales report: ' . $e->getMessage();
             return;
         }
-    }
+    }/* 
+
+    public function purchases($user){
+        try {
+            $sql = $this->conn->prepare("SELECT ID_VENTA, ID_OBJ, VEN_CANT, PRECIO FROM VENTAS_DETALLE WHERE ");
+            $sql->execute(["USER" => $user]);
+
+
+            $sales = [];
+            while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
+                $sale = new ProudctModel();
+                $sale->setDate($row['FECHA_VENTA']);
+                $sale->setCategory($row['CATEGORIA']);
+                $sale->setName($row['PRODUCTO']);
+                $sale->setPrice($row['PRECIO']);
+                $sale->setQuantity($row['EXISTENCIA']);
+                $sale->setOwner($row['VENDEDOR']);
+
+                array_push($sales, $sale);
+            }
+
+            return $sales;
+        } catch (PDOException $e) {
+            echo 'Cannot get sales report: ' . $e->getMessage();
+            return;
+        }
+    } */
 
 
     //SETTERS

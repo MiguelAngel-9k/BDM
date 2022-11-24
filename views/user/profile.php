@@ -18,19 +18,6 @@ foreach($categories as $category)
 
     <?php include 'partials/header.php' ?>
 
-    <!-- CATEGOIRES NAVS -->
-    <nav class="nav">
-        <?php
-        foreach ($categories as $category) {
-        ?>
-            <a href='<?php echo constant('API') ?>category/category/<?php echo $category['ID'] ?>' class="nav-link">
-                <?php echo $category['NAME']; ?>
-            </a>
-        <?php
-        }
-        ?>
-    </nav>
-
     <!-- USER INFORMATION -->
     <div class="mt-5 container-fluid">
         <div class="row">

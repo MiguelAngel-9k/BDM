@@ -49,9 +49,18 @@ $items = $data['items'];
                 <!-- WISH LIST CONTENT -->
                 <?php foreach ($items as $item) { ?>
                     <a href="<?php echo constant('API') . '/product/product/' . $item->getID() ?>" class="wish-object rounded row my-3 border-success text-primary p-2 border-bottom border-2">
-                        <div class="col-1 p-2">
-                            <img width="100" src="data:image/jpeg;base64,<?php echo base64_encode($item->getCover()) ?>" alt="" class="img-thumbnail">
-                        </div>
+                        <?php if ($product->medType == 'image') { ?>
+                            <div class="col-1 p-2">
+                                <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($item->getCover()) . '" alt="Imagen" class="card-img-top rounded">' ?>
+                            </div>
+                        <?php } else { ?>
+                            <div class="col-1 p-2">
+                                <video width="120" height="140" autoplay muted>
+                                    <source src="data:<?php echo $item->type ?>/<?php echo $item->ext ?>;base64,<?php echo base64_encode($item->getCover()) ?>" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        <?php } ?>
                         <div class="col-8">
                             <h3 class="m-0"><?php echo $item->getName(); ?></h3>
                             <!-- <p class="m-0">Estrellas</p> -->
