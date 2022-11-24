@@ -200,17 +200,34 @@ BEGIN
             FROM OBJETOS ORDER BY ID_OBJ DESC LIMIT 1;
 
         WHEN _OP = 'GTO' THEN #OBTNER POR DUENIO
-            SELECT * FROM VW_PORTADA_OBJETO
-                WHERE VENDEDOR = _VEND;
+            SELECT 
+                TITULO, 
+                DESCRIPCION, 
+                PORTADA,
+                PRECIO, 
+                OBJETO, 
+                VENDEDOR, 
+                TIPO, 
+                EXTENSION 
+            FROM VW_PORTADA_OBJETO
+                GROUP BY OBJETO HAVING VENDEDOR = _VEND;
 
         WHEN _OP = 'GET' THEN #APROBAR (OBSOLETO)
             SELECT * FROM VW_OBJECT WHERE ID_OBJ = OBJ;
 
         WHEN _OP = 'BUS' THEN #BUSCAR
-            SELECT * FROM VW_PORTADA_OBJETO
-                WHERE 
-                    TITULO LIKE CONCAT('%', _DESC, '%') OR
-                    DESCRIPCION LIKE CONCAT('%', _DESC, '%');
+            SELECT 
+                TITULO, 
+                DESCRIPCION, 
+                PORTADA,
+                PRECIO, 
+                OBJETO, 
+                VENDEDOR, 
+                TIPO, 
+                EXTENSION  FROM VW_PORTADA_OBJETO
+            WHERE 
+                TITULO LIKE CONCAT('%', _DESC, '%') OR
+                DESCRIPCION LIKE CONCAT('%', _DESC, '%');
 
 
     END CASE;
@@ -230,11 +247,11 @@ BEGIN
 
     CASE
         WHEN _OP = 'ALL' THEN #OBTIENE TODAS LAS PETICIONES PENDIENTES
-            SELECT * FROM VW_OBJETO_CATEGORIA WHERE ESTADO = 'No aprovado';
+            SELECT ID_OBJETO, OBJETO, CATEGORIA, VENDEDOR, ALTA, CANTIDAD, PRECIO, ESTADO FROM VW_OBJETO_CATEGORIA GROUP BY ID_OBJETO HAVING ESTADO = 'No aprovado';
 
         WHEN _OP = 'APR' THEN #APROVAR OBJETO
             UPDATE OBJETOS SET OBJ_ST = b'0' WHERE ID_OBJ = _OBJ;
-            SELECT * FROM VW_OBJETO_CATEGORIA;
+            SELECT ID_OBJETO, OBJETO, CATEGORIA, VENDEDOR, ALTA, CANTIDAD, PRECIO FROM VW_OBJETO_CATEGORIA GROUP BY ID_OBJETO;
 
     END CASE;
 

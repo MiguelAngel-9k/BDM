@@ -110,7 +110,14 @@ $catName = $data['idCat'];
 
                                 <div class="col-lg-4 col-sm-6 col-12 col-md-4">
                                     <div class="card rounded p-2 m-1" style="width:18rem;">
-                                        <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($product->getCover()) . '" alt="Imagen" class="card-img-top rounded">' ?>
+                                        <?php if ($product->medType == 'image') { ?>
+                                            <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($product->getCover()) . '" alt="Imagen" class="card-img-top rounded">' ?>
+                                        <?php } else { ?>
+                                            <video width="220" height="140" autoplay muted>
+                                                <source src="data:<?php echo $product->medType ?>/<?php echo $product->medExt ?>;base64,<?php echo base64_encode($product->getCover()) ?>" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        <?php } ?>
                                         <div class="card-body">
                                             <h3 class="card-title">
                                                 <?php echo $product->getName(); ?>
@@ -124,7 +131,7 @@ $catName = $data['idCat'];
                                             <a href="<?php echo $product->getID(); ?>" class="my-2 btn text-light d-block btn-success">
                                                 Comprar
                                             </a>
-                                            <a href="<?php echo constant('API').'product/product/'.$product->getID(); ?>" class="my-2 btn text-light d-block btn-success-light">
+                                            <a href="<?php echo constant('API') . 'product/product/' . $product->getID(); ?>" class="my-2 btn text-light d-block btn-success-light">
                                                 See More
                                             </a>
                                         </div>

@@ -170,7 +170,7 @@ class ProudctModel
             return $requests;
         } catch (PDOException $e) {
             echo 'Error al traer las solicitudes de objetos';
-            return;
+            return 'Error al traer las solicitudes de objetos'.$e->getMessage();
         }
     }
 
@@ -224,6 +224,8 @@ class ProudctModel
                 $product->setPrice($row['PRECIO']);
                 $product->setID($row['OBJETO']);
                 $product->setOwner($row['VENDEDOR']);
+                $product->medType = $row['TIPO'];
+                $product->medExt = $row['EXTENSION'];
 
                 $products[$row['OBJETO']] = $product;
             }

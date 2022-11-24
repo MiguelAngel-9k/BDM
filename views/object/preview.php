@@ -30,7 +30,14 @@ $product =  $data['PRODUCT'];
                         </ul>
                     </div>
                     <div class="col">
-                        <img src="data:<?php echo $product['media'][0]['type'] ?>/jpeg;base64,<?php echo base64_encode($product['media'][0]['resource']) ?>" alt="" class="product-thumbnail img-fluid mx-auto d-block">
+                        <?php if ($product['media'][0]['type'] == 'image') { ?>
+                            <img src="data:<?php echo $product['media'][0]['type'] ?>/jpeg;base64,<?php echo base64_encode($product['media'][0]['resource']) ?>" alt="" class="product-thumbnail img-fluid mx-auto d-block">
+                        <?php } else { ?>
+                            <video width="440" height="320" autoplay muted>
+                                <source src="data:<?php echo $product['media'][0]['type'] ?>/<?php echo $product['media'][0]['ext'] ?>;base64,<?php echo base64_encode($product['media'][0]['resource']) ?>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -58,22 +65,19 @@ $product =  $data['PRODUCT'];
         </div>
         <div class="row">
             <h1 class="text-primary text-center m-2">Resources</h1>
-            <ul class="list-group list-group-flush">
-                <?php
-                foreach ($product['media'] as $media) {
-                    if ($media['type'] == 'video') {
-                ?>
-                        <video width="320" height="240" autoplay muted>
+            <?php
+            foreach ($product['media'] as $media) {
+                if ($media['type'] == 'video') {
+            ?>
+                    <div class="col-lg-4 bg-dark rounded d-flex justify-content-center">
+                        <video width="440" height="320" autoplay muted>
                             <source src="data:<?php echo $media['type'] ?>/<?php echo $media['ext'] ?>;base64,<?php echo base64_encode($media['resource']) ?>" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
+                    </div>
 
-                <?php }
-                } ?>
-                <li class="list-group-item">
-                    <img src="https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/71rXQLfFiAL._SX342_.jpg" class="d-block mx-auto img-fluid">
-                </li>
-            </ul>
+            <?php }
+            } ?>
         </div>
     </div>
 

@@ -23,39 +23,45 @@ foreach($categories as $category)
                     <!-- IMAGES LIST -->
                     <div class="col-2">
                         <ul class="list-group list-group-flush">
-                            <?php foreach ($product['media'] as $media) { ?>
-                                <li class="list-group-item">
-                                    <img width="80" height="80" src="data:image/jpeg;base64,<?php echo base64_encode($media) ?>" alt="" class="rounded thumbnail d-block mx-auto">
-                                </li>
-                            <?php } ?>
+                            <?php
+                            foreach ($product['media'] as $media) {
+                                if ($media['type'] == 'image') {
+                            ?>
+                                    <li class="list-group-item">
+                                        <img width="80" height="80" src="data:<?php echo $media['type'] ?>/jpeg;base64,<?php echo base64_encode($media['resource']) ?>" alt="" class="rounded thumbnail d-block mx-auto">
+                                    </li>
+
+                            <?php }
+                            } ?>
                         </ul>
                     </div>
                     <div class="col">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($product['media'][0]) ?>" alt="" class="product-thumbnail img-fluid mx-auto d-block">
+                        <?php if ($product['media'][0]['type'] == 'image') { ?>
+                            <img src="data:<?php echo $product['media'][0]['type'] ?>/jpeg;base64,<?php echo base64_encode($product['media'][0]['resource']) ?>" alt="" class="product-thumbnail img-fluid mx-auto d-block">
+                        <?php } else { ?>
+                            <video width="440" height="320" autoplay muted>
+                                <source src="data:<?php echo $product['media'][0]['type'] ?>/<?php echo $product['media'][0]['ext'] ?>;base64,<?php echo base64_encode($product['media'][0]['resource']) ?>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
             <div class="col-5 text-primary">
                 <div class="row">
                     <h1 class="fw-normal"><?php echo $product['name'] ?></h1>
-                    <span class="badge <?php echo $product['qty'] == 'In Stock' ? 'bg-good' : 'bg-danger' ?>"><?php echo $product['qty'] ?></span>
-                    <p>Saler: <a class="text-primary fw-bold"><?php echo $product['owner'] ?></a></p>
+                    <!-- <p>Plataform: Xbox, Xbox one, windows, Xbox Series S</p> -->
+                    <p>Saler: <a class="text-primary fw-bold" href="sales_user.html"><?php echo $product['owner'] ?></a></p>
                 </div>
                 <div class="row">
                     <div class="col-3">
                         <span>
-                            <h2>$<?php echo $product['price'] ?></h2>
-                            <?php
-                            if ($product['price'] == 'Cotizar') {
-                            ?>
-                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cotizar">Cotizar</a>
-                            <?php
-                            }
-                            ?>
+                            <!-- <h2 class="text-danger fw-light text-decoration-line-through">$60.99</h2> -->
+                            <h2>$<?php echo $product['price']; ?></h2>
                         </span>
                     </div>
                     <div class="col">
-                        <p><?php echo $product['desc'] ?></p>
+                        <p><?php echo $product['desc']; ?></p>
                     </div>
                 </div>
             </div>
@@ -82,6 +88,22 @@ foreach($categories as $category)
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <h1 class="text-primary text-center m-2">Resources</h1>
+            <?php
+            foreach ($product['media'] as $media) {
+                if ($media['type'] == 'video') {
+            ?>
+                    <div class="col-lg-4 bg-dark rounded d-flex justify-content-center">
+                        <video width="440" height="320" autoplay muted>
+                            <source src="data:<?php echo $media['type'] ?>/<?php echo $media['ext'] ?>;base64,<?php echo base64_encode($media['resource']) ?>" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+            <?php }
+            } ?>
         </div>
         <!-- <div class="row px-5">
             <h3 class="text-primary">Top reviws</h3>

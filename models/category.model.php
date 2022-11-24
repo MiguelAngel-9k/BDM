@@ -60,6 +60,8 @@ class CategoryModel{
                 $product->setPrice($row['PRECIO']);
                 $product->setID($row['ID_OBJETO']);
                 $product->setOwner($row['VENDEDOR']);
+                $product->medType = $row['TIPO'];
+                $product->medExt = $row['EXTENSION'];
 
                 $products[$row['ID_OBJETO']] = $product;
             }

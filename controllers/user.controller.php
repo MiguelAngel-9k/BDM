@@ -66,22 +66,25 @@ class User extends Controller
     public function profile()
     {
         session_start();
-        $user = new UserModel();
-        $user->get($_SESSION['USER']);
+        if (isset($_SESSION['USER'])) {
+            $user = new UserModel();
+            $user->get($_SESSION['USER']);
 
-        $categories = new CategoryModel();
-        $products = new ProudctModel();
-        $list = new WishListModel();
+            $categories = new CategoryModel();
+            $products = new ProudctModel();
+            $list = new WishListModel();
+            $data = array(
+                'USER' => $user->serialize(),
+                'CATEGOIRES' => $categories->getAll(),
+                'PRODUCTS' => $user->getRol() == 'A' ? $products->getRequests() : $products->getByOwner($_SESSION['USER']),
+                'WLISTS' => $list->getByOwner($_SESSION['USER']),
+                'CART' => $products->getCarrito($_SESSION['USER'])
+            );
 
-        $data = array(
-            'USER' => $user->serialize(),
-            'CATEGOIRES' => $categories->getAll(),
-            'PRODUCTS' => $user->getRol() == 'A' ? $products->getRequests() : $products->getByOwner($_SESSION['USER']),
-            'WLISTS' => $list->getByOwner($_SESSION['USER']),
-            'CART' => $products->getCarrito($_SESSION['USER'])
-        );
 
-        $this->render('user/profile',  $data);
+            $this->render('user/profile',  $data);
+        }
+        header('location:'.constant('API'));
     }
 
     public function login()
@@ -219,7 +222,7 @@ class User extends Controller
         session_unset($_SESSION['user']);
         session_destroy();
 
-        header('location: '.constant('API'));
+        header('location: ' . constant('API'));
     }
 
     private function isName($name)
