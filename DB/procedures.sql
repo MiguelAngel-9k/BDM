@@ -213,7 +213,17 @@ BEGIN
                 GROUP BY OBJETO HAVING VENDEDOR = _VEND;
 
         WHEN _OP = 'GET' THEN #APROBAR (OBSOLETO)
-            SELECT * FROM VW_OBJECT WHERE ID_OBJ = OBJ;
+            SELECT 
+                RECURSO,
+                EXTENSION,
+                TIPO,
+                OBJETO,
+                ID_OBJ,
+                STOCK,
+                VENDEDOR,
+                PRECIO,
+                DESCRIPCION
+            FROM VW_OBJECT WHERE ID_OBJ = OBJ;
 
         WHEN _OP = 'BUS' THEN #BUSCAR
             SELECT 
@@ -333,7 +343,21 @@ BEGIN
             WHERE CAT_ST = 1;
 
         WHEN _OP = 'PCA' THEN #OBTENER OBJETOS POR CATEGORIA
-            SELECT * FROM VW_OBJETO_CATEGORIA
+            SELECT 
+                PORTADA,
+                EXTENSION,
+                TIPO,
+                ID_OBJETO,
+                OBJETO,
+                ID_CAT,
+                CATEGORIA,
+                VENDEDOR,
+                ALTA,
+                CANTIDAD,
+                PRECIO,
+                DESCRIPCION,
+                ESTADO
+            FROM VW_OBJETO_CATEGORIA
                 WHERE ID_CAT = _CATEGORIA AND ESTADO = 'Aprovado';
 
     END CASE;
@@ -385,7 +409,15 @@ BEGIN
             FROM D_LISTAS
             WHERE DL_USR = _OWNER;
 
-            SELECT * FROM D_LISTAS;
+            SELECT 
+                ID_LISTA,
+                DL_NOMBRE,
+                DL_DESC,
+                DL_IMGN,
+                DL_USR,
+                DL_ALTA,
+                DL_ED,DL_PRIV
+            FROM D_LISTAS;
         WHEN _OP = 'ADI' THEN
             INSERT INTO D_LISTAS_DETALLE(
                 ID_LISTA, 
@@ -404,10 +436,25 @@ BEGIN
             );
 
         WHEN _OP = 'GEL' THEN #GET LIST
-            SELECT * FROM VW_LISTAS WHERE LISTA = _LISTA;
+            SELECT
+                PORTADA,
+                LISTA,
+                PRIVACIDAD,
+                NOMBRE,
+                DESCRIIPCION,
+                AUTOR
+            FROM VW_LISTAS WHERE LISTA = _LISTA;
 
         WHEN _OP = 'LIS' THEN #LIST ITEMS
-            SELECT * FROM VW_LISTA_OBJETOS WHERE LISTA = _LISTA;
+            SELECT
+                PORTADA,
+                EXTENCION,
+                TIPO,
+                TITULO,
+                PRECIO,
+                OBJETO,
+                LISTA
+            FROM VW_LISTA_OBJETOS WHERE LISTA = _LISTA;
 
         WHEN _OP = 'ELI' THEN #ELIMINAR ELEMENTO DE LA LISTA
             DELETE FROM D_LISTAS_DETALLE 
@@ -522,7 +569,12 @@ BEGIN
                             WHERE OBJ = _OBJ AND 
                             USUARIO = _USUARIO )) THEN
 
-                SELECT * FROM COTIZACIONES
+                SELECT
+                    USUARIO,
+                    OBJ,
+                    CANTIDAD,
+                    PORCENTAJE
+                FROM COTIZACIONES
                     WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
             ELSE 
                 UPDATE COTIZACIONES
@@ -537,8 +589,13 @@ BEGIN
         INSERT INTO COTIZACIONES
             VALUES(_USUARIO, _OBJ, _CANTIDAD, COTIZAR(_CANTIDAD, _OBJ));
 
-        SELECT * FROM COTIZACIONES
-                WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
+        SELECT
+            USUARIO,
+            OBJ,
+            CANTIDAD,
+            PORCENTAJE
+        FROM COTIZACIONES
+        WHERE USUARIO = _USUARIO AND OBJ = _OBJ;
     END IF;
 
 END //
@@ -594,5 +651,3 @@ BEGIN
 
 END //
 DELIMITER ;
-
-SELECT * FROM MERCADONA_DB.CATEGORIAS;
